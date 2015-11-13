@@ -30,10 +30,6 @@ body {
 	margin: 0 auto -80px;
 }
 
-.row-indent {
-    height: 25%;
-    min-height: 80px;
-}
 
 .form-group {
     padding-left: 5px;
@@ -45,6 +41,11 @@ body {
     opacity: 0.2;
 }
 
+.row-indent {
+    height: 25%;
+    min-height: 80px;
+}
+
 @media (min-width: 768px) {
 	.row-indent {
         height: 50%;
@@ -52,7 +53,6 @@ body {
     .form-group {
         padding: 0;
     }
-
 }
 
 #top-menu {
@@ -72,8 +72,6 @@ body {
     background-color: #7DA7A0;
     color: white;
 }
-
-
 
 #wrapper {
     height: 100%;
