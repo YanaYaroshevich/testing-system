@@ -1,0 +1,80 @@
+#top-menu {
+	box-shadow: 0 2px 14px 2px #529085;
+	margin-bottom: 15px;
+    background-color: #65968E;
+    border-color: #529085;
+    opacity: 60%;
+}
+
+.navbar {
+    min-height: 80px;
+}
+
+.navbar-brand {
+    padding: 5px;
+    height: 80px;
+}
+
+.container1 {
+	height: 100%;
+	margin: 0 auto -80px;
+}
+
+#wrapper {
+    height: 100%;
+    background: url(resources/background.jpg)no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+    padding-top: 50px;
+	height: 100%;
+	min-height: 100%;
+	position: relative;
+	margin: 0;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 15px;
+}
+
+#top-pannel {
+	/* background-color: #216FA0;*/
+}
+
+.logo{
+    height: 100%;
+    opacity: 0.2;
+}
+
+/*.top-nav {
+	padding: 0 15px;
+	margin-right: 0 !important
+}
+
+.top-nav > li {
+	display: inline-block;
+	float: left;
+}
+
+.top-nav > li > a,
+.top-nav > li > b {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	line-height: 20px;
+	color: #FFFFFF;
+}
+
+.top-nav > li > a:hover,
+.top-nav > li > a:focus,
+.top-nav > .open > a,
+.top-nav > .open > a:hover,
+.top-nav > .open > a:focus {
+	color: #FFFFFF;
+	background-color: #285069;
+}*/
