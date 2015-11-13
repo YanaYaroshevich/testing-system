@@ -19,6 +19,7 @@
      <!-- Styles -->
     <link href="app.css" rel="stylesheet"/>
     
+    <!-- Icon -->
     <link rel="shortcut icon" href="resources/logo.png"/>
 
 	<!-- jQuery -->
@@ -28,9 +29,7 @@
 	<script src="bower_components/angular/angular.min.js"></script>
     
     <!-- UI-bootstrap -->
-	<script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-    
-    
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -38,37 +37,35 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="top-menu" role="navigation">
-            
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">
                     <img class="logo" alt="Brand" src="resources/logo.png"/>
                 </a>
             </div>
-            
         </nav>
         <!-- /.navbar -->
         
         <!-- Container -->
-        <div class="container1 container-fluid">
+        <div class="container-main container-fluid">
             
-            <div class="row rowH">
-            </div>
+            <div class="row row-indent"></div>
             
             <div class="row">
-                <div class="col-sm-6 col-md-8">
-                </div>
+                
+                <div class="col-sm-6 col-md-8"></div>
+
                 <div class="col-sm-6 col-md-4">
                     <form id="input-form" class="form-horizontal">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
+                                <label class="col-sm-4 control-label">Email</label>
                                 <div class="col-sm-7">
-                                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                                    <input type="email" class="form-control" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+                                <label class="col-sm-4 control-label">Password</label>
                                 <div class="col-sm-7">
-                                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                    <input type="password" class="form-control" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -90,9 +87,9 @@
             </div> 
             
         </div>
+        <!-- /.container -->
+        
     </div>    
-
-    
 </body>
 
 </html>
