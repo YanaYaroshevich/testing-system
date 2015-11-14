@@ -1,0 +1,11 @@
+{
+  "name": "Testing System",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "express-stormpath": "^2.2.0",
+    "mongodb": "^2.0.48",
+    "mongoose": "^4.2.5",
+    "stormpath": "^0.14.0"
+  }
+}

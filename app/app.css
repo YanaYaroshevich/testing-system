@@ -3,9 +3,9 @@ html {
 }
 
 body {
-    padding-top: 50px;
 	height: 100%;
 	min-height: 100%;
+    overflow: hidden;
 	position: relative;
 	margin: 0;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -17,7 +17,22 @@ body {
 }
 
 .navbar {
-    min-height: 80px;
+    height: 80px;
+}
+
+.footer {
+    box-shadow: 0 2px 14px 2px #529085;
+    background-color: #7DA7A0;
+    border-color: #529085;
+    opacity: 60%;
+    position: fixed;
+    height: 60px;
+    z-index: 1030;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    color: white;
+    padding-top: 20px;
 }
 
 .navbar-brand {
@@ -41,17 +56,31 @@ body {
     opacity: 0.2;
 }
 
-.row-indent {
-    height: 25%;
-    min-height: 80px;
+.row-indent-down {
+    height: 70px;
+}
+
+.row-indent-up {
+    height: 10px;
+}
+
+.ng-scope {
+    height: 100%;
 }
 
 @media (min-width: 768px) {
-	.row-indent {
+	.row-indent-up {
         height: 50%;
+        min-height: 90px;
     }
     .form-group {
         padding: 0;
+    }
+    #wrapper {
+        overflow: hidden;
+    }
+    .container-main {
+        overflow: auto;
     }
 }
 
@@ -75,9 +104,12 @@ body {
 
 #wrapper {
     height: 100%;
+    overflow: auto;
     background: url(resources/background.jpg)no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    padding-top: 80px;
+    padding-bottom: 60px;
 }

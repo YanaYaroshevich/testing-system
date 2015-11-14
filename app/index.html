@@ -25,11 +25,28 @@
 </head>
 
 <body>
+ <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="top-menu" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="index.html">
+                <img class="logo" alt="Brand" src="resources/logo.png"/>
+            </a>
+        </div>
+    </nav>
+    <!-- /.navbar -->
+    
     <div id="wrapper">
         <div ng-view></div>
-    </div> 
+    </div>    
     
-    <!-- jQuery -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <p><i class="fa fa-copyright"></i> Yana Yaroshevich</p>
+      </div>
+    </footer>
+</body>
+
+ <!-- jQuery -->
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 
 	<!-- Angular -->
@@ -44,7 +61,5 @@
     <!-- Scripts -->
     <script src="app.js"></script>
     <script src="start-page/start-page.js"></script>
-    
-</body>
 
 </html>
