@@ -2,6 +2,7 @@
   "name": "Testing System",
   "main": "app.js",
   "dependencies": {
+    "cloudinary": "^1.2.5",
     "express": "^4.13.3",
     "express-stormpath": "^2.2.0",
     "mongodb": "^2.0.48",
