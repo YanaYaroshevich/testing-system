@@ -64,7 +64,7 @@ body {
     height: 10px;
 }
 
-.ng-scope {
+#view-wrapper .ng-scope {
     height: 100%;
 }
 
@@ -76,7 +76,7 @@ body {
     .form-group {
         padding: 0;
     }
-    #wrapper {
+    #view-wrapper {
         overflow: hidden;
     }
     .container-main {
@@ -102,14 +102,109 @@ body {
     color: white;
 }
 
-#wrapper {
-    height: 100%;
-    overflow: auto;
-    background: url(resources/background.jpg)no-repeat center center fixed; 
+#background {
+     background: url(resources/background.jpg)no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+#wrapper {
+    height: 100%;
+}
+
+#view-wrapper {
+    height: 100%;
+    overflow: auto;
     padding-top: 80px;
     padding-bottom: 60px;
+}
+
+/* Side Navigation */
+
+.side-nav li a {
+    outline: none;
+    background-color: #7DA7A0 !important;
+}
+
+.side-nav li a:hover,
+.side-nav li a:focus {
+    outline: none;
+    background-color: white !important;
+    border-style: solid;
+    border-color: #7DA7A0;
+}
+
+.navbar-nav {
+    margin: 0px -15px;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: white;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #529085;
+}
+
+.navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-toggle:hover {
+    background-color: #529085;
+}
+
+#left-menu > li > a {
+    color: white;
+}
+
+#left-menu > li > a:hover,
+#left-menu > li > a:focus {
+    color: #7DA7A0;
+}
+
+@media (min-width: 768px) {
+	.side-nav {
+		position: fixed;
+		top: 150px;
+		left: 225px;
+		width: 225px;
+		margin-left: -225px;
+		border: none;
+		border-radius: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+		height: 100%;
+	}
+
+	.side-nav > li > a {
+		width: 225px;
+	}
+
+	#top-menu {
+		opacity: 0.9;
+	}
+    
+    #left-menu > li > a {
+        color: #7DA7A0;
+    }
+
+    #left-menu > li > a:hover,
+    #left-menu > li > a:focus {
+        color: white;
+    }
+
+    .side-nav li a:hover,
+    .side-nav li a:focus {
+        outline: none;
+        background-color: #7DA7A0 !important;
+        border-style: none;
+    }
+    
+    .side-nav li a{
+        background-color: white !important;
+        border-radius:6px; 
+        -webkit-border-radius:6px; 
+        -moz-border-radius:5px; 
+        -khtml-border-radius:10px;
+    }
 }
