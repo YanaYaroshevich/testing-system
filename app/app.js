@@ -11,6 +11,7 @@ config(['$routeProvider', function($routeProvider) {
 }]).
 controller('CollapseCtrl', ['$scope', '$location', function($scope, $location) {
     window.scope = $scope;
+    $scope.path = '#/main';
     
     $scope.isCollapsed = true;
     
@@ -25,6 +26,7 @@ controller('CollapseCtrl', ['$scope', '$location', function($scope, $location) {
                     else if ($location.path() === '/start'){
                         $scope.showLeftMenu = false;
                         $scope.pageName = "";
+                        $scope.path = '#/start';
                     }
                   }
     );

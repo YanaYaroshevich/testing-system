@@ -2,6 +2,12 @@ html {
 	height: 100%;
 }
 
+h2 {
+    margin-top: 0;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
 body {
 	height: 100%;
 	min-height: 100%;
@@ -110,10 +116,6 @@ body {
     background-size: cover;
 }
 
-#wrapper {
-    height: 100%;
-}
-
 #view-wrapper {
     height: 100%;
     overflow: auto;
@@ -121,11 +123,18 @@ body {
     padding-bottom: 60px;
 }
 
+.page-name {
+    color:  #529085;
+    width: 225px;
+}
+
 /* Side Navigation */
 
 .side-nav li a {
     outline: none;
     background-color: #7DA7A0 !important;
+    border-style: solid;
+    border-color: #7DA7A0;
 }
 
 .side-nav li a:hover,
@@ -159,7 +168,7 @@ body {
 
 #left-menu > li > a:hover,
 #left-menu > li > a:focus {
-    color: #7DA7A0;
+    color: #529085;
 }
 
 @media (min-width: 768px) {
@@ -185,7 +194,7 @@ body {
 	}
     
     #left-menu > li > a {
-        color: #7DA7A0;
+        color: #529085;
     }
 
     #left-menu > li > a:hover,
@@ -203,6 +212,7 @@ body {
     .side-nav li a{
         background-color: white !important;
         border-radius:6px; 
+        border-style: none;
         -webkit-border-radius:6px; 
         -moz-border-radius:5px; 
         -khtml-border-radius:10px;
