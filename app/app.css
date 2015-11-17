@@ -191,6 +191,13 @@ body {
     margin: 0px -15px;
 }
 
+.main-container {
+    height: 100%;
+    margin-top: -80px;
+    padding-left: 225px;
+    padding-top: 60px;
+}
+
 /* Navigation for big sizes */
 
 @media (min-width: 768px) {
