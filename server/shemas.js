@@ -11,9 +11,9 @@ module.exports = function (mongoose){
             firstName: { type: String, trim: true },
             lastName: { type: String, trim: true },
             picture: { type: String, trim: true },
-            tests: [ Schema.Types.ObjectId ],
-            students: [ Schema.Types.ObjectId ],
-            teachers: [ Schema.Types.ObjectId ],
+            tests: [ mongoose.Schema.Types.ObjectId ],
+            students: [ mongoose.Schema.Types.ObjectId ],
+            teachers: [ mongoose.Schema.Types.ObjectId ],
             group: String,
             course: {type: Number, min: 1}  
         },
@@ -22,7 +22,7 @@ module.exports = function (mongoose){
         }),
 
         questionSchema: new mongoose.Schema({
-            testId:  Schema.Types.ObjectId,
+            testId:  mongoose.Schema.Types.ObjectId,
             questionText: String,
             answers: [String],
             questionType: Number,
@@ -35,11 +35,11 @@ module.exports = function (mongoose){
         }),
         
         testSchema: new mongoose.Schema({
-            questions: [ Schema.Types.ObjectId ],
-            teacherId: Schema.Types.ObjectId,
+            questions: [ mongoose.Schema.Types.ObjectId ],
+            teacherId: mongoose.Schema.Types.ObjectId,
             testName: String,
             description: String,
-            studentsAssigned: [ Schema.Types.ObjectId ],
+            studentsAssigned: [ mongoose.Schema.Types.ObjectId ],
             active: Boolean
         }, 
         {
@@ -47,8 +47,8 @@ module.exports = function (mongoose){
         }),
         
         studentTestSchema: new mongoose.Schema({
-            studentId: Schema.Types.ObjectId,
-            testId: Schema.Types.ObjectId,
+            studentId: mongoose.Schema.Types.ObjectId,
+            testId: mongoose.Schema.Types.ObjectId,
             passed: Boolean,
             grade: Number
         }, 
@@ -56,4 +56,4 @@ module.exports = function (mongoose){
             collection: 'student-test'
         })
     };
-}
+};

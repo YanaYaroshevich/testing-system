@@ -13,14 +13,16 @@ var stormpath = require('stormpath');
 var cloudinary = require('cloudinary');
 var cloudConfig = require('./cloud');
 
-
 var client = null;
 var appStormpath = null;
 var keyfile = security.apiKeyFile;
 
-var port = 8000;
+var port = 8080;
 var app = express();
+
 mongoose.connect(db.url);
+var schemas = require('./shemas')(mongoose);
+
 cloudinary.config(cloudConfig);
 
 stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
@@ -34,14 +36,27 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
     });
 });
 
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: true}));
 
-var kittySchema = mongoose.Schema({
-    name: String
+app.all('/*', function(req,res,next){
+    res.set({
+        'Access-Control-Allow-Origin':'*',
+        "Access-Control-Allow-Methods":"PUT, DELETE, POST, GET, OPTIONS"
+    });
+    next();
 });
-var Kitten = mongoose.model('Kitten', kittySchema);
 
-var fluffy = new Kitten({ name: 'fluffy' });
+var router = express.Router();
 
-fluffy.save(function (err, fluffy) {
-  if (err) return console.error(err);
+app.use(express.static(__dirname.substring(0, __dirname.lastIndexOf('\\')) + '\\app'));
+app.set('views', __dirname.substring(0, __dirname.lastIndexOf('\\')) + '\\app');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');  
+
+/* GET home page. */
+router.get('/', function(req, res){
+  res.render('index.html');
 });
+
+app.use('/', router);

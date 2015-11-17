@@ -11,7 +11,7 @@ angular.module('myApp', [
 config(['$routeProvider', function($routeProvider) { 
   $routeProvider.otherwise({redirectTo: '/start'});
 }]).
-controller('MainCtrl', ['$scope', '$location', 'ngNotify', function($scope, $location, ngNotify) {
+controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
      ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',

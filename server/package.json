@@ -2,7 +2,9 @@
   "name": "Testing System",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "cloudinary": "^1.2.5",
+    "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-stormpath": "^2.2.0",
     "mongodb": "^2.0.48",
