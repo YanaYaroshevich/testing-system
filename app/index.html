@@ -39,30 +39,57 @@
                 <img class="logo" alt="Brand" src="resources/logo.png"/>
             </a>
         </div>
+        
+        <div ng-if="showLeftMenu" class="collapse navbar-collapse"  uib-collapse="isCollapsed">
+        
+            <!-- Top Menu Items -->
+            <ul class="nav top-navig">
+                 <li>
+                    <a href="#/start" >
+                        <i class="fa fa-fw fa-power-off"></i>
+                        <span>Log out</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="" >
+                        <i class="fa fa-fw fa-question-circle"></i>
+                        <span>Help</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="">
+                        <i class="fa fa-fw fa-user"></i>
+                        <span>User name</span>
+                    </a>
+                </li>
+            </ul>
 
-        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-        <div ng-if="showLeftMenu" class="collapse navbar-collapse" uib-collapse="isCollapsed">
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            
             <ul class="nav navbar-nav side-nav" id="left-menu">
                 <li>
-                    <a>
+                    <a href="">
                         <i class="fa fa-fw fa-circle-o"></i>
                         <span>My tests</span>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="">
                         <i class="fa fa-fw fa-circle-o"></i>
                         <span>My statistics</span>
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="">
                         <i class="fa fa-fw fa-circle-o"></i>
                         <span>My materials</span>
                     </a>
                 </li>
             </ul>
-        </div>
+            
+        </div>    
     </nav>     
 
     <div id="view-wrapper">
