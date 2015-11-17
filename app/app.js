@@ -4,30 +4,29 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.startPage',
   'myApp.mainPage',
+  'myApp.header',    
   'ui.bootstrap',
+  'ngNotify'   
 ]).
-config(['$routeProvider', function($routeProvider) {
+config(['$routeProvider', function($routeProvider) { 
   $routeProvider.otherwise({redirectTo: '/start'});
 }]).
-controller('CollapseCtrl', ['$scope', '$location', function($scope, $location) {
-    window.scope = $scope;
-    $scope.path = '#/main';
+controller('MainCtrl', ['$scope', '$location', 'ngNotify', function($scope, $location, ngNotify) {
+     ngNotify.config({
+        theme: 'pastel',
+		position: 'bottom',
+		duration: 3000,
+		type: 'error',
+		sticky: true,
+		html: false
+    });
     
-    $scope.isCollapsed = true;
+    //window.scope = $scope;
+    try{
+       
+    }
     
-    $scope.$watch(function(){ 
-                    return $location.path();
-                  },
-                  function(){
-                    if($location.path() === '/main'){
-                        $scope.showLeftMenu = true;
-                        $scope.pageName = "Main page";
-                    }
-                    else if ($location.path() === '/start'){
-                        $scope.showLeftMenu = false;
-                        $scope.pageName = "";
-                        $scope.path = '#/start';
-                    }
-                  }
-    );
+   catch(e){
+       ngNotify.set(e);
+   }
 }]);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.mainPage', ['ngRoute'])
+angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {
@@ -9,5 +9,8 @@ angular.module('myApp.mainPage', ['ngRoute'])
   });
 }])
 
-.controller('MainPageCtrl', ['$scope', function($scope) {
+.controller('MainPageCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+    $rootScope.path = '#/main';
+    $rootScope.showLeftMenu = true;
+    $rootScope.pageName = "Main page";
 }]);
