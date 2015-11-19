@@ -15,7 +15,7 @@ module.exports = function (mongoose){
             students: [ mongoose.Schema.Types.ObjectId ],
             teachers: [ mongoose.Schema.Types.ObjectId ],
             group: String,
-            course: {type: Number, min: 1}  
+            course: {type: Number, min: -1}  
         },
         {
             collection: 'user' 

@@ -1,12 +1,12 @@
 {
   "name": "Testing System",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.14.1",
     "cloudinary": "^1.2.5",
+    "connect-flash": "^0.1.1",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
-    "express-stormpath": "^2.2.0",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
     "stormpath": "^0.14.0"
