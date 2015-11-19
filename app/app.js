@@ -8,8 +8,9 @@ angular.module('myApp', [
   'ui.bootstrap',
   'ngNotify'   
 ]).
-config(['$routeProvider', function($routeProvider) { 
+config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) { 
   $routeProvider.otherwise({redirectTo: '/start'});
+  $locationProvider.html5Mode(true);    
 }]).
 controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
      ngNotify.config({
@@ -21,7 +22,6 @@ controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
 		html: false
     });
     
-    //window.scope = $scope;
     try{
        
     }

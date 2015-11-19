@@ -10,6 +10,9 @@ var db = require('./db');
 var security = require('./storm');
 var stormpath = require('stormpath');
 
+var bodyParser = require('body-parser');
+
+
 var cloudinary = require('cloudinary');
 var cloudConfig = require('./cloud');
 
@@ -36,8 +39,8 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
     });
 });
 
-//app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.all('/*', function(req,res,next){
     res.set({
@@ -49,13 +52,15 @@ app.all('/*', function(req,res,next){
 
 var router = express.Router();
 
-app.use(express.static(__dirname.substring(0, __dirname.lastIndexOf('\\')) + '\\app'));
-app.set('views', __dirname.substring(0, __dirname.lastIndexOf('\\')) + '\\app');
+var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
+
+app.use(express.static(rootDir + '\\app'));
+app.set('views', rootDir + '\\app');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');  
 
 /* GET home page. */
-router.get('/', function(req, res){
+router.get('/start', function(req, res){
   res.render('index.html');
 });
 

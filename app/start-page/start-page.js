@@ -10,7 +10,7 @@ angular.module('myApp.startPage', ['ngRoute'])
 }])
 
 .controller('StartPageCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $rootScope.path = '#/start';
+    $rootScope.path = '/start';
     $rootScope.showLeftMenu = false;
     $rootScope.pageName = "";
 }]);

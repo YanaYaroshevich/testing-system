@@ -10,7 +10,7 @@ angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
 }])
 
 .controller('MainPageCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-    $rootScope.path = '#/main';
+    $rootScope.path = '/main';
     $rootScope.showLeftMenu = true;
     $rootScope.pageName = "Main page";
 }]);
