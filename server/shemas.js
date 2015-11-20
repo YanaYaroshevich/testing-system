@@ -5,9 +5,7 @@ module.exports = function (mongoose){
         userSchema: new mongoose.Schema({
             online: Boolean,
             role: Number,
-            login: { type: String, trim: true, lowercase: true, unique: true },
-            password: { type: String, required: true},
-            email: { type: String, trim: true, lowercase: true, unique: true },
+            email: { type: String, trim: true, lowercase: true, unique: true, required: true },
             firstName: { type: String, trim: true },
             lastName: { type: String, trim: true },
             picture: { type: String, trim: true },

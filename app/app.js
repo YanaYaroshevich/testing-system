@@ -12,6 +12,16 @@ config(['$routeProvider', '$locationProvider', function($routeProvider, $locatio
   $routeProvider.otherwise({redirectTo: '/start'});
   $locationProvider.html5Mode(true);    
 }]).
+run( function($rootScope, $location) {
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+      if ( $rootScope.account == null ) {
+        if ( next.templateUrl == "start-page/start-page.html" ) {
+        } else {
+          $location.path( "/start" );
+        }
+      }         
+    });
+}).
 controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
      ngNotify.config({
         theme: 'pastel',

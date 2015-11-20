@@ -21,6 +21,8 @@ var app = express();
 mongoose.connect(db.url);
 cloudinary.config(cloudConfig);
 
+var account = {};
+
 var UserModel = mongoose.model( 'User', schemas.userSchema );
 var QuestionModel = mongoose.model( 'Question', schemas.questionSchema );
 var TestModel = mongoose.model( 'Test', schemas.testSchema );
@@ -31,27 +33,18 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
     client = new stormpath.Client({apiKey: apiKey});
     
     client.getApplication(security.application, function(error, application) {
-        console.log('lalal');
         if (error) throw error;
         appStormpath = application;
         app.listen(port);
         
-        var account = {
+        /*account = {
             username: 'admin',
             password: 'Qwertyuiop1',
             email: 'admin@admin.com',
             givenName: 'Admin',
             surname: 'Adminov',
             
-            customData: {
-                role: 0,
-                picture: null,
-                tests: null,
-                students: null,
-                teachers: null,
-                group: null,
-                course: -1
-            }
+            
         };
         
         var user = {
@@ -67,21 +60,21 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
             teachers: account.customData.teachers,
             group: account.group,
             course: account.customData.course
-        };
+        };*/
         
         
-        var aaa = new UserModel(user);
-        aaa.save(function(err){if(err) console.log(err)});
+        //var aaa = new UserModel(user);
+        //aaa.save(function(err){if(err) console.log(err)});
         /*appStormpath.createAccount(account, function(err, account) {
           if (err) throw err;
         });*/
         
-        appStormpath.getAccounts({email: 'admin@admin.com'}, function(err, accounts) {
+        /* appStormpath.getAccounts({email: 'admin@admin.com'}, function(err, accounts) {
             if (err) throw err;
             accounts.each(function (account, index) {
                 console.log(account.givenName + " " + account.surname);
             });
-        });
+        }); */
     });
 });
 
@@ -112,6 +105,24 @@ router.get('/start', function(req, res){
   res.render('index.html');
 });
 
-
+router.post('/start', function(req,res){
+    appStormpath.authenticateAccount({
+      username: req.body.email,
+      password: req.body.password
+    }, function (err, result) {
+      if (err) {
+        res.send({noErrors: false});
+      }
+      else{
+        UserModel.findOne({email: result.account.email}, function(err, result_acc){
+            if(err)
+                res.send({noErrors: false});
+            else {
+                res.send({account: result_acc, noErrors: true});
+            }
+        });
+      }
+    });
+});
 
 app.use('/', router);

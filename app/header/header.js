@@ -14,7 +14,12 @@ angular.module('myApp.header', ['ngRoute', 'ui.bootstrap'])
   });
 }])
 
-.controller('HeaderCtrl', ['$scope', function($scope) {
+.controller('HeaderCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
     $scope.isCollapsed = true;
+    
+    $scope.getUserName = function(){
+       return ($location.path() !== '/start') ? $rootScope.account.firstName + ' ' + $rootScope.account.lastName : '';
+    }
+    
 }]);
 
