@@ -24,13 +24,16 @@ angular.module('myApp.startPage', ['ngRoute'])
             if(res.data.noErrors){
                 $scope.wrongInput = false;
                 $rootScope.account = res.data.account;
+                $rootScope.auth = true; 
                 $location.path( "/main" );
             }
             else {
                 $scope.wrongInput = true;
+                $rootScope.auth = false;
             }
         }, function(err){
             console.log(err);
+            $rootScope.auth = false;
         });
     };
 }]);

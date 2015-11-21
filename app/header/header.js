@@ -13,13 +13,18 @@ angular.module('myApp.header', ['ngRoute', 'ui.bootstrap'])
     controller: 'StartPageCtrl'
   });
 }])
-
 .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
     $scope.isCollapsed = true;
     
-    $scope.getUserName = function(){
-       return ($location.path() !== '/start') ? $rootScope.account.firstName + ' ' + $rootScope.account.lastName : '';
+    function isStartPage(){
+        return ($location.path() === '/start');
     }
     
+    $scope.getUserName = function(){
+       return !isStartPage() ? $rootScope.account.firstName + ' ' + $rootScope.account.lastName : '';
+    }
+    
+    $scope.getRole = function(){
+        return !isStartPage() ? $rootScope.account.role : -1;
+    } 
 }]);
-

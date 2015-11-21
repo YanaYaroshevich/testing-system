@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var express = require('express');
 var stormpath = require('stormpath');
@@ -23,17 +23,17 @@ cloudinary.config(cloudConfig);
 
 var account = {};
 
-var UserModel = mongoose.model( 'User', schemas.userSchema );
-var QuestionModel = mongoose.model( 'Question', schemas.questionSchema );
-var TestModel = mongoose.model( 'Test', schemas.testSchema );
-var StudentTestModel = mongoose.model( 'StudentTest', schemas.studentTestSchema );
+var UserModel = mongoose.model('User', schemas.userSchema);
+var QuestionModel = mongoose.model('Question', schemas.questionSchema);
+var TestModel = mongoose.model('Test', schemas.testSchema);
+var StudentTestModel = mongoose.model('StudentTest', schemas.studentTestSchema);
 
 stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
-    if (err) throw err;
+    if (err) { throw err; }
     client = new stormpath.Client({apiKey: apiKey});
     
-    client.getApplication(security.application, function(error, application) {
-        if (error) throw error;
+    client.getApplication(security.application, function (error, application) {
+        if (error) { throw error; }
         appStormpath = application;
         app.listen(port);
         
@@ -83,10 +83,10 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.all('/*', function(req,res,next){
+app.all('/*', function (req, res, next) {
     res.set({
-        'Access-Control-Allow-Origin':'*',
-        "Access-Control-Allow-Methods":"PUT, DELETE, POST, GET, OPTIONS"
+        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS"
     });
     next();
 });
@@ -98,31 +98,31 @@ var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
 app.use(express.static(rootDir + '\\app'));
 app.set('views', rootDir + '\\app');
 app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'ejs');  
+app.set('view engine', 'ejs');
 
 /* GET home page. */
-router.get('/start', function(req, res){
-  res.render('index.html');
+router.get('/', function (req, res) {
+    res.render('index.html');
 });
 
-router.post('/start', function(req,res){
+router.post('/start', function (req, res) {
     appStormpath.authenticateAccount({
       username: req.body.email,
       password: req.body.password
     }, function (err, result) {
-      if (err) {
-        res.send({noErrors: false});
-      }
-      else{
-        UserModel.findOne({email: result.account.email}, function(err, result_acc){
-            if(err)
-                res.send({noErrors: false});
-            else {
-                res.send({account: result_acc, noErrors: true});
-            }
-        });
-      }
+        if (err) {
+            res.send({noErrors: false});
+        }
+        else {
+            UserModel.findOne({email: result.account.email}, function (err, result_acc) {
+                if(err) {
+                    res.send({noErrors: false});
+                }
+                else {
+                    res.send({account: result_acc, noErrors: true});
+                }
+            });
+        }
     });
 });
-
 app.use('/', router);

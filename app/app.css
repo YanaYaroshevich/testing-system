@@ -62,16 +62,20 @@ body {
     opacity: 0.2;
 }
 
-.row-indent-down {
-    height: 70px;
-}
-
 .row-indent-up {
     height: 10px;
 }
 
-#view-wrapper .ng-scope {
-    height: 100%;
+@media (min-height: 502px) {
+    #view-wrapper .ng-scope {
+        height: 100%;
+    }
+}
+
+@media (max-height: 600px) {
+    .row-indent-down {
+        height: 70px;
+    }
 }
 
 @media (min-width: 768px) {

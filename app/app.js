@@ -4,25 +4,24 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.startPage',
   'myApp.mainPage',
-  'myApp.header',    
+  'myApp.header',
   'ui.bootstrap',
-  'ngNotify'   
+  'ngNotify'
 ]).
-config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) { 
+config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/start'});
-  $locationProvider.html5Mode(true);    
+  $locationProvider.html5Mode(true);
 }]).
-run( function($rootScope, $location) {
-    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-      if ( $rootScope.account == null ) {
-        if ( next.templateUrl == "start-page/start-page.html" ) {
-        } else {
-          $location.path( "/start" );
+run(function ($rootScope, $location) {
+    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+      if ($rootScope.account === null) {
+        if (next.templateUrl !== "start-page/start-page.html") {
+          $location.path("/start");
         }
-      }         
+      }
     });
 }).
-controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
+controller('MainCtrl', ['$scope', 'ngNotify', function ($scope, ngNotify) {
      ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -32,11 +31,12 @@ controller('MainCtrl', ['$scope', 'ngNotify', function($scope, ngNotify) {
 		html: false
     });
     
-    try{
-       
-    }
+    $scope.auth = false;
     
-   catch(e){
-       ngNotify.set(e);
-   }
+    try {
+        
+    }
+    catch (e) {
+        ngNotify.set(e);
+    }
 }]);

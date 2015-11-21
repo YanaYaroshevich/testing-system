@@ -1,6 +1,10 @@
 {
-  "name": "Testing System",
+  "name": "Testing-System",
   "main": "server.js",
+  "version": "0.0.0",
+  "description": "Testing System for the BSU",
+  "repository": "https://github.com/YanaYaroshevich/Testing-System",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.1",
     "cloudinary": "^1.2.5",
