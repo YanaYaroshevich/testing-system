@@ -199,10 +199,9 @@ body {
     margin: 0px -15px;
 }
 
-.main-container {
+.content-container {
     height: 100%;
     margin-top: -80px;
-    padding-left: 300px;
     padding-top: 60px;
 }
 
@@ -222,6 +221,10 @@ body {
 		height: 100%;
 	}
 
+    .content-container {
+        padding-left: 300px;
+    }
+    
 	.side-nav > li > a {
 		width: 225px;
 	}

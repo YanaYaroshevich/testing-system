@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.startPage', ['ngRoute'])
+angular.module('myApp.startPage', ['ngRoute', 'ngCookies'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/start', {
@@ -9,11 +9,12 @@ angular.module('myApp.startPage', ['ngRoute'])
   });
 }]) 
 
-.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$location', function($scope, $rootScope, $http, $location) {
+.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$location', '$cookies', function($scope, $rootScope, $http, $location, $cookies) {
     $rootScope.path = '/start';
     $rootScope.showLeftMenu = false;
     $rootScope.pageName = "";
     
+    $scope.rememberMe = false;
     $scope.wrongInput = false;
     
     $scope.login = function(){
@@ -24,16 +25,18 @@ angular.module('myApp.startPage', ['ngRoute'])
             if(res.data.noErrors){
                 $scope.wrongInput = false;
                 $rootScope.account = res.data.account;
-                $rootScope.auth = true; 
+                if ($scope.rememberMe)
+                    $cookies.putObject('user', res.data.account);
+                    
+                else 
+                    $cookies.remove('user');
                 $location.path( "/main" );
             }
             else {
                 $scope.wrongInput = true;
-                $rootScope.auth = false;
             }
         }, function(err){
             console.log(err);
-            $rootScope.auth = false;
         });
     };
 }]);

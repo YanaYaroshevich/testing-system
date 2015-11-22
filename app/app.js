@@ -6,18 +6,22 @@ angular.module('myApp', [
   'myApp.mainPage',
   'myApp.header',
   'ui.bootstrap',
-  'ngNotify'
+  'ngNotify',
+  'ngCookies'
 ]).
 config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/start'});
   $locationProvider.html5Mode(true);
 }]).
-run(function ($rootScope, $location) {
+run(function ($rootScope, $location, $cookies, $http) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-      if ($rootScope.account === null) {
+      if (!$cookies.getObject('user') && !$rootScope.account) {
         if (next.templateUrl !== "start-page/start-page.html") {
           $location.path("/start");
         }
+      }
+      else if (!$rootScope.account){
+          $rootScope.account = $cookies.get('user'); 
       }
     });
 }).
@@ -30,8 +34,6 @@ controller('MainCtrl', ['$scope', 'ngNotify', function ($scope, ngNotify) {
 		sticky: true,
 		html: false
     });
-    
-    $scope.auth = false;
     
     try {
         

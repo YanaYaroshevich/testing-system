@@ -102,8 +102,12 @@ app.set('view engine', 'ejs');
 
 /* GET home page. */
 router.get('/', function (req, res) {
+    res.redirect('/start');
+});
+router.get('/start', function (req, res) {
     res.render('index.html');
 });
+
 
 router.post('/start', function (req, res) {
     appStormpath.authenticateAccount({
@@ -124,5 +128,9 @@ router.post('/start', function (req, res) {
             });
         }
     });
+});
+
+router.get('/main', function (req, res) {
+   res.send('');
 });
 app.use('/', router);
