@@ -7,7 +7,8 @@ angular.module('myApp', [
   'myApp.header',
   'ui.bootstrap',
   'ngNotify',
-  'ngCookies'
+  'ngCookies',
+  'news'
 ]).
 config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/start'});

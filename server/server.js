@@ -27,6 +27,7 @@ var UserModel = mongoose.model('User', schemas.userSchema);
 var QuestionModel = mongoose.model('Question', schemas.questionSchema);
 var TestModel = mongoose.model('Test', schemas.testSchema);
 var StudentTestModel = mongoose.model('StudentTest', schemas.studentTestSchema);
+var NewsModel = mongoose.model('NewsModel', schemas.newsSchema);
 
 stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
     if (err) { throw err; }
@@ -36,6 +37,22 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         if (error) { throw error; }
         appStormpath = application;
         app.listen(port);
+        
+        /*UserModel.findOne({email: 'a@a.aaa'}, function(err, result) {
+           if (err)
+               console.log(err);
+            else {
+                var news = {
+                    text: "Lallal",
+                    link: '/main',
+                    linkText: 'super link',
+                    userId: result._id
+                };
+                
+                var aaa = new NewsModel(news);
+                aaa.save(function(err){if(err) console.log(err)});
+            }
+        });*/
         
         /*account = {
             username: 'admin',
@@ -130,7 +147,30 @@ router.post('/start', function (req, res) {
     });
 });
 
+router.get('/main/:userId/news', function (req, res) {
+    console.log(req);
+    NewsModel.find({userId: req.params.userId}, function (err, result_news) {
+        if (err) {
+            res.status(err.status).send(err);
+        }
+        else {
+            console.log(result_news);
+            res.send( { news: result_news } );
+        }
+    });
+});
+
+router.delete('/main/:userId/news/:newsId', function (req, res) {
+    NewsModel.remove({_id: req.params.newsId}, function (err) {
+        if (err)
+            res.send(err); 
+        else
+            res.send({});
+    });
+});
+
 router.get('/main', function (req, res) {
    res.send('');
 });
+
 app.use('/', router);

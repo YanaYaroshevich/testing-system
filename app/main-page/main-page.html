@@ -10,7 +10,10 @@
                 <div class="block-name">
                     <h3>News block</h3>
                 </div>
-                <uib-alert type="danger">rapapam</uib-alert>
+                <div class="news" ng-repeat="piece in news">
+                    <news-dir model="piece">
+                    </news-dir>
+                </div>
             </div>
         </div> 
     </div>

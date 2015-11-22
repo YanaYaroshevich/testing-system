@@ -52,6 +52,16 @@ module.exports = function (mongoose) {
         },
         {
             collection: 'student-tests'
+        }),
+        
+        newsSchema: new mongoose.Schema({
+            text: { type: String },
+            date: { type: Date, default: Date.now },
+            link: { type: String, trim: true },
+            userId: { type: mongoose.Schema.Types.ObjectId },
+            linkText: { type: String }
+        }, {
+            collection: 'news'
         })
     };
 };
