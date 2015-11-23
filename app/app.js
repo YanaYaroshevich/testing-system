@@ -1,18 +1,19 @@
 'use strict';
 
 angular.module('myApp', [
-  'ngRoute',
-  'myApp.startPage',
-  'myApp.mainPage',
-  'myApp.header',
-  'ui.bootstrap',
-  'ngNotify',
-  'ngCookies',
-  'news'
+    'ngRoute',
+    'myApp.startPage',
+    'myApp.mainPage',
+    'myApp.header',
+    'myApp.newTest',
+    'ui.bootstrap',
+    'ngNotify',
+    'ngCookies',
+    'news'
 ]).
 config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-  $routeProvider.otherwise({redirectTo: '/start'});
-  $locationProvider.html5Mode(true);
+   $routeProvider.otherwise({redirectTo: '/start'});
+   $locationProvider.html5Mode(true);
 }]).
 run(function ($rootScope, $location, $cookies, $http) {
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
@@ -37,7 +38,6 @@ controller('MainCtrl', ['$scope', 'ngNotify', function ($scope, ngNotify) {
     });
     
     try {
-        
     }
     catch (e) {
         ngNotify.set(e);

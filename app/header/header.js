@@ -1,23 +1,19 @@
 'use strict';
 
-angular.module('myApp.header', ['ngRoute', 'ui.bootstrap'])
-
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/main', {
-    templateUrl: 'main-page/main-page.html',
-    controller: 'MainPageCtrl'
-    
-  }).
-  when('/start', {
-    templateUrl: 'start-page/start-page.html',
-    controller: 'StartPageCtrl'
-  });
-}])
+angular.module('myApp.header', [])
 .controller('HeaderCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
     $scope.isCollapsed = true;
     
     function isStartPage(){
         return ($location.path() === '/start');
+    }
+    
+    function isMainPage(){
+        return ($location.path() === '/main');
+    }
+    
+    function isNewTestPage(){
+        return ($location.path() === '/test/new');
     }
     
     $scope.getUserName = function(){
@@ -26,5 +22,5 @@ angular.module('myApp.header', ['ngRoute', 'ui.bootstrap'])
     
     $scope.getRole = function(){
         return !isStartPage() ? $rootScope.account.role : -1;
-    } 
+    }
 }]);

@@ -38,13 +38,13 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         appStormpath = application;
         app.listen(port);
         
-        /*UserModel.findOne({email: 'a@a.aaa'}, function(err, result) {
+       /* UserModel.findOne({email: 'a@a.aaa'}, function(err, result) {
            if (err)
                console.log(err);
             else {
                 var news = {
-                    text: "Lallal",
-                    link: '/main',
+                    text: "The koala (Phascolarctos cinereus, or, inaccurately, koala bear[a]) is an arboreal herbivorous marsupial native to Australia. It is the only extant representative of the family Phascolarctidae, and its closest living relatives are the wombats.[3] The koala is found in coastal areas of the mainland's eastern and southern regions, inhabiting Queensland, New South Wales, Victoria, and South Australia. It is easily recognisable by its stout, tailless body and large head with round, fluffy ears and large, spoon-shaped nose. The koala has a body length of 60–85 cm (24–33 in) and weighs 4–15 kg (9–33 lb). Pelage colour ranges from silver grey to chocolate brown. Koalas from the northern populations are typically smaller and lighter in colour than their counterparts further south. These populations possibly are separate subspecies, but this is disputed.",
+                    link: '/start',
                     linkText: 'super link',
                     userId: result._id
                 };
@@ -62,26 +62,40 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
             surname: 'Adminov',
             
             
-        };
-        
-        var user = {
-            login: account.username,
-            password: account.password,
-            email: account.email,
-            firstName: account.givenName,
-            lastName: account.surname,
-            role: account.customData.role,
-            picture: account.customData.picture,
-            tests: account.customData.tests,
-            studetns: account.customData.students,
-            teachers: account.customData.teachers,
-            group: account.group,
-            course: account.customData.course
         };*/
         
+        /* var user = {
+            role: 2,
+            email: 'b@b.bbb',
+            firstName: 'Bbbb',
+            lastName: 'Bbbb',
+            picture: '',
+            tests: [],
+            students: [],
+            teachers: [],
+        };
         
-        //var aaa = new UserModel(user);
-        //aaa.save(function(err){if(err) console.log(err)});
+        var aaa = new UserModel(user);
+        aaa.save(function(err){if(err) console.log(err)}); 
+        
+        UserModel.findOne({email: 'b@b.bbb'}, function(err, result) {
+           if (err)
+               console.log(err);
+            else {
+                var news = {
+                    text: "Google was founded by Larry Page and Sergey Brin while they were Ph.D. students at Stanford University. Together they own about 14 percent of its shares but control 56 percent of the stockholder voting power through supervoting stock. They incorporated Google as a privately held company on September 4, 1998. An initial public offering followed on August 19, 2004. Its mission statement from the outset was 'to organize the world's information and make it universally accessible and useful,' and its unofficial slogan was 'Don't be evil'. In 2004, Google moved to its new headquarters in Mountain View, California, nicknamed the Googleplex. In August 2015, Google announced plans to reorganize its interests as a holding company called Alphabet Inc. When this restructuring took place on October 2, 2015, Google became Alphabet's leading subsidiary, as well as the parent for Google's Internet interests.",
+                    link: '/main',
+                    linkText: 'super link',
+                    userId: result._id
+                };
+                
+                var aaa = new NewsModel(news);
+                aaa.save(function(err){if(err) console.log(err)});
+            }
+        });*/
+        
+        
+        
         /*appStormpath.createAccount(account, function(err, account) {
           if (err) throw err;
         });*/

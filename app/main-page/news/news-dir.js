@@ -1,7 +1,7 @@
 angular.module('news', []).directive('newsDir', [
     function(){
         function link(scope, elem, attrs){
-            scope.date = scope.model.date;
+            scope.date = new Date(scope.model.date).toLocaleString();
             scope.text = scope.model.text;
             scope.newsLink = scope.model.link;
             scope.linkText = scope.model.linkText;

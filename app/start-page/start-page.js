@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.startPage', ['ngRoute', 'ngCookies'])
+angular.module('myApp.startPage', [])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/start', {
@@ -9,13 +9,22 @@ angular.module('myApp.startPage', ['ngRoute', 'ngCookies'])
   });
 }]) 
 
-.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$location', '$cookies', function($scope, $rootScope, $http, $location, $cookies) {
+.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$location', '$cookies', 'ngNotify', function($scope, $rootScope, $http, $location, $cookies, ngNotify) {
     $rootScope.path = '/start';
     $rootScope.showLeftMenu = false;
-    $rootScope.pageName = "";
+    $scope.pageName = "";
     
     $scope.rememberMe = false;
     $scope.wrongInput = false;
+    
+    ngNotify.config({
+        theme: 'pastel',
+		position: 'bottom',
+		duration: 3000,
+		type: 'error',
+		sticky: true,
+		html: false
+    });
     
     $scope.login = function(){
         var form = {};
@@ -25,18 +34,20 @@ angular.module('myApp.startPage', ['ngRoute', 'ngCookies'])
             if(res.data.noErrors){
                 $scope.wrongInput = false;
                 $rootScope.account = res.data.account;
-                if ($scope.rememberMe)
+                if ($scope.rememberMe){
                     $cookies.putObject('user', res.data.account);
-                    
-                else 
+                }    
+                else {
                     $cookies.remove('user');
+                }
                 $location.path( "/main" );
             }
             else {
                 $scope.wrongInput = true;
             }
         }, function(err){
-            console.log(err);
+            $scope.wrongInput = true;
+            ngNotify.set(err);
         });
     };
 }]);

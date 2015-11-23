@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
+angular.module('myApp.mainPage', [])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main', {
@@ -9,13 +9,21 @@ angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
   });
 }])
 
-.controller('MainPageCtrl', ['$scope', '$rootScope', '$http', function($scope, $rootScope, $http) {
+.controller('MainPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', function($scope, $rootScope, $http, ngNotify) {
     $rootScope.path = '/main';
     $rootScope.showLeftMenu = true;
-    $rootScope.pageName = "Main page";
+    $scope.pageName = "Main page";
+    
+    ngNotify.config({
+        theme: 'pastel',
+		position: 'bottom',
+		duration: 3000,
+		type: 'error',
+		sticky: true,
+		html: false
+    });
     
     var getNews = function() {
-        console.log($rootScope.account);
         $http.get('/main/' + $rootScope.account._id + '/news').then(function (res) {
             $scope.news = res.data.news.map(function(elem){
                 elem.onClose = (function(newsId){
@@ -23,9 +31,8 @@ angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
                 })(elem._id);
                 return elem;
             });
-            console.log($scope.news);
         }, function (err) {
-            console.log(err);
+            ngNotify.set(err);
         });
     }
 
@@ -33,7 +40,7 @@ angular.module('myApp.mainPage', ['ngRoute', 'ui.bootstrap'])
         $http.delete('/main/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
             getNews();
         }, function (err) {
-            console.log(err);
+            ngNotify.set(err);
         });
     }
     
