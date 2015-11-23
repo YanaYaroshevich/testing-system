@@ -170,6 +170,10 @@ body {
     background-color: #529085;
 }
 
+.navbar-fixed-top .navbar-collapse {
+    max-height: 360px;
+}
+
 #left-menu > li > a {
     color: white;
 }
@@ -286,15 +290,6 @@ body {
     }
 }
 
-.news-text {
-    background-color: white;
-    border-radius:6px; 
-    border-style: none;
-    -webkit-border-radius:6px; 
-    -moz-border-radius:5px; 
-    -khtml-border-radius:10px;
-}
-
 .test-creation {
     font-size: 20px;
     color: #529085;
@@ -325,17 +320,45 @@ textarea:focus {
     color: #529085;
 }
 
-.dropdown-toggle.btn-primary {
+.panel-group {
+    padding-bottom: 60px;
+}
+
+.btn-primary {
     background-color: #529085;
     color: white;
     border-color: #529085; 
 }
 
-.open>.dropdown-toggle.btn-primary:focus, 
-.open>.dropdown-toggle.btn-primary:hover,
-.dropdown-toggle.btn-primary:focus,
-.dropdown-toggle.btn-primary:hover {
+.open>.uib-dropdown-toggle.btn-primary:focus, 
+.open>.uib-dropdown-toggle.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus {
     background-color: white;
     color: #529085;
     border-color: #529085; 
+}
+
+.btn-primary.disabled, 
+.btn-primary.disabled.active, 
+.btn-primary.disabled.focus, 
+.btn-primary.disabled:active, 
+.btn-primary.disabled:focus, 
+.btn-primary.disabled:hover, 
+.btn-primary[disabled], 
+.btn-primary[disabled].active, 
+.btn-primary[disabled].focus, 
+.btn-primary[disabled]:active, 
+.btn-primary[disabled]:focus, 
+.btn-primary[disabled]:hover {
+    background-color: gray;
+    color: white;
+    border-color: black; 
 }

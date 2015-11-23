@@ -23,4 +23,8 @@ angular.module('myApp.header', [])
     $scope.getRole = function(){
         return !isStartPage() ? $rootScope.account.role : -1;
     }
+    
+    $scope.collapse = function() {
+        $scope.isCollapsed = !$scope.isCollapsed;
+    }
 }]);

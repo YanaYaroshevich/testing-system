@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" id="top-menu" role="navigation" ng-controller="HeaderCtrl">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" id="menu-button" ng-click="isCollapsed = !isCollapsed" ng-show="showLeftMenu">
+        <button type="button" class="navbar-toggle" id="menu-button" ng-click="collapse()" ng-show="showLeftMenu">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -24,14 +24,14 @@
             </li>
 
             <li>
-                <a href="" >
+                <a ng-click="collapse()" href="" >
                     <i class="fa fa-fw fa-question-circle"></i>
                     <span>Help</span>
                 </a>
             </li>
 
             <li>
-                <a href="">
+                <a ng-click="collapse()" href="">
                     <i class="fa fa-fw fa-user"></i>
                     <span>{{getUserName()}}</span>
                 </a>
@@ -42,54 +42,53 @@
 
         <ul class="nav navbar-nav side-nav" id="left-menu">
             <li>
-                <a ng-if="getRole() === 2" href="/test/new">
+                <a ng-click="collapse()" ng-if="getRole() === 2" href="/test/new">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>New test</span>
                 </a>
             </li>
             <li>
-                <a ng-if="getRole() === 1 || getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 1 || getRole() === 2" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>
             </li>
             <li>
-                <a ng-if="getRole() === 1" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 1" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My statistics</span>
                 </a>
             </li>
             <li>
-                <a ng-if="getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 2" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Statistics</span>
                 </a>
             </li>
              <li>
-                <a ng-if="getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 2" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Students</span>
                 </a>
             </li>
             <li>
-                <a ng-if="getRole() === 1 || getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 1 || getRole() === 2" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My materials</span>
                 </a>
             </li>
              <li>
-                <a ng-if="getRole() === 0" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 0" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>User creation</span>
                 </a>
             </li>
              <li>
-                <a ng-if="getRole() === 0" href="">
+                <a ng-click="collapse()" ng-if="getRole() === 0" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>List of users</span>
                 </a>
             </li>
         </ul>
-
     </div>    
 </nav>     

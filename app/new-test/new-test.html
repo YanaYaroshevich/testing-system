@@ -11,14 +11,14 @@
                 <div class="test-creation">
                     <p>Name</p>
                 </div>
-                <input type="text" class="form-control" placeholder="Type here" ng-model="testName">
+                <input type="text" class="form-control" placeholder="Type here" ng-model="test.name"/>
             
                 <br/>
 
                 <div class="test-creation">
                     <p>Description</p>
                 </div>
-                <textarea class="test-description" rows="5" placeholder="Type here" cols="50" ng-model="testDescr"></textarea>     
+                <textarea class="test-description" rows="5" placeholder="Type here" cols="50" ng-model="test.descr"></textarea>     
                 
                 <br/>
             </div>    
@@ -36,11 +36,11 @@
                         
                         <div>
                             <p>Type of the question *</p>
-                            <div class="btn-group" dropdown="" dropdown-append-to-body="">
-                                <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle="">
+                            <div class="btn-group" uib-dropdown="" uib-dropdown-append-to-body="">
+                                <button type="button" class="btn btn-primary uib-dropdown-toggle" uib-dropdown-toggle="">
                                     {{toShowTypes[typeInd]}} <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu fill-dropdown-list" role="menu">
+                                <ul class="uib-dropdown-menu fill-dropdown-list" role="menu">
                                     <li><a href="#" ng-click="chooseType(0)">{{toShowTypes[0]}}</a></li>
                                     <li><a href="#" ng-click="chooseType(1)">{{toShowTypes[1]}}</a></li>
                                     <li><a href="#" ng-click="chooseType(2)">{{toShowTypes[2]}}</a></li>
@@ -49,6 +49,31 @@
                             </div>
                         </div>
                         
+                        <br/>
+                        
+                        <div class="test-creation">
+                            <p ng-if="typeInd === 2">Mark the phrase to insert with: ###phrase###</p>
+                            <p>Text of question</p>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Type here" ng-model="questionText">   
+                            
+                        <div ng-if="typeInd === 0 || typeInd === 4" ng-repeat="answer in answers track by $index">
+                             <div class="test-creation">
+                                <br/> 
+                                <p>Answer #{{$index + 1}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <input type="text" class="form-control" placeholder="Type here" ng-model="answer.text"> 
+                                </div>
+                                <div class="col-xs-2">
+                                    <input type="checkbox" ng-checked="answer.right" ng-model="answer.right">
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <button class="btn btn-primary" ng-disabled="answers.length >= 6" ng-click="addAnswer()">Add an answer</button>
+                        <button class="btn btn-primary" ng-disabled="answers.length <= 2" ng-click="removeAnswer()">Remove an answer</button>
                     </uib-accordion-group>
                 </uib-accordion>    
             </div>
