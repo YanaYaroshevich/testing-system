@@ -27,4 +27,10 @@ angular.module('myApp.header', [])
     $scope.collapse = function() {
         $scope.isCollapsed = !$scope.isCollapsed;
     }
+    
+    $scope.getNewTestPageStyle = function () {
+        if (isNewTestPage()){
+            return "background-color: #529085 !important; color: white";            
+        }
+    };
 }]);

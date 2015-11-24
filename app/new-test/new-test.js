@@ -9,7 +9,7 @@ angular.module('myApp.newTest', [])
   });
 }])
 
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', function($scope, $rootScope, $http, ngNotify) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', function($scope, $rootScope, $http, ngNotify, uiGridConstants) {
     $rootScope.path = '/main';
     $rootScope.showLeftMenu = true;
     $scope.pageName = "Test creation";
@@ -26,24 +26,31 @@ angular.module('myApp.newTest', [])
     $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
     
     $scope.test = {};
+    $scope.test.questions = [];
     $scope.test.name = '';
     $scope.test.description = '';
+    
+    /* ---------------------------- Dates ----------------------------------- */
+    
+    $scope.minDate = new Date();
+    $scope.test.from = new Date();
+    $scope.test.to = new Date();
+    
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+
+    /* -------------------------------------------------------------------------*/
+    
     $scope.typeInd = 0;
     $scope.questionText = '';
-    
-    $scope.test.questions = [];
-    
+    $scope.questionCost = 1;
     $scope.answers = [{text: '', right: true}, {text: '', right: false}];
     
     $scope.chooseType = function(ind){
         $scope.typeInd = ind;
-        $scope.answers = [{text: '', right: true}, {text: '', right: false}];
-    }
-    
-    $scope.addQuestion = function(){
-        var question = {};
-        question.type = $scope.typeInd;
-        question.text = $scope.questionText;
+        if (ind === 0){
+            $scope.answers = [{text: '', right: true}, {text: '', right: false}];
+        }
     }
     
     $scope.addAnswer = function () {
@@ -53,10 +60,74 @@ angular.module('myApp.newTest', [])
     $scope.removeAnswer = function () {
         $scope.answers.pop();
     }
+    
+    var questions = [];
+    
+    var questionCreation = function (quest) {
+        var obj = {};
+        obj.type = $scope.toShowTypes[quest.type];
+        obj.text = quest.text;
+        obj.cost = quest.cost;
+        return obj;
+    };
+    
+    $scope.addQuestion = function(){
+        var question = {};
+        question.type = $scope.typeInd;
+        question.text = $scope.questionText;
+        question.cost = $scope.questionCost;
+        if (question.type === 0)
+            question.answers = $scope.answers;
+        $scope.test.questions.push(question);
+        questions.push(questionCreation(question));
+    }
 
+    
+    /* --------------------- Questions table ---------------------------- */
+    
+    $scope.gridQuestions = {
+        enableFiltering: true,
+        data: questions,
+        columnDefs : [
+            { name: 'type', headerCellClass: 'header-filtered' },
+            { name: 'text', headerCellClass: 'header-filtered' },
+            { name: 'cost', headerCellClass: 'header-filtered' }
+        ]
+    };
+    /* --------------------- Students table ----------------------------- */
+    
+    
+    
+    $scope.gridStudents = {
+        enableRowSelection: true,
+        enableSelectAll: true,
+        multiSelect: true,
+        enableFiltering: true
+    };
+    
     $http.get('test/new/students/' + $rootScope.account._id).then(function (res) {
         console.log(res.data);
-    }, function (err) {
+        var students = res.data.map(function(stud){
+            return {
+                firstName: stud.firstName,
+                lastName: stud.lastName,
+                email: stud.email,
+                course: stud.course,
+                group: stud.group
+            };
+        });
+         
+        $scope.gridStudents.columnDefs = [
+            { name: 'firstName', headerCellClass: 'header-filtered' },
+            { name: 'lastName', headerCellClass: 'header-filtered' },
+            { name: 'email', headerCellClass: 'header-filtered' },
+            { name: 'course', headerCellClass: 'header-filtered' },
+            { name: 'group', headerCellClass: 'header-filtered' }
+        ];
         
-    });
+        $scope.gridStudents.data = students;
+     
+    }, function (err) {   
+        ngNotify.set(err);
+    }); 
 }]);

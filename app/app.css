@@ -320,10 +320,6 @@ textarea:focus {
     color: #529085;
 }
 
-.panel-group {
-    padding-bottom: 60px;
-}
-
 .btn-primary {
     background-color: #529085;
     color: white;
@@ -361,4 +357,12 @@ textarea:focus {
     background-color: gray;
     color: white;
     border-color: black; 
+}
+
+.add-question {
+    background-color: #71BF71;
+}
+
+.stud-grid, .question-grid {
+    height: 250px;
 }

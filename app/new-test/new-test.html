@@ -19,11 +19,21 @@
                     <p>Description</p>
                 </div>
                 <textarea class="test-description" rows="5" placeholder="Type here" cols="50" ng-model="test.descr"></textarea>     
+            
+                <br/>
+                
+                <div class="test-creation">
+                    <p>Questions</p>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div ui-grid="gridQuestions" ui-grid-resize-columns ui-grid-auto-resize class="question-grid"></div>
+                    </div>
+                </div>
                 
                 <br/>
             </div>    
-        
-        
+               
             <div class="col-sm-8">
                 <div class="test-creation">
                     <p>Question adding</p>
@@ -59,8 +69,19 @@
                             <div class="col-xs-10">
                                 <input type="text" class="form-control" placeholder="Type here" ng-model="questionText"/>
                             </div>
-                        </div>     
-                            
+                        </div>   
+                        
+                        <br/>
+                        
+                        <div class="test-creation">
+                            <p>Question cost</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <input type="number" min="1" class="form-control" placeholder="Type here" ng-model="questionCost"/>
+                            </div>
+                        </div>   
+            
                         <div ng-if="typeInd === 0 || typeInd === 4">
                             <div ng-repeat="answer in answers track by $index">
                                  <div class="test-creation">
@@ -77,12 +98,49 @@
                                 </div>
                             </div>
                             <br/>
+                            
                             <button class="btn btn-primary" ng-disabled="answers.length >= 6" ng-click="addAnswer()">Add an answer</button>
-                            <button class="btn btn-primary" ng-disabled="answers.length <= 2" ng-click="removeAnswer()">Remove an answer</button>
-                        </div>    
+                            <button class="btn btn-primary" ng-disabled="answers.length <= 2" ng-click="removeAnswer()">Remove an answer</button>       
+                        </div>
+                        
+                        <br/>    
+                        
+                        <button class="btn btn-success add-question" ng-click="addQuestion()">Add question</button> 
                     </uib-accordion-group>
                 </uib-accordion>    
             </div>
         </div>
+        
+        <div class="test-creation">
+            <p>Choose dates of start and finish</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <p class="input-group">
+                    <uib-datepicker ng-model="test.from" min-date="minDate" show-weeks="true" class="well well-sm"></uib-datepicker>
+                </p>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <p class="input-group datepicker-to">
+                    <uib-datepicker ng-model="test.to" min-date="test.from" show-weeks="true" class="well well-sm"></uib-datepicker>
+                </p>
+            </div>
+        </div>    
+        
+        <br/>
+        
+        <div class="test-creation">
+            <p>Assign students</p>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div ui-grid="gridStudents" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="stud-grid"></div>
+            </div>
+        </div>
+            
+        <br/>
+
     </div>
 </div>    

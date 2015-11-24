@@ -9,7 +9,12 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngNotify',
     'ngCookies',
-    'news'
+    'news',
+    'ui.grid',
+    'ui.grid.edit',
+    'ui.grid.selection',
+    'ui.grid.autoResize',
+    'ui.grid.resizeColumns'
 ]).
 config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
    $routeProvider.otherwise({redirectTo: '/start'});

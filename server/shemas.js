@@ -38,7 +38,9 @@ module.exports = function (mongoose) {
             testName: String,
             description: String,
             studentsAssigned: [ mongoose.Schema.Types.ObjectId ],
-            active: Boolean
+            active: Boolean,
+            start: { type: Date, default: new Date()},
+            finish: { type: Date, default: new DAte() }
         },
         {
             collection: 'tests'
