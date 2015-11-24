@@ -10,6 +10,7 @@
     "angular-route": "~1.4.7",
     "ng-notify": "~0.7.1",
     "angular-cookies": "~1.4.8",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "angular-ui-grid": "~3.0.7"
   }
 }

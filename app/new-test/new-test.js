@@ -37,6 +37,7 @@ angular.module('myApp.newTest', [])
     
     $scope.chooseType = function(ind){
         $scope.typeInd = ind;
+        $scope.answers = [{text: '', right: true}, {text: '', right: false}];
     }
     
     $scope.addQuestion = function(){
@@ -52,4 +53,10 @@ angular.module('myApp.newTest', [])
     $scope.removeAnswer = function () {
         $scope.answers.pop();
     }
+
+    $http.get('test/new/students/' + $rootScope.account._id).then(function (res) {
+        console.log(res.data);
+    }, function (err) {
+        
+    });
 }]);

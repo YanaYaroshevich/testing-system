@@ -55,25 +55,31 @@
                             <p ng-if="typeInd === 2">Mark the phrase to insert with: ###phrase###</p>
                             <p>Text of question</p>
                         </div>
-                        <input type="text" class="form-control" placeholder="Type here" ng-model="questionText">   
+                        <div class="row">
+                            <div class="col-xs-10">
+                                <input type="text" class="form-control" placeholder="Type here" ng-model="questionText"/>
+                            </div>
+                        </div>     
                             
-                        <div ng-if="typeInd === 0 || typeInd === 4" ng-repeat="answer in answers track by $index">
-                             <div class="test-creation">
-                                <br/> 
-                                <p>Answer #{{$index + 1}}</p>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-10">
-                                    <input type="text" class="form-control" placeholder="Type here" ng-model="answer.text"> 
+                        <div ng-if="typeInd === 0 || typeInd === 4">
+                            <div ng-repeat="answer in answers track by $index">
+                                 <div class="test-creation">
+                                    <br/> 
+                                    <p>Answer #{{$index + 1}}</p>
                                 </div>
-                                <div class="col-xs-2">
-                                    <input type="checkbox" ng-checked="answer.right" ng-model="answer.right">
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <input type="text" class="form-control" placeholder="Type here" ng-model="answer.text"/> 
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="checkbox" ng-checked="answer.right" ng-model="answer.right"/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <br/>
-                        <button class="btn btn-primary" ng-disabled="answers.length >= 6" ng-click="addAnswer()">Add an answer</button>
-                        <button class="btn btn-primary" ng-disabled="answers.length <= 2" ng-click="removeAnswer()">Remove an answer</button>
+                            <br/>
+                            <button class="btn btn-primary" ng-disabled="answers.length >= 6" ng-click="addAnswer()">Add an answer</button>
+                            <button class="btn btn-primary" ng-disabled="answers.length <= 2" ng-click="removeAnswer()">Remove an answer</button>
+                        </div>    
                     </uib-accordion-group>
                 </uib-accordion>    
             </div>
