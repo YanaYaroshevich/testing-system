@@ -29,6 +29,10 @@ angular.module('myApp.newTest', [])
     $scope.test.questions = [];
     $scope.test.name = '';
     $scope.test.description = '';
+    $scope.typeInd = 0;
+    $scope.questionText = '';
+    $scope.questionCost = 1;
+    $scope.answers = [{text: '', right: true}, {text: '', right: false}];
     
     /* ---------------------------- Dates ----------------------------------- */
     
@@ -40,11 +44,6 @@ angular.module('myApp.newTest', [])
     $scope.format = $scope.formats[0];
 
     /* -------------------------------------------------------------------------*/
-    
-    $scope.typeInd = 0;
-    $scope.questionText = '';
-    $scope.questionCost = 1;
-    $scope.answers = [{text: '', right: true}, {text: '', right: false}];
     
     $scope.chooseType = function(ind){
         $scope.typeInd = ind;
@@ -74,8 +73,10 @@ angular.module('myApp.newTest', [])
     $scope.addQuestion = function(){
         var question = {};
         question.type = $scope.typeInd;
-        question.text = $scope.questionText;
-        question.cost = $scope.questionCost;
+        // I'm sorry for this :)
+        question.text = $scope.accordion.groups[0].$$childHead.questionText;
+        question.cost = $scope.accordion.groups[0].$$childHead.questionCost;
+        console.log(question);
         if (question.type === 0)
             question.answers = $scope.answers;
         $scope.test.questions.push(question);

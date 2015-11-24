@@ -366,3 +366,6 @@ textarea:focus {
 .stud-grid, .question-grid {
     height: 250px;
 }
+.ui-grid-row  {
+    height: auto !important;
+}
