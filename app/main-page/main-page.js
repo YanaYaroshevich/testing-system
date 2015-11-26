@@ -32,7 +32,7 @@ angular.module('myApp.mainPage', [])
                 return elem;
             });
         }, function (err) {
-            ngNotify.set(err);
+            ngNotify.set(err.data);
         });
     }
 
@@ -40,7 +40,7 @@ angular.module('myApp.mainPage', [])
         $http.delete('/main/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
             getNews();
         }, function (err) {
-            ngNotify.set(err);
+            ngNotify.set(err.data);
         });
     }
     

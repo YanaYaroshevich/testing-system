@@ -40,7 +40,7 @@ module.exports = function (mongoose) {
             studentsAssigned: [ mongoose.Schema.Types.ObjectId ],
             active: Boolean,
             start: { type: Date, default: new Date()},
-            finish: { type: Date, default: new DAte() }
+            finish: { type: Date, default: new Date() }
         },
         {
             collection: 'tests'

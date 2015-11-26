@@ -369,3 +369,7 @@ textarea:focus {
 .ui-grid-row  {
     height: auto !important;
 }
+
+.test-adding {
+    margin-bottom: 70px;
+}

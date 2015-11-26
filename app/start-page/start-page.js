@@ -47,7 +47,7 @@ angular.module('myApp.startPage', [])
             }
         }, function(err){
             $scope.wrongInput = true;
-            ngNotify.set(err);
+            ngNotify.set(err.data);
         });
     };
 }]);

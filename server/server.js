@@ -136,6 +136,24 @@ router.get('/test/new/students/:teacherId', function (req, res) {
     });
 });
 
+router.post('/test/new', function (req, res) {
+    UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
+        if (err) {
+            res.status(err.status).send(err);
+        }
+        else {
+            if(result_user.role === 2) {
+                
+            }
+            else {
+                res.status(err.status).send(err);
+            }
+        }
+    });
+    
+    console.log(req.body);
+});
+
 router.get('/main', function (req, res) {
    res.send('');
 });
