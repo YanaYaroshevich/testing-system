@@ -143,7 +143,25 @@ router.post('/test/new', function (req, res) {
         }
         else {
             if(result_user.role === 2) {
+                var test = {};
                 
+                var testDB = new TestModel(test);
+                testDB.save(function(err){if(err) console.log(err)}); 
+                
+                //get testId there
+                
+                
+                var question = {};
+                for (var i = 0; i < req.body.questions.length; i++) {
+                    question.questionText = req.body.questions[i].text;
+                    question.questionCost = req.body.questions[i].cost;
+                    question.questionType = req.body.questions[i].typeInd;
+                    if (req.body.questions[i].typeInd === 3)
+                        question.additionalPicture = req.body.questions[i].additionalPicture;
+                    if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 1)
+                        question.answers = req.body.questions[i].answers;
+                    //add testId
+                }
             }
             else {
                 res.status(err.status).send(err);

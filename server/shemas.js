@@ -21,12 +21,11 @@ module.exports = function (mongoose) {
 
         questionSchema: new mongoose.Schema({
             testId:  mongoose.Schema.Types.ObjectId,
-            questionText: String,
-            answers: [String],
-            questionType: Number,
-            additionPicture: {type: String, trim: true},
-            rightAnswers: [Number],
-            questionCost: Number
+            questionText: String, //+
+            answers: [ { text: String, right: Boolean } ], //+
+            questionType: Number, //+
+            additionPicture: { type: String, trim: true }, //+
+            questionCost: Number //+
         },
         {
             collection: 'questions'
@@ -39,7 +38,7 @@ module.exports = function (mongoose) {
             description: String,
             studentsAssigned: [ mongoose.Schema.Types.ObjectId ],
             active: Boolean,
-            start: { type: Date, default: new Date()},
+            start: { type: Date, default: new Date() },
             finish: { type: Date, default: new Date() }
         },
         {
