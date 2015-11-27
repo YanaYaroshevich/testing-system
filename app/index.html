@@ -20,13 +20,13 @@
     <link href="bower_components/ng-notify/dist/ng-notify.min.css" rel="stylesheet"/>
     
     <!-- Ui-grid -->
-    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css"/>
     
      <!-- Styles -->
     <link href="app.css" rel="stylesheet"/>
     
     <!-- Icon -->
-    <link rel="shortcut icon" href="resources/logo.png"/>
+    <link rel="shortcut icon" href="components/pics/logo.png"/>
     <base href="/start">
 </head>
 
@@ -63,10 +63,30 @@
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
 
     <!-- Scripts -->
+
+    <!-- App -->
     <script src="app.js"></script>
+
+    <!-- Start-page -->
     <script src="start-page/start-page.js"></script>
-    <script src="main-page/main-page.js"></script>
+    <script src="start-page/start-page.controller.js"></script>
+    <script src="start-page/start-page.config.js"></script>
+
+    <!-- Header -->
     <script src="header/header.js"></script>
-    <script src="main-page/news/news-dir.js"></script>
+    <script src="header/header.controller.js"></script>
+
+    <!-- Main-page -->
+    <script src="main-page/main-page.js"></script>
+    <script src="main-page/main-page.config.js"></script>
+    <script src="main-page/main-page.controller.js"></script>
+
+    <!-- News -->
+    <script src="components/directives/news/news.js"></script>
+    <script src="components/directives/news/news.directive.js"></script>
+   
+    <!-- New-test-page -->
     <script src="new-test/new-test.js"></script>
+    <script src="new-test/new-test.config.js"></script>
+    <script src="new-test/new-test.controller.js"></script>
 </html>

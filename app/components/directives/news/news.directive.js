@@ -1,4 +1,8 @@
-angular.module('news', []).directive('newsDir', [
+'use strict';
+
+angular.module('news')
+
+.directive('newsDir', [
     function(){
         function link(scope, elem, attrs){
             scope.date = new Date(scope.model.date).toLocaleString();
@@ -11,7 +15,7 @@ angular.module('news', []).directive('newsDir', [
 
         return {
             restrict: 'E',
-            templateUrl: 'main-page/news/news-tmpl.html',
+            templateUrl: '../components/directives/news/news.html',
             link: link,
             scope: {
                 model: '='

@@ -191,8 +191,6 @@ var questionsAdding = function(req, testId, res){
     }
     
     connection.collection('questions').insert(questions);
-       
-    
 };
 
 var studentTestAdding = function(testId, studId, res) {
@@ -254,9 +252,9 @@ router.post('/test/new', function (req, res) {
                             newsAdding(req.body.students[i], 'New test was created', 'Click here to open', testId, res);
                         }
                         newsAdding(req.body.teacherId, 'Your test was successfully created', 'Click here to open', testId, res);
+                        res.send(testId);
                     }   
                 });
-                res.send('');
             }
             else {
                 res.status(err.status).send(err);
