@@ -22,83 +22,16 @@ body {
     color: #529085; 
 }
 
-.navbar {
-    height: 80px;
-}
-
-.footer {
-    box-shadow: 0 2px 14px 2px #529085;
-    background-color: #7DA7A0;
-    border-color: #529085;
-    opacity: 60%;
-    position: fixed;
-    height: 60px;
-    z-index: 1030;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    color: white;
-    padding-top: 20px;
-}
-
-.navbar-brand {
-    padding: 5px;
-    height: 80px;
-}
-
-.container-main {
-	height: 100%;
-	margin: 0 auto -80px;
-}
-
-
-.form-group {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.logo{
-    height: 100%;
-    opacity: 0.2;
-}
-
-.row-indent-up {
-    height: 10px;
-}
-
 @media (min-height: 502px) {
     #view-wrapper .ng-scope {
         height: 100%;
     }
 }
 
-@media (max-height: 600px) {
-    .row-indent-down {
-        height: 70px;
-    }
-}
-
 @media (min-width: 768px) {
-	.row-indent-up {
-        height: 50%;
-        min-height: 90px;
-    }
-    .form-group {
-        padding: 0;
-    }
     #view-wrapper {
         overflow: hidden;
     }
-    .container-main {
-        overflow: auto;
-    }
-}
-
-#top-menu {
-	box-shadow: 0 2px 14px 2px #529085;
-    background-color: #7DA7A0;
-    border-color: #529085;
-    opacity: 60%;
 }
 
 #input-form {
@@ -110,14 +43,6 @@ body {
     padding-top: 20px;
     background-color: #7DA7A0;
     color: white;
-}
-
-#background {
-     background: url(components/pics/background.jpg)no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 
 #view-wrapper {
@@ -136,73 +61,6 @@ body {
     color:  #529085;
 }
 
-/* Side Navigation */
-
-.side-nav li a {
-    outline: none;
-    background-color: #7DA7A0 !important;
-    border-style: solid;
-    border-color: #7DA7A0;
-}
-
-.side-nav li a:hover,
-.side-nav li a:focus {
-    outline: none;
-    background-color: white !important;
-    border-style: solid;
-    border-color: #7DA7A0;
-}
-
-.navbar-nav {
-    margin: 0px -15px;
-}
-
-.navbar-inverse .navbar-toggle {
-    border-color: white;
-}
-
-.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    border-color: #529085;
-}
-
-.navbar-inverse .navbar-toggle:focus,
-.navbar-inverse .navbar-toggle:hover {
-    background-color: #529085;
-}
-
-.navbar-fixed-top .navbar-collapse {
-    max-height: 360px;
-}
-
-#left-menu > li > a {
-    color: white;
-}
-
-#left-menu > li > a:hover,
-#left-menu > li > a:focus {
-    color: #529085;
-}
-
-/* Top navigation */
-
-.top-navig > li > a {
-    color: white;
-    background-color: #7DA7A0;
-}
-
-.top-navig > li > a:focus,
-.top-navig > li > a:hover,
-.top-navig > .open > a,
-.top-navig > .open > a:hover,
-.top-navig > .open > a:focus {
-    color: #7DA7A0;
-    background-color: white;
-}
-
-.top-navig {
-    margin: 0px -15px;
-}
-
 .content-container {
     height: 100%;
     margin-top: -80px;
@@ -210,85 +68,6 @@ body {
 }
 
 /* Navigation for big sizes */
-
-@media (min-width: 768px) {
-	.side-nav {
-		position: fixed;
-		top: 150px;
-		left: 225px;
-		width: 225px;
-		margin-left: -225px;
-		border: none;
-		border-radius: 0;
-		overflow-y: auto;
-		overflow-x: hidden;
-		height: 100%;
-	}
-
-    .content-container {
-        padding-left: 300px;
-    }
-    
-	.side-nav > li > a {
-		width: 225px;
-	}
-
-	#top-menu {
-		opacity: 0.9;
-	}
-    
-    #left-menu > li > a {
-        color: #529085;
-    }
-
-    #left-menu > li > a:hover,
-    #left-menu > li > a:focus {
-        color: white;
-    }
-
-    .side-nav li a:hover,
-    .side-nav li a:focus {
-        outline: none;
-        background-color: #7DA7A0 !important;
-        border-style: none;
-    }
-    
-    .side-nav li a{
-        background-color: white !important;
-        border-radius:6px; 
-        border-style: none;
-        -webkit-border-radius:6px; 
-        -moz-border-radius:5px; 
-        -khtml-border-radius:10px;
-    }
-    
-    .top-navig {
-        padding: 0 15px;
-    }
-
-    .top-navig > li {
-        display: inline-block;
-        float: right;
-    }
-
-    .top-navig > li > a {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        line-height: 49px;
-        color: white;
-    }
-
-    /*    hover navbar buttons    */
-
-    .top-navig > li > a:focus,
-    .top-navig > li > a:hover,
-    .top-navig > .open > a,
-    .top-navig > .open > a:hover,
-    .top-navig > .open > a:focus {
-        color: #7DA7A0;
-        background-color: white;
-    }
-}
 
 .test-creation {
     font-size: 20px;
@@ -366,6 +145,7 @@ textarea:focus {
 .stud-grid, .question-grid {
     height: 250px;
 }
+
 .ui-grid-row  {
     height: auto !important;
 }

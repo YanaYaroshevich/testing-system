@@ -1,0 +1,42 @@
+#background {
+     background: url(../components/pics/background.jpg)no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container-main {
+	height: 100%;
+	margin: 0 auto -80px;
+}
+
+.row-indent-up {
+    height: 10px;
+}
+
+@media (max-height: 600px) {
+    .row-indent-down {
+        height: 70px;
+    }
+}
+
+.form-group {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@media (min-width: 768px) {
+    .row-indent-up {
+        height: 50%;
+        min-height: 90px;
+    }
+    
+    .form-group {
+        padding: 0;
+    }
+    
+    .container-main {
+        overflow: auto;
+    }
+}
