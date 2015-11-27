@@ -9,7 +9,6 @@ module.exports = function (mongoose) {
             firstName: { type: String, trim: true, required: true },
             lastName: { type: String, trim: true, required: true },
             picture: { type: String, trim: true, default: '' },
-            tests: [ mongoose.Schema.Types.ObjectId ],
             students: [ mongoose.Schema.Types.ObjectId ],
             teachers: [ mongoose.Schema.Types.ObjectId ],
             group: { type: String, default: '-1' },
@@ -20,47 +19,46 @@ module.exports = function (mongoose) {
         }),
 
         questionSchema: new mongoose.Schema({
-            testId:  mongoose.Schema.Types.ObjectId,
-            questionText: String, //+
+            testId:  mongoose.Schema.Types.ObjectId, //+
+            text: String, //+
             answers: [ { text: String, right: Boolean } ], //+
-            questionType: Number, //+
+            type: Number, //+
             additionPicture: { type: String, trim: true }, //+
-            questionCost: Number //+
+            cost: Number //+
         },
         {
             collection: 'questions'
         }),
         
         testSchema: new mongoose.Schema({
-            questions: [ mongoose.Schema.Types.ObjectId ],
-            teacherId: mongoose.Schema.Types.ObjectId,
-            testName: String,
-            description: String,
-            studentsAssigned: [ mongoose.Schema.Types.ObjectId ],
-            active: Boolean,
-            start: { type: Date, default: new Date() },
-            finish: { type: Date, default: new Date() }
+            teacherId: mongoose.Schema.Types.ObjectId, //+
+            name: String, //+
+            description: String, //+
+            active: Boolean, //+
+            start: { type: Date, default: new Date() }, //+
+            finish: { type: Date, default: new Date() } //+
         },
         {
             collection: 'tests'
         }),
         
         studentTestSchema: new mongoose.Schema({
-            studentId: mongoose.Schema.Types.ObjectId,
-            testId: mongoose.Schema.Types.ObjectId,
-            passed: Boolean,
-            grade: Number
+            studentId: mongoose.Schema.Types.ObjectId, //+
+            testId: mongoose.Schema.Types.ObjectId, //+
+            passed: Boolean, //+
+            grade: { type: Number, default: 0 }, //+
+            assigned: Boolean //+
         },
         {
-            collection: 'student-tests'
+            collection: 'studentTests'
         }),
         
         newsSchema: new mongoose.Schema({
-            text: { type: String },
-            date: { type: Date, default: Date.now },
-            link: { type: String, trim: true },
-            userId: { type: mongoose.Schema.Types.ObjectId },
-            linkText: { type: String }
+            text: { type: String }, //+
+            date: { type: Date, default: Date.now }, //+
+            link: { type: String, trim: true }, //+
+            userId: { type: mongoose.Schema.Types.ObjectId }, //+
+            linkText: { type: String } //+
         }, {
             collection: 'news'
         })

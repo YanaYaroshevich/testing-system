@@ -23,13 +23,17 @@ angular.module('myApp.newTest', [])
 		html: false
     });
     
-    $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
+    var testToDefault = function(){
+        $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
+        $scope.test = {};
+        $scope.test.questions = [];
+        $scope.test.name = '';
+        $scope.test.description = '';
+        $scope.test.students = [];
+        $scope.question = {};
+    };
     
-    $scope.test = {};
-    $scope.test.questions = [];
-    $scope.test.name = '';
-    $scope.test.description = '';
-    $scope.test.students = [];
+    testToDefault();
     
      var questionToDefault = function(){
         $scope.question.text = '';
@@ -38,18 +42,21 @@ angular.module('myApp.newTest', [])
         $scope.question.type = $scope.toShowTypes[$scope.question.typeInd];
         $scope.question.answers = [{text: '', right: true}, {text: '', right: false}];
     };
-    
-    $scope.question = {};
+
     questionToDefault();
     
     /* ---------------------------- Dates ----------------------------------- */
     
-    $scope.minDate = new Date();
-    $scope.test.from = new Date();
-    $scope.test.to = new Date();
+    var datesToDefault = function(){
+        $scope.minDate = new Date();
+        $scope.test.from = new Date();
+        $scope.test.to = new Date();
+
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+    }
     
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
+    datesToDefault();
 
     /* -------------------------------------------------------------------------*/
     
@@ -74,11 +81,11 @@ angular.module('myApp.newTest', [])
     $scope.gridQuestions = {
             enableFiltering: true,
             columnDefs : [
-                    { name: 'num' },
-                    { name: 'type', headerCellClass: 'header-filtered' },
+                    { name: 'num', headerCellClass: 'header-filtered', enableCellEdit: false },
+                    { name: 'type', headerCellClass: 'header-filtered', enableCellEdit: false  },
                     { name: 'text', headerCellClass: 'header-filtered' },
                     { name: 'cost', headerCellClass: 'header-filtered' }
-                ]
+            ]
     };
     
      var questionFill = function(){
@@ -113,9 +120,8 @@ angular.module('myApp.newTest', [])
         
         $scope.question.num = $scope.test.questions.length + 1;
         $scope.test.questions.push(angular.copy($scope.question));
-        questionToDefault();
-        
         $scope.gridQuestions.data = $scope.test.questions;
+        questionToDefault();
         
         return true;
     };
@@ -127,6 +133,9 @@ angular.module('myApp.newTest', [])
         else{
             if($scope.gridQuestions.data.length > 0){
                 $scope.gridQuestions.data.splice($scope.questionToRemove - 1, 1);
+                for (var i = 0; i < $scope.gridQuestions.data.length; i++){
+                    $scope.gridQuestions.data[i].num = i + 1;
+                }
             }
         }
     };

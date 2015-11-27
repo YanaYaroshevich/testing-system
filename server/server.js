@@ -19,6 +19,7 @@ var port = 8080;
 var app = express();
 
 mongoose.connect(db.url);
+var connection = mongoose.connection;
 cloudinary.config(cloudConfig);
 
 var account = {};
@@ -28,6 +29,8 @@ var QuestionModel = mongoose.model('Question', schemas.questionSchema);
 var TestModel = mongoose.model('Test', schemas.testSchema);
 var StudentTestModel = mongoose.model('StudentTest', schemas.studentTestSchema);
 var NewsModel = mongoose.model('NewsModel', schemas.newsSchema);
+
+var ObjectID = require('mongodb').ObjectID;
 
 stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
     if (err) { throw err; }
@@ -66,6 +69,7 @@ app.set('view engine', 'ejs');
 router.get('/', function (req, res) {
     res.redirect('/start');
 });
+
 router.get('/start', function (req, res) {
     res.render('index.html');
 });
@@ -103,12 +107,21 @@ router.get('/main/:userId/news', function (req, res) {
 });
 
 router.delete('/main/:userId/news/:newsId', function (req, res) {
-    NewsModel.remove({_id: req.params.newsId}, function (err) {
+    console.log(req.params.newsId);
+    
+    NewsModel.findOne({_id: req.params.newsId}, function (err, news) {
         if (err) {
             res.send(err); 
         }
         else {
-            res.send({});
+            news.remove(function(err) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    res.send('');
+                }
+            });
         }
     });
 });
@@ -136,40 +149,120 @@ router.get('/test/new/students/:teacherId', function (req, res) {
     });
 });
 
+var dateCreation = function (date, isStart) {
+    var d = new Date(date);
+    if (isStart) {
+        d.setHours(0);
+        d.setMinutes(0);
+        d.setSeconds(0);
+        d.setMilliseconds(0);
+    }
+    else {
+        d.setHours(23);
+        d.setMinutes(59);
+        d.setSeconds(59);
+        d.setMilliseconds(999);
+    }
+    return d;
+};
+
+var questionsAdding = function(req, testId, res){
+    var questions = [];
+    var question = {};
+                
+    for (var i = 0; i < req.body.questions.length; i++) {
+        question.text = req.body.questions[i].text;
+        question.cost = req.body.questions[i].cost;
+        question.type = req.body.questions[i].typeInd;
+        if (req.body.questions[i].typeInd === 3)
+            question.additionalPicture = req.body.questions[i].additionalPicture;
+        if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 1){
+            question.answers = req.body.questions[i].answers.map( function(ans) {
+                return {
+                    text: ans.text,
+                    right: ans.right
+                };
+            });
+        }
+        question.testId = testId;
+        question._id = new ObjectID();
+        questions.push(question);
+        question = {};
+    }
+    
+    connection.collection('questions').insert(questions);
+       
+    
+};
+
+var studentTestAdding = function(testId, studId, res) {
+    var studentTest = {};
+    studentTest.testId = testId;
+    studentTest.studentId = studId;
+    studentTest.passed = false;
+    studentTest.assigned = true;
+    
+    var studentTestDB = new StudentTestModel(studentTest);
+    studentTestDB.save(function(err){
+        if(err) {
+            res.status(err.status).send(err);
+        }               
+    });
+};
+
+var newsAdding = function(studId, text, linkText, testId, res) {
+    var news = {};
+    news.userId = studId;
+    news.text = text;
+    news.link = '/test/' + testId;
+    news.linkText = linkText;
+    
+    var newsDB = new NewsModel(news);
+    newsDB.save(function(err){
+        if(err) {
+            res.status(err.status).send(err);
+        }               
+    });
+};
+
 router.post('/test/new', function (req, res) {
     UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
         if (err) {
             res.status(err.status).send(err);
         }
         else {
-            if(result_user.role === 2) {
+            if(result_teacher.role === 2) {
                 var test = {};
-                
+                test.name = req.body.name;
+                test.description = req.body.description;
+                test.start = dateCreation(req.body.from, true);  
+                test.finish = dateCreation(req.body.to, false);
+                test.teacherId = req.body.teacherId;
+                test.active = true;
+                var testId;
+
                 var testDB = new TestModel(test);
-                testDB.save(function(err){if(err) console.log(err)}); 
-                
-                //get testId there
-                
-                
-                var question = {};
-                for (var i = 0; i < req.body.questions.length; i++) {
-                    question.questionText = req.body.questions[i].text;
-                    question.questionCost = req.body.questions[i].cost;
-                    question.questionType = req.body.questions[i].typeInd;
-                    if (req.body.questions[i].typeInd === 3)
-                        question.additionalPicture = req.body.questions[i].additionalPicture;
-                    if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 1)
-                        question.answers = req.body.questions[i].answers;
-                    //add testId
-                }
+                testDB.save(function(err, curTest) {
+                    if(err) {
+                        res.status(err.status).send(err);
+                    }
+                    else {
+                        testId = curTest._id;
+                        questionsAdding(req, testId, res);
+                        for (var i = 0; i < req.body.students.length; i++) {
+                            studentTestAdding(testId, req.body.students[i], res);
+                            newsAdding(req.body.students[i], 'New test was created', 'Click here to open', testId, res);
+                        }
+                        newsAdding(req.body.teacherId, 'Your test was successfully created', 'Click here to open', testId, res);
+                    }   
+                });
+                res.send('');
             }
             else {
                 res.status(err.status).send(err);
             }
         }
     });
-    
-    console.log(req.body);
 });
 
 router.get('/main', function (req, res) {

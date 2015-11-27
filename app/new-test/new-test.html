@@ -98,7 +98,7 @@
                     </uib-accordion-group>
                 </uib-accordion>    
                 
-                <div ng-show="gridQuestions.data.length > 0">
+                <div ng-if="gridQuestions.data.length > 0">
                     <div class="test-creation">
                         <p>Questions</p>
                     </div>
@@ -116,7 +116,7 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <div ui-grid="gridQuestions" ui-grid-resize-columns class="question-grid"></div>
+                            <div ui-grid="gridQuestions" ui-grid-resize-columns ui-grid-edit class="question-grid"></div>
                         </div>
                     </div>
                 </div>    
