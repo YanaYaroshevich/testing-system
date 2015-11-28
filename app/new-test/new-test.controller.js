@@ -2,7 +2,7 @@
 
 angular.module('myApp.newTest')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', function($scope, $rootScope, $http, ngNotify, uiGridConstants) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$location', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $location) {
     $rootScope.path = '/main';
     $rootScope.showLeftMenu = true;
     $scope.pageName = "Test creation";
@@ -209,6 +209,7 @@ angular.module('myApp.newTest')
         if (testFill()){
             $scope.test.teacherId = $rootScope.account._id;
             $http.post('test/new', $scope.test).then(function (res) {
+                $location.path('/test/' + res.data.testId);
                 
             }, function (err) {
                 ngNotify.set(err.data);

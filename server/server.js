@@ -107,8 +107,6 @@ router.get('/main/:userId/news', function (req, res) {
 });
 
 router.delete('/main/:userId/news/:newsId', function (req, res) {
-    console.log(req.params.newsId);
-    
     NewsModel.findOne({_id: req.params.newsId}, function (err, news) {
         if (err) {
             res.send(err); 
@@ -146,6 +144,18 @@ router.get('/test/new/students/:teacherId', function (req, res) {
                 res.status(err.status).send(err);
             }
         } 
+    });
+});
+
+router.get('test/:testId', function(req, res) {
+    TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
+        if (err) {
+            res.status(err.status).send(err);
+        }
+        else {
+            console.log(result_test);
+            res.send( { test: result_test } );
+        }
     });
 });
 
@@ -252,7 +262,7 @@ router.post('/test/new', function (req, res) {
                             newsAdding(req.body.students[i], 'New test was created', 'Click here to open', testId, res);
                         }
                         newsAdding(req.body.teacherId, 'Your test was successfully created', 'Click here to open', testId, res);
-                        res.send(testId);
+                        res.send({testId: testId});
                     }   
                 });
             }

@@ -1,3 +1,14 @@
+#input-form {
+    border-radius:6px; 
+    -webkit-border-radius:6px; 
+    -moz-border-radius:5px; 
+    -khtml-border-radius:10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #7DA7A0;
+    color: white;
+}
+
 .navbar {
     height: 80px;
 }

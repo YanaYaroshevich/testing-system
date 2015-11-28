@@ -33,7 +33,8 @@ angular.module('myApp.startPage')
                 else {
                     $cookies.remove('user');
                 }
-                $location.path( "/main" );
+                //$location.path( "/main" );
+                $location.path('/test/56599789744ccd5818160a08');
             }
             else {
                 $scope.wrongInput = true;

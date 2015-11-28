@@ -1,0 +1,24 @@
+.panel-title, .fill-dropdown-list li a, uib-accordion {
+    color: #529085;
+}
+
+.test-creation {
+    font-size: 20px;
+    color: #529085;
+}
+
+.add-question {
+    background-color: #71BF71;
+}
+
+.stud-grid, .question-grid {
+    height: 250px;
+}
+
+.ui-grid-row  {
+    height: auto !important;
+}
+
+.test-adding {
+    margin-bottom: 70px;
+}
