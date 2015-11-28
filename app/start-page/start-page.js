@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('myApp.startPage', []);
+angular.module('myApp.startPage', ['ui.router']);

@@ -1,3 +1,3 @@
 'use strict';
 
-angular.module('myApp.mainPage', []);
+angular.module('myApp.mainPage', ['news']);                                                                              

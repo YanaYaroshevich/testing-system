@@ -2,7 +2,7 @@
 
 angular.module('myApp.startPage')
 
-.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$location', '$cookies', 'ngNotify', function($scope, $rootScope, $http, $location, $cookies, ngNotify) {
+.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$state', '$cookies', 'ngNotify', function($scope, $rootScope, $http, $state, $cookies, ngNotify) {
     $rootScope.path = '/start';
     $rootScope.showLeftMenu = false;
     $scope.pageName = "";
@@ -23,18 +23,28 @@ angular.module('myApp.startPage')
         var form = {};
         form.password = $scope.curPassword;
         form.email = $scope.curEmail;
-        $http.post('/start', form).then(function(res){
+        $http.post('/login', form).then(function(res){
             if(res.data.noErrors){
                 $scope.wrongInput = false;
                 $rootScope.account = res.data.account;
+                $rootScope.id = res.data.account._id;
                 if ($scope.rememberMe){
-                    $cookies.putObject('user', res.data.account);
+                    if(typeof(Storage) == "undefined") {
+                        ngNotify.set('localStorage is not accessible');
+                    }
+                    else {
+                        localStorage.setItem('id', res.data.account._id);
+                    }
                 }    
                 else {
-                    $cookies.remove('user');
+                    if(typeof(Storage) == "undefined") {
+                        ngNotify.set('localStorage is not accessible');
+                    }
+                    else {
+                        localStorage.removeItem('id');
+                    }
                 }
-                //$location.path( "/main" );
-                $location.path('/test/56599789744ccd5818160a08');
+                $state.go('main');
             }
             else {
                 $scope.wrongInput = true;

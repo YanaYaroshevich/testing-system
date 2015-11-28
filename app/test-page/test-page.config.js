@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.newTest')
+angular.module('myApp.testPage')
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/test/:testId', {

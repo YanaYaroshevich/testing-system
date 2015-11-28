@@ -11,23 +11,23 @@
     <title>Testing system</title>
 
 	<!-- Bootstrap Core CSS -->
-	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 	<!-- Custom Fonts -->
-	<link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+	<link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
     
     <!-- Ng-notify -->
-    <link href="bower_components/ng-notify/dist/ng-notify.min.css" rel="stylesheet"/>
+    <link href="/bower_components/ng-notify/dist/ng-notify.min.css" rel="stylesheet"/>
     
     <!-- Ui-grid -->
-    <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/bower_components/angular-ui-grid/ui-grid.min.css"/>
     
      <!-- Styles -->
-    <link href="app.css" rel="stylesheet"/>
-    <link href="footer/footer.css" rel="stylesheet"/>
-    <link href="start-page/start-page.css" rel="stylesheet"/>
-    <link href="header/header.css" rel="stylesheet"/>
-    <link href="new-test/new-test.css" rel="stylesheet"/>
+    <link href="/app.css" rel="stylesheet"/>
+    <link href="/footer/footer.css" rel="stylesheet"/>
+    <link href="/start-page/start-page.css" rel="stylesheet"/>
+    <link href="/header/header.css" rel="stylesheet"/>
+    <link href="/new-test/new-test.css" rel="stylesheet"/>
     
     <!-- Icon -->
     <link rel="shortcut icon" href="components/pics/logo.png"/>
@@ -36,10 +36,11 @@
 </head>
 
 <body ng-controller="MainCtrl">
+    
     <div ng-include="'header/header.html'"></div>
 
     <div id="view-wrapper">
-        <div ng-view></div>
+        <div ui-view></div>
     </div>    
     
     <div ng-include="'footer/footer.html'"></div>
@@ -50,12 +51,15 @@
 
 	<!-- Angular -->
 	<script src="bower_components/angular/angular.min.js"></script>
+
+    <!-- Ui-router -->
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     
     <!-- Angular cookies -->
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     
     <!-- Angular-route -->
-     <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <!-- <script src="bower_components/angular-route/angular-route.min.js"></script> -->
     
     <!-- UI-bootstrap -->
     <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
@@ -75,28 +79,25 @@
     <!-- Start-page -->
     <script src="start-page/start-page.js"></script>
     <script src="start-page/start-page.controller.js"></script>
-    <script src="start-page/start-page.config.js"></script>
 
     <!-- Header -->
     <script src="header/header.js"></script>
     <script src="header/header.controller.js"></script>
 
-    <!-- Main-page -->
-    <script src="main-page/main-page.js"></script>
-    <script src="main-page/main-page.config.js"></script>
-    <script src="main-page/main-page.controller.js"></script>
-
     <!-- News -->
     <script src="components/directives/news/news.js"></script>
-    <script src="components/directives/news/news.directive.js"></script>
-   
+    <script src="components/directives/news/news.directive.js"></script>                                                                                                                 
+
+    <!-- Main-page -->
+    <script src="main-page/main-page.js"></script>
+    <script src="main-page/main-page.controller.js"></script>
+
     <!-- New-test-page -->
     <script src="new-test/new-test.js"></script>
-    <script src="new-test/new-test.config.js"></script>
     <script src="new-test/new-test.controller.js"></script>
 
     <!-- Test-page -->
-    <script src="test-page/test-page.js"></script>
-    <script src="test-page/test-page.controller.js"></script>
-    <script src="test-page/test-page.config.js"></script>
+    <!--<script src="test-page/test-page.js"></script>
+    <script src="test-page/test-page.controller.js"></script>-->
+    <!--<script src="test-page/test-page.config.js"></script>-->
 </html>

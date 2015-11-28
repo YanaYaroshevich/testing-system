@@ -16,6 +16,19 @@ angular.module('myApp.newTest')
 		html: false
     });
     
+    var updatePage = function(){
+        $http.get('/user/' + $rootScope.id).then(
+            function(res) {
+                $rootScope.account = res.data.account;
+                getStudents();
+            },
+            function(err) {
+                ngNotify.set(err.data);
+                $state.go('start');
+            }
+        );
+    };
+    
     var testToDefault = function(){
         $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
         $scope.test = {};
@@ -151,37 +164,39 @@ angular.module('myApp.newTest')
 
         gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
             var msg = 'rows changed ' + rows.length;
-            console.log(msg);
         });
     };
     
-    $http.get('test/new/students/' + $rootScope.account._id).then(function (res) {
-        console.log(res.data);
-        var students = res.data.map(function(stud){
-            return {
-                firstName: stud.firstName,
-                lastName: stud.lastName,
-                email: stud.email,
-                course: stud.course,
-                group: stud.group,
-                studId: stud._id
-            };
-        });
-         
-        $scope.gridStudents.columnDefs = [
-            { name: 'firstName', headerCellClass: 'header-filtered' },
-            { name: 'lastName', headerCellClass: 'header-filtered' },
-            { name: 'email', headerCellClass: 'header-filtered' },
-            { name: 'course', headerCellClass: 'header-filtered' },
-            { name: 'group', headerCellClass: 'header-filtered' }
-        ];
-        
-        $scope.gridStudents.data = students;
-        
+    var getStudents = function(){
+        $http.get('test/students/' + $rootScope.account._id).then(function (res) {
+            console.log(res.data);
+            var students = res.data.map(function(stud){
+                return {
+                    firstName: stud.firstName,
+                    lastName: stud.lastName,
+                    email: stud.email,
+                    course: stud.course,
+                    group: stud.group,
+                    studId: stud._id
+                };
+            });
 
-    }, function (err) {   
-        ngNotify.set(err.data);
-    }); 
+            $scope.gridStudents.columnDefs = [
+                { name: 'firstName', headerCellClass: 'header-filtered' },
+                { name: 'lastName', headerCellClass: 'header-filtered' },
+                { name: 'email', headerCellClass: 'header-filtered' },
+                { name: 'course', headerCellClass: 'header-filtered' },
+                { name: 'group', headerCellClass: 'header-filtered' }
+            ];
+
+            $scope.gridStudents.data = students;
+
+
+        }, function (err) {   
+            ngNotify.set(err.data);
+        }); 
+    }
+    
     
     /* ------------------------ Test complete --------------------*/
     
@@ -208,12 +223,14 @@ angular.module('myApp.newTest')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.account._id;
-            $http.post('test/new', $scope.test).then(function (res) {
-                $location.path('/test/' + res.data.testId);
+            $http.post('test/add', $scope.test).then(function (res) {
+                //$state.go('tests');
                 
             }, function (err) {
                 ngNotify.set(err.data);
             });
         }
     }
+    
+    updatePage();
 }]);

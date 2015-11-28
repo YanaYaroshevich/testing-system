@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('myApp', [
-    'ngRoute',
     'myApp.startPage',
     'myApp.mainPage',
     'myApp.header',
@@ -9,30 +8,57 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngNotify',
     'ngCookies',
-    'news',
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.selection',
     'ui.grid.autoResize',
-    'ui.grid.resizeColumns'
-]).
-config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-   $routeProvider.otherwise({redirectTo: '/start'});
-   $locationProvider.html5Mode(true);
-}]).
-run(function ($rootScope, $location, $cookies, $http) {
-    $rootScope.$on("$routeChangeStart", function (event, next, current) {
-      if (!$cookies.getObject('user') && !$rootScope.account) {
-        if (next.templateUrl !== "start-page/start-page.html") {
-          $location.path("/start");
+    'ui.grid.resizeColumns',
+    'ui.router'
+])
+
+.run(['$state', '$rootScope', '$cookies', '$http', function ($state, $rootScope, $cookies, $http) {
+    $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {
+        if(typeof(Storage) == "undefined") {
+            ngNotify.set('localStorage is not accessible');
         }
-      }
-      else if (!$rootScope.account){
-          $rootScope.account = $cookies.get('user'); 
-      }
+                    
+        else {
+            if (!localStorage.getItem('id') && !$rootScope.id) {
+                if (toState.name !== "start") {
+                    e.preventDefault();
+                    $state.go("start");
+                }
+            }
+            else if (!$rootScope.id){
+                $rootScope.id = localStorage.getItem('id');
+            }
+        }
     });
-}).
-controller('MainCtrl', ['$scope', 'ngNotify', function ($scope, ngNotify) {
+}])
+
+.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function ($locationProvider, $stateProvider, $urlRouterProvider) { 
+    $urlRouterProvider.otherwise("/start");
+    $stateProvider
+        .state('start', {
+            url: "/start",
+            templateUrl: "start-page/start-page.html",
+            controller: "StartPageCtrl"
+        })
+        .state('main', {
+            url: "/main",
+            templateUrl: "main-page/main-page.html",
+            controller: "MainPageCtrl"
+        })
+        .state('newTest', {
+            url: "/new/test",
+            templateUrl: 'new-test/new-test.html',
+            controller: 'NewTestCtrl'
+        });
+    
+    $locationProvider.html5Mode(true);
+}])
+    
+.controller('MainCtrl', ['$scope', 'ngNotify', '$rootScope', function ($scope, ngNotify, $rootScope) {
      ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -42,7 +68,8 @@ controller('MainCtrl', ['$scope', 'ngNotify', function ($scope, ngNotify) {
 		html: false
     });
     
-    try {
+    try {  
+        $rootScope.account = {};
     }
     catch (e) {
         ngNotify.set(e);
