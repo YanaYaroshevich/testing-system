@@ -12,6 +12,9 @@ angular.module('myApp.newTest')
 		html: false
     });
     
+    $rootScope.showLeftMenu = true;
+    $scope.pageName = "Test creation";
+    
     var updatePage = function(){
         $http.get('/user/' + $rootScope.id).then(
             function(res) {
@@ -164,7 +167,7 @@ angular.module('myApp.newTest')
     };
     
     var getStudents = function(){
-        $http.get('test/students/' + $rootScope.account._id).then(function (res) {
+        $http.get('/new/test/students/' + $rootScope.account._id).then(function (res) {
             console.log(res.data);
             var students = res.data.map(function(stud){
                 return {
@@ -192,8 +195,6 @@ angular.module('myApp.newTest')
             ngNotify.set(err.data);
         }); 
     }
-    
-    
     /* ------------------------ Test complete --------------------*/
     
     var testFill = function(){
@@ -219,7 +220,7 @@ angular.module('myApp.newTest')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.account._id;
-            $http.post('test/add', $scope.test).then(function (res) {
+            $http.post('/new/test/add', $scope.test).then(function (res) {
                 console.log(res);
                 $state.go('test', {testId: res.data.testId});
                 

@@ -41,7 +41,7 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         appStormpath = application;
         app.listen(port);
         
-       
+        //addStudent();
     });
 });
 
@@ -64,7 +64,7 @@ app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.use(['/start', '/main', '/new', '/test'], function(req, res) {
+app.get(['/start', '/main', '/new/test', '/test'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
 
@@ -73,6 +73,28 @@ app.use(['/start', '/main', '/new', '/test'], function(req, res) {
 });*/
 
 app.use('/', router);
+
+var addStudent = function() {
+     UserModel.findOne({email: 'b@b.bbb'}, function(err, result_teacher){
+        if (err) {
+            console.log(err);
+        }
+        else {
+            UserModel.findOne({email: 'yaroshevich.yana@gmail.com'}, function(err, result_student){
+                if (err) {
+                    conole.log(err);
+                }
+                else {
+                    result_teacher.students.push(result_student._id);
+                    result_teacher.save(function (err) {
+                        if (err) 
+                           console.log(err);
+                    });
+                }
+            });  
+        }
+    });
+};
 
 /* GET home page. */
 router.get('/', function (req, res) {
@@ -127,7 +149,7 @@ router.get('/user/:userId', function(req, res) {
     });
 });
 
-router.get('/:userId/news', function (req, res) {
+router.get('/main/:userId/news', function (req, res) {
     NewsModel.find({userId: req.params.userId}, function (err, result_news) {
         if (err) {
             res.send(err);
@@ -138,7 +160,7 @@ router.get('/:userId/news', function (req, res) {
     });
 });
 
-router.delete('/:userId/news/:newsId', function (req, res) {
+router.delete('/main/:userId/news/:newsId', function (req, res) {
     NewsModel.findOne({_id: req.params.newsId}, function (err, news) {
         if (err) {
             res.send(err); 
@@ -156,30 +178,7 @@ router.delete('/:userId/news/:newsId', function (req, res) {
     });
 });
 
-router.get('/test/students/:teacherId', function (req, res) {
-    UserModel.findOne({_id: req.params.teacherId}, function(err, result_user){
-        if (err) {
-            res.send(err);
-        }
-        else {
-            if(result_user.role === 2) {
-                UserModel.find({'_id': { $in: result_user.students}}, function (err, result_students) {
-                    if (err) {
-                        res.send(err);
-                    }
-                    else {
-                        res.send(result_students);
-                    }    
-                });
-            }
-            else {
-                res.send(err);
-            }
-        } 
-    });
-});
-
-router.get('test/:testId', function(req, res) {
+router.get('/test/:testId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
             res.send(err);
@@ -265,7 +264,7 @@ var newsAdding = function(studId, text, linkText, testId, res) {
     });
 };
 
-router.post('/test/add', function (req, res) {
+router.post('/new/test/add', function (req, res) {
     UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
         if (err) {
             res.send(err);
@@ -302,5 +301,28 @@ router.post('/test/add', function (req, res) {
                 res.send(err);
             }
         }
+    });
+});
+
+router.get('/new/test/students/:teacherId', function (req, res) {
+    UserModel.findOne({_id: req.params.teacherId}, function(err, result_user){
+        if (err) {
+            res.send(err);
+        }
+        else {
+            if(result_user.role === 2) {
+                UserModel.find({'_id': { $in: result_user.students}}, function (err, result_students) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        res.send(result_students);
+                    }    
+                });
+            }
+            else {
+                res.send(err);
+            }
+        } 
     });
 });

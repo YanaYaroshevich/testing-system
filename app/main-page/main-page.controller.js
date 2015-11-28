@@ -3,7 +3,6 @@
 angular.module('myApp.mainPage')
 
 .controller('MainPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', '$state', function($scope, $rootScope, $http, ngNotify, $state) {
-    $rootScope.path = '/main';
     $rootScope.showLeftMenu = true;
     $scope.pageName = "Main page";
     
@@ -30,7 +29,7 @@ angular.module('myApp.mainPage')
     };
     
     var getNews = function() {
-        $http.get('/' + $rootScope.account._id + '/news').then(function (res) {
+        $http.get('/main/' + $rootScope.account._id + '/news').then(function (res) {
             $scope.news = res.data.news.map(function(elem){
                 elem.onClose = (function(newsId){
                     return function() { onClose(newsId); };
@@ -43,7 +42,7 @@ angular.module('myApp.mainPage')
     };
 
     var onClose = function(newsId){
-        $http.delete('/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
+        $http.delete('/main/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
             getNews();
         }, function (err) {
             ngNotify.set(err.data);
