@@ -60,15 +60,17 @@ var router = express.Router();
 
 var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
 
-//app.use(express.static(rootDir + '\\app'));
- app.use('/',express.static(rootDir + '\\app'));
-//app.set('views', rootDir + '\\app');
+app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.use(['/start', '/main', '/new'], function(req, res) {
+app.use(['/start', '/main', '/new', '/test'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
+
+/*app.use(function(req, res, next) {
+  res.status(404).sendFile(rootDir + '\\app' + '\\index.html');
+});*/
 
 app.use('/', router);
 
@@ -81,7 +83,15 @@ router.get('/start', function (req, res) {
     res.send({obj: ''});
 });
 
-router.post('/login', function (req, res, next) {
+router.get('/main', function (req, res) {
+    res.send({lalka: ''});
+});
+
+router.get('/new/test', function (req, res) {
+    res.send({lalka: ''});
+});
+
+router.post('/login', function (req, res) {
     appStormpath.authenticateAccount({
       username: req.body.email,
       password: req.body.password
@@ -100,6 +110,10 @@ router.post('/login', function (req, res, next) {
             });
         }
     });
+});
+
+router.post('/logout', function (req, res) {
+    res.send({lalka: ''});
 });
 
 router.get('/user/:userId', function(req, res) {
@@ -289,12 +303,4 @@ router.post('/test/add', function (req, res) {
             }
         }
     });
-});
-
-router.get('/main', function (req, res) {
-    res.send({lalka: ''});
-});
-
-router.get('/new/test', function (req, res) {
-    res.send({lalka: ''});
 });

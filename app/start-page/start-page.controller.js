@@ -3,9 +3,7 @@
 angular.module('myApp.startPage')
 
 .controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$state', '$cookies', 'ngNotify', function($scope, $rootScope, $http, $state, $cookies, ngNotify) {
-    $rootScope.path = '/start';
     $rootScope.showLeftMenu = false;
-    $scope.pageName = "";
     
     $scope.rememberMe = false;
     $scope.wrongInput = false;

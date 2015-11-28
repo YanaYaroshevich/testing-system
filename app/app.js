@@ -5,6 +5,7 @@ angular.module('myApp', [
     'myApp.mainPage',
     'myApp.header',
     'myApp.newTest',
+    'myApp.testPage',
     'ui.bootstrap',
     'ngNotify',
     'ngCookies',
@@ -53,6 +54,17 @@ angular.module('myApp', [
             url: "/new/test",
             templateUrl: 'new-test/new-test.html',
             controller: 'NewTestCtrl'
+        })
+        .state('test', {
+            url: '/test/:testId',
+            templateUrl: 'test-page/test-page.html',
+            controller: 'TestPageCtrl'
+            /* resolve : {
+            	test: ['$stateParams', 'test', function($stateParams, test) {
+            		console.log(test);
+                    console.log($stateParams);
+            	}]
+            }*/
         });
     
     $locationProvider.html5Mode(true);

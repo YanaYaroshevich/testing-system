@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
         </button>
 
-        <a class="navbar-brand" href="{{path}}">
+        <a class="navbar-brand" ui-sref="main">
             <img class="logo" alt="Brand" src="components/pics/logo.png"/>
         </a>
     </div>
@@ -17,7 +17,7 @@
         <!-- Top Menu Items -->
         <ul class="nav top-navig">
              <li>
-                <a href="/start" >
+                <a ng-click="logout()">
                     <i class="fa fa-fw fa-power-off"></i>
                     <span>Log out</span>
                 </a>

@@ -2,7 +2,7 @@
 
 angular.module('myApp.header')
 
-.controller('HeaderCtrl', ['$scope', '$rootScope', '$location', function($scope, $rootScope, $location) {
+.controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'ngNotify', '$state', '$http', function($scope, $rootScope, $location, ngNotify, $state, $http) {
     $scope.isCollapsed = true;
     
     function isStartPage(){
@@ -33,5 +33,20 @@ angular.module('myApp.header')
         if (isNewTestPage()){
             return "background-color: #529085 !important; color: white";            
         }
+    };
+    
+    $scope.logout = function(){
+        $http.post('/logout', {id: $rootScope.id}).then(function(res){
+            if(typeof(Storage) == "undefined") {
+                ngNotify.set('localStorage is not accessible');
+            }
+            else {
+                localStorage.removeItem('id');
+                delete $rootScope.id;
+            }
+            $state.go('start');
+        }, function(err){
+            ngNotify.set(err.data);
+        });
     };
 }]);
