@@ -30,9 +30,8 @@ angular.module('myApp.testPage')
         { name: 'email', headerCellClass: 'header-filtered', width: '150' },
         { name: 'course', headerCellClass: 'header-filtered', width: '80' },
         { name: 'group', headerCellClass: 'header-filtered', width: '80' },
-        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', width: '100'
-        }
-        
+        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', width: '100', enableFiltering: false},
+        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', width: '100', enableFiltering: false}
     ];
     
     console.log($scope.test);
