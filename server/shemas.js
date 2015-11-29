@@ -10,7 +10,6 @@ module.exports = function (mongoose) {
             lastName: { type: String, trim: true, required: true },
             picture: { type: String, trim: true, default: '' },
             students: [ mongoose.Schema.Types.ObjectId ],
-            teachers: [ mongoose.Schema.Types.ObjectId ],
             group: { type: String, default: '-1' },
             course: { type: Number, default: -1 }
         },

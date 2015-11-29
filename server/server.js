@@ -64,7 +64,7 @@ app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.get(['/start', '/main', '/new/test', '/test'], function(req, res) {
+app.get(['/start', '/main', '/new/test', '/test/:testId'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
 
@@ -99,18 +99,6 @@ var addStudent = function() {
 /* GET home page. */
 router.get('/', function (req, res) {
     res.redirect('/start');
-});
-
-router.get('/start', function (req, res) {
-    res.send({obj: ''});
-});
-
-router.get('/main', function (req, res) {
-    res.send({lalka: ''});
-});
-
-router.get('/new/test', function (req, res) {
-    res.send({lalka: ''});
 });
 
 router.post('/login', function (req, res) {
@@ -178,14 +166,83 @@ router.delete('/main/:userId/news/:newsId', function (req, res) {
     });
 });
 
-router.get('/test/:testId', function(req, res) {
+router.get('/test/page/:testId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
             res.send(err);
         }
         else {
-            console.log(result_test);
-            res.send( { test: result_test } );
+            var toSend = {
+                name: result_test.name,
+                description: result_test.description,
+                finish: result_test.finish,
+                start: result_test.start
+            };
+            StudentTestModel.find({testId: result_test._id}, function (err, result_usersTest) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    var usersTest = result_usersTest.map(function(cur){
+                        return {
+                            passed: cur.passed,
+                            assigned: cur.assigned,
+                            id: cur.studentId
+                        };
+                    });
+                    UserModel.findOne({_id: result_test.teacherId}, function(err, result_teacher){
+                        if (err) {
+                            res.send(err);
+                        }
+                        else {
+                            toSend.teacher = result_teacher;
+                            UserModel.find({role: 1, '_id': { $in: result_teacher.students}}, function(err, all_students){
+                                if (err) {
+                                    res.send(err);
+                                }
+                                else {
+                                    toSend.students = all_students.map(function(cur){
+                                        var toReturn = {
+                                            firstName: cur.firstName,
+                                            lastName: cur.lastName,
+                                            email: cur.email,
+                                            course: cur.course,
+                                            group: cur.group, 
+                                            passed: false,
+                                            assigned: false
+                                        };
+                                        for (var i = 0; i < usersTest.length; i++){
+                                            if (cur._id.toString() === usersTest[i].id.toString()){
+                                                toReturn.passed = usersTest[i].passed;
+                                                toReturn.assigned = usersTest[i].assigned;
+                                                break;
+                                            }
+                                        }
+                                        return toReturn;
+                                    });
+                                    QuestionModel.find({testId: result_test._id}, function(err, result_qs){
+                                         if (err) {
+                                            res.send(err);
+                                        }
+                                        else {    
+                                            toSend.questions = result_qs.map(function(cur){
+                                                return {
+                                                    text: cur.text,
+                                                    cost: cur.cost,
+                                                    type: cur.type,
+                                                    answers: cur.answers  
+                                                };
+                                            });
+                                            console.log(toSend);
+                                            res.send( { test: toSend } );
+                                        }
+                                    });
+                                }
+                            })
+                        }     
+                    });
+                }
+            });
         }
     });
 });

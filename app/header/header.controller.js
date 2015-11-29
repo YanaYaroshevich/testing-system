@@ -2,19 +2,19 @@
 
 angular.module('myApp.header')
 
-.controller('HeaderCtrl', ['$scope', '$rootScope', '$location', 'ngNotify', '$state', '$http', function($scope, $rootScope, $location, ngNotify, $state, $http) {
+.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', function($scope, $rootScope, ngNotify, $http, $state) {
     $scope.isCollapsed = true;
     
     function isStartPage(){
-        return ($location.path() === '/start');
+        return ($state.is('start'));
     }
     
     function isMainPage(){
-        return ($location.path() === '/main');
+        return ($state.is('main'));
     }
     
     function isNewTestPage(){
-        return ($location.path() === '/test/new');
+        return ($state.is('newTest'));
     }
     
     $scope.getUserName = function(){

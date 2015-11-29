@@ -14,11 +14,13 @@ angular.module('myApp', [
     'ui.grid.selection',
     'ui.grid.autoResize',
     'ui.grid.resizeColumns',
-    'ui.router'
+    'ui.router',
+    'auth'
 ])
 
-.run(['$state', '$rootScope', '$cookies', '$http', function ($state, $rootScope, $cookies, $http) {
+.run(['$state', '$rootScope', '$cookies', '$http', 'authService', '$q', function ($state, $rootScope, $cookies, $http, authService, $q) {
     $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {
+        
         if(typeof(Storage) == "undefined") {
             ngNotify.set('localStorage is not accessible');
         }
@@ -33,6 +35,13 @@ angular.module('myApp', [
             else if (!$rootScope.id){
                 $rootScope.id = localStorage.getItem('id');
             }
+            
+            $q.when(authService.setAccount($rootScope.id)).then(function(){
+                if (!authService.isAuthorised(toState.name)){
+                    $state.go('start');
+                    localStorage.removeItem('id');
+                }
+            });
         }
     });
 }])
@@ -58,15 +67,17 @@ angular.module('myApp', [
         .state('test', {
             url: '/test/:testId',
             templateUrl: 'test-page/test-page.html',
-            controller: 'TestPageCtrl'
-            /* resolve : {
-            	test: ['$stateParams', 'test', function($stateParams, test) {
-            		console.log(test);
-                    console.log($stateParams);
-            	}]
-            }*/
+            controller: 'TestPageCtrl',
+            resolve : {
+                testToShow: ['$http', '$stateParams', function($http, $stateParams){
+                    return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                        return res.data.test;
+                    }, function(err){
+                        ngNotify.set(err.data);
+                    });
+                }]
+            }
         });
-    
     $locationProvider.html5Mode(true);
 }])
     

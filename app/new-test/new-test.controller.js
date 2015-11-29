@@ -168,18 +168,21 @@ angular.module('myApp.newTest')
     
     var getStudents = function(){
         $http.get('/new/test/students/' + $rootScope.account._id).then(function (res) {
-            console.log(res.data);
-            var students = res.data.map(function(stud){
-                return {
-                    firstName: stud.firstName,
-                    lastName: stud.lastName,
-                    email: stud.email,
-                    course: stud.course,
-                    group: stud.group,
-                    studId: stud._id
-                };
-            });
-
+            if (res.data){
+                var students = res.data.map(function(stud){
+                    return {
+                        firstName: stud.firstName,
+                        lastName: stud.lastName,
+                        email: stud.email,
+                        course: stud.course,
+                        group: stud.group,
+                        studId: stud._id
+                    };
+                });
+                
+                $scope.gridStudents.data = students;
+            }
+            
             $scope.gridStudents.columnDefs = [
                 { name: 'firstName', headerCellClass: 'header-filtered' },
                 { name: 'lastName', headerCellClass: 'header-filtered' },
@@ -187,10 +190,6 @@ angular.module('myApp.newTest')
                 { name: 'course', headerCellClass: 'header-filtered' },
                 { name: 'group', headerCellClass: 'header-filtered' }
             ];
-
-            $scope.gridStudents.data = students;
-
-
         }, function (err) {   
             ngNotify.set(err.data);
         }); 
