@@ -60,7 +60,7 @@ angular.module('myApp.testPage')
     $scope.gridQuestions.data = testToShow.questions.map(function(quest){
         var toReturn = {};
         toReturn.rightAnswers = '';
-        if (quest.type === 0) {
+        if (quest.typeInd === 0) {
             for (var i = 0; i < quest.answers.length; i++) {
                 if (quest.answers[i].right){
                     toReturn.rightAnswers += quest.answers[i].text + '; ';
@@ -68,11 +68,12 @@ angular.module('myApp.testPage')
             }
             toReturn.text = quest.text;
         }
-        else if (quest.type === 2) {
-            toReturn.rightAnswers = quest.text.substring(quest.text.indexOf('###'), quest.text.lastIndexOf('###'));
-            toReturn.text = quest.text.replace(toReturn.rightAnswers, '???').replace('###', '');
+        else if (quest.typeInd === 2) {
+            toReturn.rightAnswers = quest.text.substring(quest.text.indexOf('###') + 3, quest.text.lastIndexOf('###'));
+            toReturn.text = quest.text.replace(toReturn.rightAnswers, '???').split('###').join('');
         }
-        toReturn.type = $scope.toShowTypes[quest.type];
+        toReturn.type = $scope.toShowTypes[quest.typeInd];
+        toReturn.typeInd = quest.typeInd;
         toReturn.cost = quest.cost;
         return toReturn;
     });

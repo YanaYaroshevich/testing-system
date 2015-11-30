@@ -210,7 +210,8 @@ router.get('/test/page/:testId', function(req, res) {
                                             course: cur.course,
                                             group: cur.group, 
                                             passed: false,
-                                            assigned: false
+                                            assigned: false,
+                                            id: cur._id
                                         };
                                         for (var i = 0; i < usersTest.length; i++){
                                             if (cur._id.toString() === usersTest[i].id.toString()){
@@ -222,19 +223,20 @@ router.get('/test/page/:testId', function(req, res) {
                                         return toReturn;
                                     });
                                     QuestionModel.find({testId: result_test._id}, function(err, result_qs){
-                                         if (err) {
+                                        if (err) {
                                             res.send(err);
                                         }
-                                        else {    
+                                        else {
+                                            
+                                            console.log(result_qs);
                                             toSend.questions = result_qs.map(function(cur){
                                                 return {
                                                     text: cur.text,
                                                     cost: cur.cost,
-                                                    type: cur.type,
+                                                    typeInd: cur.typeInd,
                                                     answers: cur.answers  
                                                 };
                                             });
-                                            console.log(toSend);
                                             res.send( { test: toSend } );
                                         }
                                     });
@@ -272,7 +274,7 @@ var questionsAdding = function(req, testId, res){
     for (var i = 0; i < req.body.questions.length; i++) {
         question.text = req.body.questions[i].text;
         question.cost = req.body.questions[i].cost;
-        question.type = req.body.questions[i].typeInd;
+        question.typeInd = req.body.questions[i].typeInd;
         if (req.body.questions[i].typeInd === 3)
             question.additionalPicture = req.body.questions[i].additionalPicture;
         if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 1){
@@ -360,6 +362,65 @@ router.post('/new/test/add', function (req, res) {
             }
         }
     });
+});
+
+router.put('/test/edit/complete/:testId', function(req, res) {
+    TestModel.findOne({_id: req.params.testId}, function(err, result_test){
+        if (err){
+            res.send(err);
+        }
+        else {
+            result_test.name = req.body.name;
+            result_test.description = req.body.description;
+            result_test.start = dateCreation(req.body.from, true);  
+            result_test.finish = dateCreation(req.body.to, false);
+            result_test.active = true;
+            result_test.save(function(err){
+                if (err) {
+                    res.send(err);
+                }
+            }); 
+            
+            QuestionModel.find({testId: req.params.testId}, function(err, result_questions){
+                if (err){
+                    res.send(err);
+                }
+                else {
+                    for (var i = 0; i < result_questions.length; i++) {
+                        result_questions[i].remove(function(err){
+                            if (err) {
+                                res.send(err);
+                            }
+                        });
+                    }
+                    questionsAdding(req, result_test._id, res);
+                }
+            });
+            StudentTestModel.find({testId: req.params.testId}, function(err, result_studentTests){
+                if (err){
+                    res.send(err);
+                }
+                else {
+                    for (var i = 0; i < result_studentTests.length; i++) {
+                        result_studentTests[i].remove(function(err){
+                            if (err) {
+                                res.send(err);    
+                            }
+                        });
+                    }   
+
+                    for (var i = 0; i < req.body.students.length; i++) {
+                        studentTestAdding(req.params.testId, req.body.students[i], res);
+                        newsAdding(req.body.students[i], 'The test was edited', 'Click here to open', result_test._id, res);
+                    }
+                    newsAdding(req.body.teacherId, 'Your test was successfully edited', 'Click here to open', result_test._id, res);
+                    res.send({});
+                }
+            });
+            
+        }
+    });
+    
 });
 
 router.get('/new/test/students/:teacherId', function (req, res) {

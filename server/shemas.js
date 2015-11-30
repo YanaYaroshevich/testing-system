@@ -21,7 +21,7 @@ module.exports = function (mongoose) {
             testId:  mongoose.Schema.Types.ObjectId, //+
             text: String, //+
             answers: [ { text: String, right: Boolean } ], //+
-            type: Number, //+
+            typeInd: Number, //+
             additionPicture: { type: String, trim: true }, //+
             cost: Number //+
         },

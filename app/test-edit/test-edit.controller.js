@@ -2,7 +2,7 @@
 
 angular.module('myApp.testEditPage')
     
-.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$timeout', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $timeout) {
+.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$timeout', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $timeout, $state) {
     console.log(testToShow);
     
     $scope.pageName = 'Test edit';
@@ -66,8 +66,8 @@ angular.module('myApp.testEditPage')
     $scope.test.questions = testToShow.questions.map(function(quest){
                 var toReturn = quest;
                 toReturn.num = testToShow.questions.indexOf(quest) + 1;
-                toReturn.type = $scope.toShowTypes[quest.type];
-                toReturn.typeInd = quest.type;
+                toReturn.type = $scope.toShowTypes[quest.typeInd];
+                toReturn.typeInd = quest.typeInd;
                 return toReturn;
             });
     
@@ -145,8 +145,12 @@ angular.module('myApp.testEditPage')
     $scope.gridStudents.onRegisterApi = function(gridApi){
         $scope.gridApi = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope,function(row){
-            if(row.isSelected)
-                $scope.test.students.push(row.entity.studId);
+            if(row.isSelected){
+                $scope.test.students.push(row.entity.id);
+            }
+            else {
+                $scope.test.students.splice($scope.test.students.indexOf(row.entity.studId), 1);
+            }
         });
 
         gridApi.selection.on.rowSelectionChangedBatch($scope,function(rows){
@@ -172,10 +176,9 @@ angular.module('myApp.testEditPage')
             { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
             { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
         ];
-       
-    }
+    };
     
-     /* ------------------------ Test complete --------------------*/
+    /* ------------------------ Test complete --------------------*/
     
     var testFill = function(){
         if (!$scope.test.name) {
@@ -200,7 +203,7 @@ angular.module('myApp.testEditPage')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.account._id;
-            $http.edit('/test/edit/complete/' + testToShow.id, $scope.test).then(function (res) {
+            $http.put('/test/edit/complete/' + testToShow.id, $scope.test).then(function (res) {
                 $state.go('test', {testId: testToShow.id});
             }, function (err) {
                 ngNotify.set(err.data);
