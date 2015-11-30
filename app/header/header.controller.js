@@ -2,10 +2,10 @@
 
 angular.module('myApp.header')
 
-.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', function($scope, $rootScope, ngNotify, $http, $state) {
+.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', function($scope, $rootScope, ngNotify, $http, $state, authService) {
     $scope.isCollapsed = true;
     
-    function isStartPage(){
+    /*function isStartPage(){
         return ($state.is('start'));
     }
     
@@ -15,22 +15,24 @@ angular.module('myApp.header')
     
     function isNewTestPage(){
         return ($state.is('newTest'));
-    }
+    }*/
     
-    $scope.getUserName = function(){
+    /*$scope.getUserName = function(){
        return !isStartPage() ? $rootScope.account.firstName + ' ' + $rootScope.account.lastName : '';
     }
     
     $scope.getRole = function(){
         return !isStartPage() ? $rootScope.account.role : -1;
-    }
+    }*/
+    
+    $scope.auth = authService;
     
     $scope.collapse = function() {
         $scope.isCollapsed = !$scope.isCollapsed;
     }
     
     $scope.getNewTestPageStyle = function () {
-        if (isNewTestPage()){
+        if (authService.isNewTestPage()){
             return "background-color: #529085 !important; color: white";            
         }
     };

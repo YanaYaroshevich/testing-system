@@ -33,7 +33,7 @@
             <li>
                 <a ng-click="collapse()" href="">
                     <i class="fa fa-fw fa-user"></i>
-                    <span>{{getUserName()}}</span>
+                    <span>{{auth.getUserName()}}</span>
                 </a>
             </li>
         </ul>
@@ -42,49 +42,49 @@
         
         <ul class="nav navbar-nav side-nav" id="left-menu">
             <li>
-                <a style="{{getNewTestPageStyle()}}" ng-click="collapse()" ng-if="getRole() === 2" ui-sref="newTest">
+                <a style="{{getNewTestPageStyle()}}" ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="newTest">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>New test</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="getRole() === 1 || getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="getRole() === 1" href="">
+                <a ng-click="collapse()" ng-if="auth.isStudent()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My statistics</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="auth.isTeacher()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Statistics</span>
                 </a>
             </li>
              <li>
-                <a ng-click="collapse()" ng-if="getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="auth.isTeacher()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Students</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="getRole() === 1 || getRole() === 2" href="">
+                <a ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My materials</span>
                 </a>
             </li>
              <li>
-                <a ng-click="collapse()" ng-if="getRole() === 0" href="">
+                <a ng-click="collapse()" ng-if="auth.isAdmin()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>User creation</span>
                 </a>
             </li>
              <li>
-                <a ng-click="collapse()" ng-if="getRole() === 0" href="">
+                <a ng-click="collapse()" ng-if="auth.isAdmin()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>List of users</span>
                 </a>

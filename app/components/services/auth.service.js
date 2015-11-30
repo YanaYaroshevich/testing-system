@@ -2,7 +2,7 @@
 
 angular.module('auth')
 
-.service('authService', ['$http', function($http){
+.service('authService', ['$http', '$state', function($http, $state){
     var account;
     
     return {
@@ -37,7 +37,21 @@ angular.module('auth')
                 }
             }
             return true;
+        },
+        isStartPage: function(){
+            return ($state.is('start'));
+        },
+        isMainPage: function(){
+            return ($state.is('main'));
+        },
+        isNewTestPage: function(){
+            return ($state.is('newTest'));
+        },
+        getUserName: function(){
+            return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';
+        },
+        getRole: function(){
+            return account && !this.isStartPage() ? account.role : -1;
         }
-            
     };
 }]);
