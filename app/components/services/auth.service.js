@@ -33,6 +33,12 @@ angular.module('auth')
                         }
                         break;
                     }
+                    case 'testEdit': {
+                        if (!this.isTeacher()){
+                            return false;
+                        }
+                        break;
+                    }
                     default: {}
                 }
             }
@@ -46,6 +52,9 @@ angular.module('auth')
         },
         isNewTestPage: function(){
             return ($state.is('newTest'));
+        },
+        isErrorPage: function(){
+            return ($state.is('error'));    
         },
         getUserName: function(){
             return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';

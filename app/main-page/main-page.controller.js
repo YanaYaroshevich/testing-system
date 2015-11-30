@@ -36,6 +36,7 @@ angular.module('myApp.mainPage')
                 })(elem._id);
                 return elem;
             });
+            $scope.news.reverse();
         }, function (err) {
             ngNotify.set(err.data);
         });

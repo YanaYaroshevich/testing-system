@@ -8,19 +8,20 @@
     
     <div class="content-container container-fluid">
         <div class="row">
-            <div class="col-sm-5 col-md-4">
+            <div class="col-xs-4">
                 <div class="test-font">
-                    <p>Description:</p>
+                    <p>Description</p>
                     <div class="text-in">
                         <p>
                             <i class="fa fa-book"></i>
                             {{test.description}}
                         </p>
                     </div>
-                    
-                    <br/>
-                    
-                    <p>Dates:</p>
+                </div>
+            </div>    
+            <div class="col-xs-4">
+                <div class="test-font">                            
+                    <p>Dates</p>
                     <div class="text-in">
                         <p> 
                             <i class="fa fa-calendar-check-o"></i>
@@ -31,9 +32,10 @@
                             to: {{test.to}}
                         </p>
                     </div>
-                    
-                    <br/>
-                    
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="test-font">          
                     <p>Teacher</p>
                     <div class="text-in">
                         <p>
@@ -43,23 +45,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-7 col-md-8">
+        </div> 
+        
+        <br/>
+        
+        <div class="row">
+            <div class="col-xs-12">
                 <div class="test-font">
                     <p>
                         <i class="fa fa-users"></i>
-                        Students:
+                        Students
                     </p>
                     <div class="text-in">
                         <div ui-grid="gridStudents" ui-grid-resize-columns class="stud-grid"></div>
                     </div>
                 </div>
-                
-                <br/>
-                    
+            </div>
+        </div>    
+        
+        <br/>
+        <div class="row">
+            <div class="col-xs-12">            
                 <div class="test-font" ng-if="auth.isTeacher() || auth.isAdmin()">    
                      <p>
                         <i class="fa fa-question"></i>
-                        Questions:
+                        Questions
                     </p>
                     <div class="text-in">
                         <div ui-grid="gridQuestions" ui-grid-resize-columns class="question-grid"></div>

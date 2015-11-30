@@ -39,13 +39,13 @@ angular.module('myApp.testPage')
     });
     
     $scope.gridStudents.columnDefs = [
-        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
+        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '120' },
         { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
         { name: 'email', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
-        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80' },
-        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', enableFiltering: false},
-        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '80', enableFiltering: false}
+        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
+        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
+        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false},
+        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false}
     ];
     
     
@@ -79,8 +79,8 @@ angular.module('myApp.testPage')
     });
     
     $scope.gridQuestions.columnDefs = [
-        { name: 'text', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'cost', headerCellClass: 'header-filtered', minWidth: '80' },
+        { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
+        { name: 'cost', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
         { name: 'type', headerCellClass: 'header-filtered', minWidth: '200' },
         { name: 'rightAnswers', enableFiltering: false,  minWidth: '150' }
     ];

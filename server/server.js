@@ -68,10 +68,6 @@ app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId'],
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
 
-/*app.use(function(req, res, next) {
-  res.status(404).sendFile(rootDir + '\\app' + '\\index.html');
-});*/
-
 app.use('/', router);
 
 var addStudent = function() {
@@ -444,4 +440,8 @@ router.get('/new/test/students/:teacherId', function (req, res) {
             }
         } 
     });
+});
+
+app.get('*', function(req, res, next) {
+  res.sendFile(rootDir + '\\app' + '\\index.html');
 });

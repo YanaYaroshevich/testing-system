@@ -7,6 +7,7 @@ angular.module('myApp', [
     'myApp.newTest',
     'myApp.testPage',
     'myApp.testEditPage',
+    'myApp.error',
     'ui.bootstrap',
     'ngNotify',
     'ngCookies',
@@ -26,7 +27,7 @@ angular.module('myApp', [
         }         
         else {
             if (!localStorage.getItem('id') && !$rootScope.id) {
-                if (toState.name !== "start") {
+                if (toState.name !== "start" && toState.name !== 'error') {
                     e.preventDefault();
                     $state.go("start");
                 }
@@ -34,6 +35,7 @@ angular.module('myApp', [
             else if (!$rootScope.id){
                 $rootScope.id = localStorage.getItem('id');
             }
+            
             $q.when(authService.setAccount($rootScope.id)).then(function(){
                 if (!authService.isAuthorised(toState.name)){
                     $state.go('start');
@@ -44,8 +46,7 @@ angular.module('myApp', [
     });
 }])
 
-.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function ($locationProvider, $stateProvider, $urlRouterProvider) { 
-    $urlRouterProvider.otherwise("/start");
+.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function ($locationProvider, $stateProvider, $urlRouterProvider){ 
     $stateProvider
         .state('start', {
             url: "/start",
@@ -91,7 +92,14 @@ angular.module('myApp', [
                     });
                 }]
             }
+        })
+        .state('error', {
+            url: '/error',
+            templateUrl: 'errors/error.html',
+            controller: 'ErrorCtrl',
         });
+    $urlRouterProvider.when('/', '/start');
+    $urlRouterProvider.otherwise("/error");
     $locationProvider.html5Mode(true);
 }])
     
