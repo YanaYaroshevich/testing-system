@@ -6,6 +6,7 @@ angular.module('myApp', [
     'myApp.header',
     'myApp.newTest',
     'myApp.testPage',
+    'myApp.testEditPage',
     'ui.bootstrap',
     'ngNotify',
     'ngCookies',
@@ -19,12 +20,10 @@ angular.module('myApp', [
 ])
 
 .run(['$state', '$rootScope', '$cookies', '$http', 'authService', '$q', function ($state, $rootScope, $cookies, $http, authService, $q) {
-    $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {
-        
+    $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {  
         if(typeof(Storage) == "undefined") {
             ngNotify.set('localStorage is not accessible');
-        }
-                    
+        }         
         else {
             if (!localStorage.getItem('id') && !$rootScope.id) {
                 if (toState.name !== "start") {
@@ -35,7 +34,6 @@ angular.module('myApp', [
             else if (!$rootScope.id){
                 $rootScope.id = localStorage.getItem('id');
             }
-            
             $q.when(authService.setAccount($rootScope.id)).then(function(){
                 if (!authService.isAuthorised(toState.name)){
                     $state.go('start');
@@ -74,6 +72,22 @@ angular.module('myApp', [
                         return res.data.test;
                     }, function(err){
                         ngNotify.set(err.data);
+                        return '';
+                    });
+                }]
+            }
+        })
+        .state('testEdit', {
+            url: '/test/edit/:testId',
+            templateUrl: 'new-test/new-test.html',
+            controller: 'TestEditPageCtrl',
+            resolve : {
+                testToShow: ['$http', '$stateParams', function($http, $stateParams){
+                    return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                        return res.data.test;
+                    }, function(err){
+                        ngNotify.set(err.data);
+                        return '';
                     });
                 }]
             }
@@ -90,7 +104,6 @@ angular.module('myApp', [
 		sticky: true,
 		html: false
     });
-    
     try {  
         $rootScope.account = {};
     }

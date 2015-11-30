@@ -1,39 +1,18 @@
 'use strict';
 
-angular.module('myApp.newTest')
+angular.module('myApp.testEditPage')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state) {
-    ngNotify.config({
-        theme: 'pastel',
-		position: 'bottom',
-		duration: 3000,
-		type: 'error',
-		sticky: true,
-		html: false
-    });
+.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$timeout', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $timeout) {
+    console.log(testToShow);
     
+    $scope.pageName = 'Test edit';
     $rootScope.showLeftMenu = true;
-    $scope.pageName = "Test creation";
-    
-    var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
-            function(res) {
-                $rootScope.account = res.data.account;
-                getStudents();
-            },
-            function(err) {
-                ngNotify.set(err.data);
-                $state.go('start');
-            }
-        );
-    };
     
     var testToDefault = function(){
         $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
         $scope.test = {};
-        $scope.test.questions = [];
-        $scope.test.name = '';
-        $scope.test.description = '';
+        $scope.test.name = testToShow.name;
+        $scope.test.description = testToShow.description;
         $scope.test.students = [];
     };
     
@@ -54,8 +33,8 @@ angular.module('myApp.newTest')
     
     var datesToDefault = function(){
         $scope.minDate = new Date();
-        $scope.test.from = new Date();
-        $scope.test.to = new Date();
+        $scope.test.from = new Date(testToShow.start);
+        $scope.test.to = new Date(testToShow.finish);
 
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
@@ -83,6 +62,15 @@ angular.module('myApp.newTest')
     
     /* --------------------- Questions table ---------------------------- */
     
+    
+    $scope.test.questions = testToShow.questions.map(function(quest){
+                var toReturn = quest;
+                toReturn.num = testToShow.questions.indexOf(quest) + 1;
+                toReturn.type = $scope.toShowTypes[quest.type];
+                toReturn.typeInd = quest.type;
+                return toReturn;
+            });
+    
     $scope.gridQuestions = {
             enableFiltering: true,
             columnDefs : [
@@ -90,7 +78,8 @@ angular.module('myApp.newTest')
                     { name: 'type', headerCellClass: 'header-filtered', enableCellEdit: false, minWidth: '200'  },
                     { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
                     { name: 'cost', headerCellClass: 'header-filtered', minWidth: '90' }
-            ]
+            ],
+            data: $scope.test.questions
     };
     
     var questionFill = function(){
@@ -143,9 +132,9 @@ angular.module('myApp.newTest')
             }
         }
     };
-     
-    /* --------------------- Students table ----------------------------- */
     
+    /*--------------------------- Students table -----------------------*/
+     
     $scope.gridStudents = {
         enableRowSelection: true,
         enableSelectAll: true,
@@ -165,35 +154,28 @@ angular.module('myApp.newTest')
         });
     };
     
-    var getStudents = function(){
-        $http.get('/new/test/students/' + $rootScope.account._id).then(function (res) {
-            if (res.data){
-                var students = res.data.map(function(stud){
-                    return {
-                        firstName: stud.firstName,
-                        lastName: stud.lastName,
-                        email: stud.email,
-                        course: stud.course,
-                        group: stud.group,
-                        studId: stud._id
-                    };
-                });
-                
-                $scope.gridStudents.data = students;
+    var getStudents = function(){        
+        $scope.gridStudents.data = testToShow.students;
+        $timeout(function() {
+            for (var i = 0; i < $scope.gridStudents.data.length; i++) {
+                if ($scope.gridStudents.data[i].assigned){
+                    if($scope.gridApi.selection.selectRow){
+                        $scope.gridApi.selection.selectRow($scope.gridStudents.data[i]);
+                    }
+                }
             }
-            
-            $scope.gridStudents.columnDefs = [
-                { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
-                { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-                { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
-                { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
-                { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
-            ];
-        }, function (err) {   
-            ngNotify.set(err.data);
-        }); 
+        });
+        $scope.gridStudents.columnDefs = [
+            { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
+            { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
+            { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
+            { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
+            { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
+        ];
+       
     }
-    /* ------------------------ Test complete --------------------*/
+    
+     /* ------------------------ Test complete --------------------*/
     
     var testFill = function(){
         if (!$scope.test.name) {
@@ -218,14 +200,26 @@ angular.module('myApp.newTest')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.account._id;
-            $http.post('/new/test/add', $scope.test).then(function (res) {
-                console.log(res);
-                $state.go('test', {testId: res.data.testId});
+            $http.edit('/test/edit/complete/' + testToShow.id, $scope.test).then(function (res) {
+                $state.go('test', {testId: testToShow.id});
             }, function (err) {
                 ngNotify.set(err.data);
             });
         }
-    }
+    };
+    
+     var updatePage = function(){
+        $http.get('/user/' + $rootScope.id).then(
+            function(res) {
+                $rootScope.account = res.data.account;
+                getStudents();
+            },
+            function(err) {
+                ngNotify.set(err.data);
+                $state.go('start');
+            }
+        );
+    };
     
     updatePage();
 }]);

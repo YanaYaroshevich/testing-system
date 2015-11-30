@@ -115,3 +115,8 @@ textarea:focus {
     color: white;
     border-color: black; 
 }
+
+.test-font {
+    font-size: 20px;
+    color: #529085;
+}

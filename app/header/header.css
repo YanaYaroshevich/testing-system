@@ -18,7 +18,7 @@
     height: 80px;
 }
 
-/* Side Navigation */
+/*--- Side Navigation ---*/
 
 .side-nav li a {
     outline: none;
@@ -65,7 +65,7 @@
     color: #529085;
 }
 
-/* Top navigation */
+/*--- Top navigation ---*/
 
 #top-menu {
 	box-shadow: 0 2px 14px 2px #529085;
@@ -164,7 +164,7 @@
         color: white;
     }
 
-    /*    hover navbar buttons    */
+    /*--- hover navbar buttons ---*/
 
     .top-navig > li > a:focus,
     .top-navig > li > a:hover,

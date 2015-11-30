@@ -64,7 +64,7 @@ app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.get(['/start', '/main', '/new/test', '/test/:testId'], function(req, res) {
+app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
 
@@ -176,7 +176,8 @@ router.get('/test/page/:testId', function(req, res) {
                 name: result_test.name,
                 description: result_test.description,
                 finish: result_test.finish,
-                start: result_test.start
+                start: result_test.start,
+                id: req.params.testId
             };
             StudentTestModel.find({testId: result_test._id}, function (err, result_usersTest) {
                 if (err) {

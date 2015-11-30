@@ -2,11 +2,25 @@
 
 angular.module('myApp.testPage')
     
-.controller('TestPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow) {
+.controller('TestPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $state) {
+    $rootScope.showLeftMenu = true;
+    $scope.pageName = "Test " + testToShow.name;
+    
+    console.log(testToShow);
     
     $scope.test = testToShow;
-    $scope.test.from = (new Date($scope.test.start)).toLocaleTimeString() + ' ' + (new Date($scope.test.start)).toLocaleDateString();
-    $scope.test.to = (new Date($scope.test.finish)).toLocaleTimeString() + ' ' + (new Date($scope.test.finish)).toLocaleDateString();;
+    $scope.auth = authService;
+    
+    /*------------------------- Dates --------------------------------------*/
+    
+    function getPrettyDate(date) {
+        return  (new Date(date)).toLocaleTimeString() + ' ' + (new Date(date)).toLocaleDateString();
+    }
+    
+    $scope.test.from = getPrettyDate($scope.test.start);
+    $scope.test.to = getPrettyDate($scope.test.finish);
+    
+    /*------------------------- Students table ------------------------------*/
     
     $scope.gridStudents = {
         enableFiltering: true
@@ -25,14 +39,17 @@ angular.module('myApp.testPage')
     });
     
     $scope.gridStudents.columnDefs = [
-        { name: 'firstName', headerCellClass: 'header-filtered', width: '120' },
-        { name: 'lastName', headerCellClass: 'header-filtered', width: '120' },
-        { name: 'email', headerCellClass: 'header-filtered', width: '150' },
-        { name: 'course', headerCellClass: 'header-filtered', width: '80' },
-        { name: 'group', headerCellClass: 'header-filtered', width: '80' },
-        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', width: '100', enableFiltering: false},
-        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', width: '100', enableFiltering: false}
+        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
+        { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
+        { name: 'email', headerCellClass: 'header-filtered', minWidth: '150' },
+        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
+        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80' },
+        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', enableFiltering: false},
+        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '80', enableFiltering: false}
     ];
+    
+    
+    /*------------------------------ Questions table -------------------------*/
     
     $scope.gridQuestions = {
         enableFiltering: true
@@ -61,17 +78,14 @@ angular.module('myApp.testPage')
     });
     
     $scope.gridQuestions.columnDefs = [
-        { name: 'text', headerCellClass: 'header-filtered', width: '150' },
-        { name: 'cost', headerCellClass: 'header-filtered', width: '80' },
-        { name: 'type', headerCellClass: 'header-filtered', width: '150' },
-        { name: 'rightAnswers', enableFiltering: false,  width: '150' }
+        { name: 'text', headerCellClass: 'header-filtered', minWidth: '150' },
+        { name: 'cost', headerCellClass: 'header-filtered', minWidth: '80' },
+        { name: 'type', headerCellClass: 'header-filtered', minWidth: '200' },
+        { name: 'rightAnswers', enableFiltering: false,  minWidth: '150' }
     ];
     
-    console.log($scope.test);
-    
-    $rootScope.showLeftMenu = true;
-    $scope.pageName = "Test " + testToShow.name;
-    
+    /*--------------------------  Account info on refresh --------------------------------------------*/
+
     var updatePage = function(){
         $http.get('/user/' + $rootScope.id).then(
             function(res) {
@@ -85,4 +99,10 @@ angular.module('myApp.testPage')
     };
     
     updatePage();
+    
+    /*------------------------------- Edit ------------------------------------------------------*/
+    
+    $scope.moveOnEditPage = function(){
+        $state.go('testEdit', {testId: testToShow.id});
+    };
 }]);

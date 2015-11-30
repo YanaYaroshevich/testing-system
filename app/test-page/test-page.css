@@ -1,3 +1,11 @@
 .text-in {
     font-size: 15px;
 }
+
+.edit-link {
+    color: #529085;
+}
+
+.edit-link:hover {
+    color: #7DA7A0;
+}
