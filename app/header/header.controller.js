@@ -17,6 +17,16 @@ angular.module('myApp.header')
         }
     };
     
+    $scope.getMyTestsPageStyle = function () {
+        if (authService.isMyTestsPage()){
+            return "background-color: #529085 !important; color: white";            
+        }
+    };
+    
+    $scope.moveToMyTestsPage = function (){
+        $state.go('myTests', {userId: $scope.auth.getId()});
+    };
+    
     $scope.logout = function(){
         $http.post('/logout', {id: $rootScope.id}).then(function(res){
             if(typeof(Storage) == "undefined") {

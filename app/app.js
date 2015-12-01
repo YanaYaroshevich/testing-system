@@ -7,6 +7,7 @@ angular.module('myApp', [
     'myApp.newTest',
     'myApp.testPage',
     'myApp.testEditPage',
+    'myApp.myTestsPage',
     'myApp.error',
     'ui.bootstrap',
     'ngNotify',
@@ -93,6 +94,21 @@ angular.module('myApp', [
                 }]
             }
         })
+        .state('myTests', {
+            url: '/tests/:userId',
+            templateUrl: 'my-tests/my-tests.html',
+            controller: 'MyTestsPageCtrl',
+            resolve: {
+                myTests: ['$http', '$stateParams', function($http, $stateParams) {
+                    return $http.get('/tests/page/' + $stateParams.userId).then(function(res){
+                        return res.data.tests;
+                    }, function(err) {
+                        ngNotify.set(err.data);
+                        return '';
+                    });
+                }]    
+            }
+        })
         .state('error', {
             url: '/error',
             templateUrl: 'errors/error.html',
@@ -103,7 +119,7 @@ angular.module('myApp', [
     $locationProvider.html5Mode(true);
 }])
     
-.controller('MainCtrl', ['$scope', 'ngNotify', '$rootScope', function ($scope, ngNotify, $rootScope) {
+.controller('MainCtrl', ['$scope', 'ngNotify', '$rootScope', 'authService', function ($scope, ngNotify, $rootScope, authService) {
      ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -114,6 +130,10 @@ angular.module('myApp', [
     });
     try {  
         $rootScope.account = {};
+        
+        $scope.getMainStyle = function(){
+            return authService.isStartPage() ? 'background' : '';    
+        };
     }
     catch (e) {
         ngNotify.set(e);

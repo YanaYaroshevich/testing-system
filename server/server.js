@@ -68,7 +68,7 @@ app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId'], function(req, res) {
+app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId', 'tests/:userId'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
 });
 
@@ -460,6 +460,50 @@ router.get('/new/test/students/:teacherId', function (req, res) {
                 res.send(err);
             }
         } 
+    });
+});
+
+router.get('/tests/page/:userId', function(req, res) {
+    UserModel.findOne({_id: req.params.userId}, function(err, result_user) {
+        if (err){
+            res.send(err);
+        }
+        else {
+            if (result_user.role === 1) {
+                StudentTestModel.find({studentId: result_user._id}, function(err, result_studentTests) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        var testsIds = result_studentTests.map(function(cur){
+                            return cur.testId;
+                        });
+                        TestModel.find({'_id': { $in: testsIds }}, function(err, result_tests) {
+                            if (err) {
+                                res.send(err);
+                            }    
+                            else {
+                                res.send({tests: result_tests});
+                            }
+                        });
+                    }
+                });
+            }
+            else if (result_user.role === 2) {
+                TestModel.find({teacherId: result_user._id}, function(err, result_tests){
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                       res.send({tests: result_tests});
+                    }
+                });
+                
+            }
+            else {
+                res.send({tests: ''});
+            }
+        }
     });
 });
 

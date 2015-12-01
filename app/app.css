@@ -32,6 +32,15 @@ body {
     #view-wrapper {
         overflow: hidden;
     }
+    .content-container {
+        padding-top: 70px;
+    }
+    #view-wrapper > .ng-scope {
+        margin-top: 80px;
+    }
+    .page-name {
+        position: fixed;
+    }
 }
 
 #view-wrapper {

@@ -31,6 +31,7 @@
     <link href="/test-page/test-page.css" rel="stylesheet"/>
     <link href="/components/directives/news/news.css" rel="stylesheet"/>
     <link href="/main-page/main-page.css" rel="stylesheet"/>
+    <link href="/my-tests/my-tests.css" rel="stylesheet"/>
     
     <!-- Icon -->
     <link rel="shortcut icon" href="components/pics/logo.png"/>
@@ -42,7 +43,7 @@
     
     <div ng-include="'header/header.html'"></div>
 
-    <div id="view-wrapper">
+    <div id="view-wrapper" class="{{getMainStyle()}}">
         <div ui-view></div>
     </div>    
     
@@ -114,4 +115,8 @@
     <!-- Error -->
     <script src="errors/error.js"></script>
     <script src="errors/error.controller.js"></script>
+
+    <!-- My-tests -->
+    <script src="my-tests/my-tests.js"></script>
+    <script src="my-tests/my-tests.controller.js"></script>
 </html>

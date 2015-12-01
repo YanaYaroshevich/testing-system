@@ -56,11 +56,17 @@ angular.module('auth')
         isErrorPage: function(){
             return ($state.is('error'));    
         },
+        isMyTestsPage: function(){
+            return ($state.is('myTests'));
+        },
         getUserName: function(){
             return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';
         },
         getRole: function(){
             return account && !this.isStartPage() ? account.role : -1;
+        },
+        getId: function(){
+            return account && !this.isStartPage() ? account._id : '';
         }
     };
 }]);

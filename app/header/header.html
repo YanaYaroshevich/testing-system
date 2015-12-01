@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" href="">
+                <a style="{{getMyTestsPageStyle()}}" ng-click="collapse(); moveToMyTestsPage();" ng-if="auth.isStudent() || auth.isTeacher()" href="">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>
