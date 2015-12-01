@@ -9,6 +9,10 @@
             <div class="col-xs-12">
                 <div class="block-name">
                     <h3>News</h3>
+                    <div ng-show="news.length === 0" class="test-font no-news">
+                        <hr/>
+                        <p>Nothing to show</p>
+                    </div>
                 </div>
                 <div class="news" ng-repeat="piece in news">
                     <news-dir model="piece"></news-dir>

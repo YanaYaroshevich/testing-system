@@ -40,8 +40,12 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         if (error) { throw error; }
         appStormpath = application;
         app.listen(port);
-        
-        //addStudent();
+        //addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
+        //addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
+        //addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
+        //addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);
+        //addStudent('b@b.bbb', 'c@c.ccc');
+        //addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');
     });
 });
 
@@ -70,13 +74,30 @@ app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId'],
 
 app.use('/', router);
 
-var addStudent = function() {
-     UserModel.findOne({email: 'b@b.bbb'}, function(err, result_teacher){
+var addUser = function(role, email, fn, ln, group, course){
+    var user = {
+        role: role,
+        email: email,
+        firstName: fn,
+        lastName: ln,
+        picture: '',
+        tests: [],
+        students: [],
+        group: group,
+        course: course
+    };
+        
+    var aaa = new UserModel(user);
+    aaa.save(function(err){if(err) console.log(err)}); 
+};
+
+var addStudent = function(teacher_email, stud_email) {
+     UserModel.findOne({email: teacher_email}, function(err, result_teacher){
         if (err) {
             console.log(err);
         }
         else {
-            UserModel.findOne({email: 'yaroshevich.yana@gmail.com'}, function(err, result_student){
+            UserModel.findOne({email: stud_email}, function(err, result_student){
                 if (err) {
                     conole.log(err);
                 }

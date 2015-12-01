@@ -64,10 +64,13 @@ angular.module('myApp.testEditPage')
     
     
     $scope.test.questions = testToShow.questions.map(function(quest){
-                var toReturn = quest;
+                var toReturn = {};
+                toReturn.cost = quest.cost;
+                toReturn.text = quest.text;
                 toReturn.num = testToShow.questions.indexOf(quest) + 1;
                 toReturn.type = $scope.toShowTypes[quest.typeInd];
                 toReturn.typeInd = quest.typeInd;
+                toReturn.answers = quest.answers;
                 return toReturn;
             });
     

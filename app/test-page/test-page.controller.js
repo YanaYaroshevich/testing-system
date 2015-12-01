@@ -23,7 +23,7 @@ angular.module('myApp.testPage')
     /*------------------------- Students table ------------------------------*/
     
     $scope.gridStudents = {
-        enableFiltering: true
+        enableFiltering: true,
     };
     
     $scope.gridStudents.data = testToShow.students.map(function(stud){
@@ -39,13 +39,13 @@ angular.module('myApp.testPage')
     });
     
     $scope.gridStudents.columnDefs = [
-        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '120' },
-        { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'email', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'assigned', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false},
-        { name: 'passed', cellTemplate: '<div class="ngCellText" style="color: green; text-align: center" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText" style="color: red; text-align: center" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false}
+        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '120', height: '20' },
+        { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150', height: '20' },
+        { name: 'email', headerCellClass: 'header-filtered', minWidth: '150', height: '20' },
+        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80', height: '20' },
+        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80', height: '20' },
+        { name: 'assigned', cellTemplate: '<div class="ngCellText add-cell" ng-class="col.colIndex()" style="color: green;" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText add-cell" style="color: red;" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false, height: '20'},
+        { name: 'passed', cellTemplate: '<div class="ngCellText add-cell" ng-class="col.colIndex()" style="color: green;" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText add-cell" style="color: red;" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false, height: '20'}
     ];
     
     

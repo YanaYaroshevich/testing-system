@@ -2,7 +2,7 @@
 
 angular.module('myApp.error')
 
-.controller('ErrorCtrl', ['$scope', function($scope){
+.controller('ErrorCtrl', ['$scope', '$http', '$rootScope', function($scope, $http, $rootScope){
     $scope.showLeftMenu = false;
     $scope.pageName = '';
     

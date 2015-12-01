@@ -9,3 +9,8 @@
 .edit-link:hover {
     color: #7DA7A0;
 }
+
+.add-cell {
+    text-align: center; 
+    padding: 5px
+}
