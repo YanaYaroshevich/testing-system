@@ -181,6 +181,8 @@ angular.module('myApp.testEditPage')
         ];
     };
     
+    getStudents();
+    
     /* ------------------------ Test complete --------------------*/
     
     var testFill = function(){
@@ -205,27 +207,12 @@ angular.module('myApp.testEditPage')
     
     $scope.addTest = function(){
         if (testFill()){
-            $scope.test.teacherId = $rootScope.account._id;
+            $scope.test.teacherId = $rootScope.id;
             $http.put('/test/edit/complete/' + testToShow.id, $scope.test).then(function (res) {
                 $state.go('test', {testId: testToShow.id});
             }, function (err) {
                 ngNotify.set(err.data);
             });
         }
-    };
-    
-     var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
-            function(res) {
-                $rootScope.account = res.data.account;
-                getStudents();
-            },
-            function(err) {
-                ngNotify.set(err.data);
-                $state.go('start');
-            }
-        );
-    };
-    
-    updatePage();
+    };    
 }]);

@@ -68,9 +68,9 @@ app.use('/', express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId', 'tests/:userId'], function(req, res) {
+/*app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId', 'tests/:userId'], function(req, res) {
     res.sendFile(rootDir + '\\app' + '\\index.html');
-});
+});*/
 
 app.use('/', router);
 
@@ -114,9 +114,9 @@ var addStudent = function(teacher_email, stud_email) {
 };
 
 /* GET home page. */
-router.get('/', function (req, res) {
+/*router.get('/', function (req, res) {
     res.redirect('/start');
-});
+});*/
 
 router.post('/login', function (req, res) {
     appStormpath.authenticateAccount({
@@ -132,6 +132,8 @@ router.post('/login', function (req, res) {
                     res.send({noErrors: false});
                 }
                 else {
+                    result_acc.online = true;
+                    result_acc.save(function(err){console.log(err)});
                     res.send({account: result_acc, noErrors: true});
                 }
             });
@@ -140,7 +142,17 @@ router.post('/login', function (req, res) {
 });
 
 router.post('/logout', function (req, res) {
-    res.send({lalka: ''});
+    UserModel.findOne({_id: req.body.id}, function(err, result_acc){
+        if(err) {
+            res.send(err);
+        }
+        else {
+            result_acc.online = false;
+            result_acc.save(function(err){console.log(err)});
+            res.send({account: result_acc});
+        }
+    });
+    
 });
 
 router.get('/user/:userId', function(req, res) {

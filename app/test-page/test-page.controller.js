@@ -85,21 +85,6 @@ angular.module('myApp.testPage')
         { name: 'rightAnswers', enableFiltering: false,  minWidth: '150' }
     ];
     
-    /*--------------------------  Account info on refresh --------------------------------------------*/
-
-    var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
-            function(res) {
-                $rootScope.account = res.data.account;
-            },
-            function(err) {
-                ngNotify.set(err.data);
-                $state.go('start');
-            }
-        );
-    };
-    
-    updatePage();
     
     /*------------------------------- Edit ------------------------------------------------------*/
     

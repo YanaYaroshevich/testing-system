@@ -6,20 +6,6 @@ angular.module('myApp.myTestsPage')
     $scope.pageName = "My tests";
     $rootScope.showLeftMenu = true;
     
-    var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
-            function(res) {
-                $rootScope.account = res.data.account;
-            },
-            function(err) {
-                ngNotify.set(err.data);
-                $state.go('start');
-            }
-        );
-    };
-    
-    updatePage();
-    
     $scope.gridTests = {
         enableFiltering: true,
     };

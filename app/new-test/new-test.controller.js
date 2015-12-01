@@ -13,20 +13,7 @@ angular.module('myApp.newTest')
     });
     
     $rootScope.showLeftMenu = true;
-    $scope.pageName = "Test creation";
-    
-    var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
-            function(res) {
-                $rootScope.account = res.data.account;
-                getStudents();
-            },
-            function(err) {
-                ngNotify.set(err.data);
-                $state.go('start');
-            }
-        );
-    };
+    $scope.pageName = "Test creation";    
     
     var testToDefault = function(){
         $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
@@ -166,7 +153,7 @@ angular.module('myApp.newTest')
     };
     
     var getStudents = function(){
-        $http.get('/new/test/students/' + $rootScope.account._id).then(function (res) {
+        $http.get('/new/test/students/' + $rootScope.id).then(function (res) {
             if (res.data){
                 var students = res.data.map(function(stud){
                     return {
@@ -193,6 +180,9 @@ angular.module('myApp.newTest')
             ngNotify.set(err.data);
         }); 
     }
+    
+    getStudents();
+    
     /* ------------------------ Test complete --------------------*/
     
     var testFill = function(){
@@ -217,7 +207,7 @@ angular.module('myApp.newTest')
     
     $scope.addTest = function(){
         if (testFill()){
-            $scope.test.teacherId = $rootScope.account._id;
+            $scope.test.teacherId = $rootScope.id;
             $http.post('/new/test/add', $scope.test).then(function (res) {
                 console.log(res);
                 $state.go('test', {testId: res.data.testId});
@@ -226,6 +216,4 @@ angular.module('myApp.newTest')
             });
         }
     }
-    
-    updatePage();
 }]);
