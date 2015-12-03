@@ -8,6 +8,7 @@ angular.module('myApp', [
     'myApp.testPage',
     'myApp.testEditPage',
     'myApp.myTestsPage',
+    'myApp.statistics',
     'myApp.error',
     'ui.bootstrap',
     'ngNotify',
@@ -64,6 +65,11 @@ angular.module('myApp', [
             templateUrl: 'new-test/new-test.html',
             controller: 'NewTestCtrl'
         })
+        .state('statistics', {
+            url: '/statistics',
+            templateUrl: 'statistics/statistics.html',
+            controller: 'StatisticsPageCtrl' 
+        })
         .state('test', {
             url: '/test/:testId',
             templateUrl: 'test-page/test-page.html',
@@ -114,6 +120,14 @@ angular.module('myApp', [
             templateUrl: 'errors/error.html',
             controller: 'ErrorCtrl',
         });
+    $urlRouterProvider.when('/start/', '/start');
+    $urlRouterProvider.when('/main/', '/main');
+    $urlRouterProvider.when('/new/test/', '/new/test');
+    $urlRouterProvider.when('/statistics/', '/statistics');
+    $urlRouterProvider.when('/test/:testId/', '/test/:testId');
+    $urlRouterProvider.when('/test/edit/:testId/', '/test/edit/:testId');
+    $urlRouterProvider.when('/tests/:userId/', '/tests/:userId');
+    
     $urlRouterProvider.when('/', '/start');
     $urlRouterProvider.otherwise("/error");
     $locationProvider.html5Mode(true);

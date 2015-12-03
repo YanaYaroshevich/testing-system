@@ -48,19 +48,19 @@
                 </a>
             </li>
             <li>
-                <a style="{{getMyTestsPageStyle()}}" ng-click="collapse(); moveToMyTestsPage();" ng-if="auth.isStudent() || auth.isTeacher()" href="">
+                <a style="{{getMyTestsPageStyle()}}" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests({userId: auth.getId()})">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="auth.isStudent()" href="">
+                <a ng-click="collapse()" ng-if="auth.isStudent()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My statistics</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="auth.isTeacher()" href="">
+                <a ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Statistics</span>
                 </a>

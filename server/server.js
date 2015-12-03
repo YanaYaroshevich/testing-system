@@ -52,7 +52,7 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-app.all('/*', function (req, res, next) {
+app.all('*', function (req, res, next) {
     res.set({
         'Access-Control-Allow-Origin': '*',
         "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS"
@@ -64,15 +64,11 @@ var router = express.Router();
 
 var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
 
-app.use('/', express.static(rootDir + '\\app'));
+app.use(express.static(rootDir + '\\app'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
-/*app.get(['/start', '/main', '/new/test', '/test/:testId', '/test/edit/:testId', 'tests/:userId'], function(req, res) {
-    res.sendFile(rootDir + '\\app' + '\\index.html');
-});*/
-
-app.use('/', router);
+app.use(router);
 
 var addUser = function(role, email, fn, ln, group, course){
     var user = {
@@ -112,11 +108,6 @@ var addStudent = function(teacher_email, stud_email) {
         }
     });
 };
-
-/* GET home page. */
-/*router.get('/', function (req, res) {
-    res.redirect('/start');
-});*/
 
 router.post('/login', function (req, res) {
     appStormpath.authenticateAccount({

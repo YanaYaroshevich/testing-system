@@ -59,6 +59,9 @@ angular.module('auth')
         isMyTestsPage: function(){
             return ($state.is('myTests'));
         },
+        isStatisticsPage: function(){
+            return ($state.is('statistics'));    
+        },
         getUserName: function(){
             return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';
         },

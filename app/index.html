@@ -21,7 +21,7 @@
     
     <!-- Ui-grid -->
     <link rel="stylesheet" type="text/css" href="/bower_components/angular-ui-grid/ui-grid.min.css"/>
-    
+        
      <!-- Styles -->
     <link href="/app.css" rel="stylesheet"/>
     <link href="/footer/footer.css" rel="stylesheet"/>
@@ -35,6 +35,9 @@
     
     <!-- Icon -->
     <link rel="shortcut icon" href="components/pics/logo.png"/>
+    
+     <!-- nv.d3 -->
+    <link rel="stylesheet" type="text/css" href="/bower_components/nvd3/build/nv.d3.css"/>    
     
     <base href="/start">
 </head>
@@ -74,6 +77,11 @@
 
     <!-- Ui-grid -->
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+    
+    <!-- nv.d3 -->
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/nvd3/build/nv.d3.js"></script> <!-- or use another assembly -->
+    <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
 
     <!-- Scripts -->
 
@@ -119,4 +127,9 @@
     <!-- My-tests -->
     <script src="my-tests/my-tests.js"></script>
     <script src="my-tests/my-tests.controller.js"></script>
+    
+    <!-- Statistics -->
+    <script src="statistics/statistics.js"></script>
+    <script src="statistics/statistics.controller.js"></script>
+
 </html>
