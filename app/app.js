@@ -11,6 +11,7 @@ angular.module('myApp', [
     'myApp.statistics',
     'myApp.error',
     'ui.bootstrap',
+    'ngAnimate',
     'ngNotify',
     'ngCookies',
     'ui.grid',
