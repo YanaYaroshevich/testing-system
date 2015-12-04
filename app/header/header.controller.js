@@ -2,13 +2,15 @@
 
 angular.module('myApp.header')
 
-.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', function($scope, $rootScope, ngNotify, $http, $state, authService) {
+.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', 'screenSize', function($scope, $rootScope, ngNotify, $http, $state, authService, screenSize) {
     $scope.isCollapsed = true;
     
     $scope.auth = authService;
     
     $scope.collapse = function() {
-        $scope.isCollapsed = !$scope.isCollapsed;
+        if (screenSize.is('xs')) {
+            $scope.isCollapsed = !$scope.isCollapsed;
+        }
     }
     
     $scope.getNewTestPageStyle = function () {

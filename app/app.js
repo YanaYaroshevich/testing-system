@@ -20,7 +20,8 @@ angular.module('myApp', [
     'ui.grid.autoResize',
     'ui.grid.resizeColumns',
     'ui.router',
-    'auth'
+    'auth',
+    'matchMedia'
 ])
 
 .run(['$state', '$rootScope', '$cookies', '$http', 'authService', '$q', function ($state, $rootScope, $cookies, $http, authService, $q) {
