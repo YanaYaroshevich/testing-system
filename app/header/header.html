@@ -54,13 +54,13 @@
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="auth.isStudent()" ui-sref="statistics">
+                <a style="{{getStatisticsPageStyle()}}" ng-click="collapse()" ng-if="auth.isStudent()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My statistics</span>
                 </a>
             </li>
             <li>
-                <a ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="statistics">
+                <a style="{{getStatisticsPageStyle()}}" ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Statistics</span>
                 </a>

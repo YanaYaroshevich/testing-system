@@ -24,6 +24,12 @@ angular.module('myApp.header')
             return "background-color: #529085 !important; color: white";            
         }
     };
+    
+    $scope.getStatisticsPageStyle = function () {
+        if (authService.isStatisticsPage()){
+            return "background-color: #529085 !important; color: white";            
+        }
+    };
 
     $scope.logout = function(){
         $http.post('/logout', {id: $rootScope.id}).then(function(res){
