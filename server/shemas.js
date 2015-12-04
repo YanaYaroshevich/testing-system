@@ -46,7 +46,8 @@ module.exports = function (mongoose) {
             testId: mongoose.Schema.Types.ObjectId, //+
             passed: Boolean, //+
             grade: { type: Number, default: 0 }, //+
-            assigned: Boolean //+
+            assigned: Boolean, //+
+            dateOfPass: { type: Date, default: null }
         },
         {
             collection: 'studentTests'

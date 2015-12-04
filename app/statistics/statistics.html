@@ -9,14 +9,14 @@
             <div class="col-sm-4" ng-repeat="data in pieChartsData track by $index">
                 <div class="test-font">
                     <p style="text-align:center">{{testsStatistics[$index].name}}</p>
-                    <nvd3 options='options' data='data'></nvd3>
+                    <nvd3 options='optionsPie' data='data'></nvd3>
                 </div>
             </div>
         </div>
         
         <div class="row">
             <div class="col-xs-12">
-                <nvd3 options='options1' data='data1'></nvd3>
+                <nvd3 options='optionsLine' data='lineChartsData'></nvd3>
             </div>
         </div>
     </div>

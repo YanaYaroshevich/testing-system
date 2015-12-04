@@ -208,7 +208,9 @@ router.get('/test/page/:testId', function(req, res) {
                         return {
                             passed: cur.passed,
                             assigned: cur.assigned,
-                            id: cur.studentId
+                            id: cur.studentId,
+                            dateOfPass: cur.dateOfPass,
+                            grade: cur.grade
                         };
                     });
                     UserModel.findOne({_id: result_test.teacherId}, function(err, result_teacher){
@@ -231,12 +233,16 @@ router.get('/test/page/:testId', function(req, res) {
                                             group: cur.group, 
                                             passed: false,
                                             assigned: false,
+                                            dateOfPass: null,
+                                            grade: 0,
                                             id: cur._id
                                         };
                                         for (var i = 0; i < usersTest.length; i++){
                                             if (cur._id.toString() === usersTest[i].id.toString()){
                                                 toReturn.passed = usersTest[i].passed;
                                                 toReturn.assigned = usersTest[i].assigned;
+                                                toReturn.dateOfPass = usersTest[i].dateOfPass;
+                                                toReturn.grade = usersTest[i].grade;
                                                 break;
                                             }
                                         }
@@ -247,8 +253,6 @@ router.get('/test/page/:testId', function(req, res) {
                                             res.send(err);
                                         }
                                         else {
-                                            
-                                            console.log(result_qs);
                                             toSend.questions = result_qs.map(function(cur){
                                                 return {
                                                     text: cur.text,
