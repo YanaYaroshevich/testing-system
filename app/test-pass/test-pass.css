@@ -1,0 +1,46 @@
+.pagination>li>a:focus, 
+.pagination>li>a:hover, 
+.pagination>li>span:focus, 
+.pagination>li>span:hover,
+.pagination>li>a,
+.pagination>li>span{
+    color: #529085;
+    border-color: #529085;
+}
+
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover {
+    color: white;
+    background-color: #529085;
+    border-color: #529085;
+}
+
+.my-pagination {
+    position: fixed;
+    bottom: 120px;
+}
+
+.test-name {
+    color:  #529085;
+    position: fixed;
+    bottom: 60px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+.question-text {
+    margin-top: 20px;
+}
+
+.test-container {
+    padding: 0;
+}
+
+.test-font {
+    padding: 0;
+}

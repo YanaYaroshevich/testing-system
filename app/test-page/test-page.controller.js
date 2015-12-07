@@ -91,4 +91,9 @@ angular.module('myApp.testPage')
     $scope.moveOnEditPage = function(){
         $state.go('testEdit', {testId: testToShow.id});
     };
+    
+    /*-------------------------------- Start ----------------------------------------------------*/
+    $scope.startTest = function(){
+         $state.go('testPass', {testId: testToShow.id});
+    }
 }]);

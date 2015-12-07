@@ -14,3 +14,7 @@
     text-align: center; 
     padding: 5px
 }
+
+.row .ng-scope {
+    height: auto;
+}

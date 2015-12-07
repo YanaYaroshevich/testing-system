@@ -23,9 +23,7 @@ body {
 }
 
 @media (min-height: 502px) {
-    #view-wrapper .ng-scope {
-        height: 100%;
-    }
+   
 }
 
 @media (min-width: 768px) {
@@ -66,8 +64,8 @@ body {
 }
 
 textarea {
-    overflow:auto;
-    resize:none;
+    overflow: auto;
+    resize: none;
     display: block;
     width: 100%;
     padding: 6px 12px;

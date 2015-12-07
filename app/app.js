@@ -9,6 +9,7 @@ angular.module('myApp', [
     'myApp.testEditPage',
     'myApp.myTestsPage',
     'myApp.statistics',
+    'myApp.testPassPage',
     'myApp.error',
     'ui.bootstrap',
     'ngAnimate',
@@ -115,6 +116,21 @@ angular.module('myApp', [
                         return '';
                     });
                 }]    
+            }
+        })
+        .state('testPass', {
+            url: '/test/pass/:testId',
+            templateUrl: 'test-pass/test-pass.html',
+            controller: 'TestPassPageCtrl',
+            resolve: {
+                test: ['$http', '$stateParams', function($http, $stateParams){
+                    return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                        return res.data.test;
+                    }, function(err){
+                        ngNotify.set(err.data);
+                        return '';
+                    });
+                }]
             }
         })
         .state('error', {
