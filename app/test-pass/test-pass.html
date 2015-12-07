@@ -4,7 +4,7 @@
             <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 test-font">
                 <div ng-repeat="question in questions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
                     <div class="question-text">
-                        <p>{{question.text}}</p>
+                        <p>{{$index+1}}. {{question.text}}</p>
                         <hr/>
                     </div>    
                 </div>
@@ -30,6 +30,6 @@
             <div class="col-sm-3 col-xs-2">
             </div>   
         </div>    
-           
+          
     </div>
 </div>
