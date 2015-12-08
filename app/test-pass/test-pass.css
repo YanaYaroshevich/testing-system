@@ -19,6 +19,27 @@
     border-color: #529085;
 }
 
+.pagination>.disabled>a, 
+.pagination>.disabled>a:focus, 
+.pagination>.disabled>a:hover, 
+.pagination>.disabled>span, 
+.pagination>.disabled>span:focus, 
+.pagination>.disabled>span:hover {
+    background-color: #eee;
+}
+
+.sub-btn {
+    color: #529085;
+    border-color: #529085;
+    background-color: white;
+}
+
+.sub-btn:hover,
+.sub-btn:focus {
+    background-color: #eee;
+    border-color: #529085;
+}
+
 .test-name {
     color:  #529085;
     margin: 0 auto;
@@ -44,7 +65,7 @@
 
 .fill-in-answer {
     display: inline-block;
-    width: 300px;
+    width: 100px;
 }
 
 .prettycheckbox>a, 

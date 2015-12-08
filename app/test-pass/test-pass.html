@@ -1,5 +1,5 @@
 <div>
-    <div class="container-fluid test-container">
+    <div ng-if="!passed" class="container-fluid test-container">
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10">
                 <div ng-repeat="question in questions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
@@ -11,7 +11,6 @@
                     <div ng-if="question.typeInd === 0 && question.multipleRight" ng-repeat="answer in question.answers" class="answer">
                         <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-checkbox>
                         <br/>
-                        
                     </div>
                     <div ng-if="question.typeInd === 0 && !question.multipleRight" ng-repeat="answer in question.answers" class="answer">
                         <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-radio>
@@ -25,24 +24,34 @@
         </div>
         
         <div class="row">
-            <div class="col-sm-2 col-xs-1">
+            <div class="col-sm-2 col-xs-1"></div>
+            <div class="col-sm-6 col-xs-10">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm my-pagination" rotate="false" num-pages="numPages" boundary-links="true"></uib-pagination>
             </div>
-            <div class="col-sm-8 col-xs-10">
-                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm my-pagination" rotate="false" num-pages="numPages"></uib-pagination> 
-            </div>
-        </div>    
+        </div>
         
+        <div class="row">
+            <div class="col-sm-2 col-xs-1"></div>
+            <div class="col-xs-10">
+                <button class="btn btn-primary sub-btn" ng-disabled="" ng-click="submitTest()">Submit</button>
+            </div>
+        </div>
          <div class="row">
-            <div class="col-sm-3 col-xs-2">
-            </div>    
-            <div class="col-sm-6 col-xs-8" style="text-align: center">   
+            <div class="col-sm-3 col-xs-2"></div>
+            <div class="col-sm-6 col-xs-8" style="text-align: center">
                 <div class="test-name">
                     <h2 style="padding: 0">{{testName}}</h2>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-2">
-            </div>   
+            <div class="col-sm-3 col-xs-2"></div>
         </div>    
-          
+    </div>
+    
+    <div ng-if="passed" class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <pre>{{grade}}</pre>
+            </div>
+        </div>
     </div>
 </div>

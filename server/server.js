@@ -285,7 +285,8 @@ router.get('/test/page/:testId/stud/:studId', function(req, res) {
                 name: result_test.name,
                 id: req.params.testId,
                 passed: null,
-                assigned: null
+                assigned: null,
+                grade: 0
             };
             StudentTestModel.find({testId: result_test._id}, function (err, result_usersTest) {
                 if (err) {
@@ -293,10 +294,10 @@ router.get('/test/page/:testId/stud/:studId', function(req, res) {
                 }
                 else {
                     for(var i = 0; i < result_usersTest.length; i++){
-                        console.log(result_usersTest[i]);
                         if(result_usersTest[i].studentId == req.params.studId){
                             toSend.passed = result_usersTest[i].passed;
                             toSend.assigned = result_usersTest[i].assigned;
+                            toSend.grade = result_usersTest[i].grade;
                         }
                     }
                     QuestionModel.find({testId: result_test._id}, function(err, result_qs){
@@ -306,6 +307,11 @@ router.get('/test/page/:testId/stud/:studId', function(req, res) {
                         else {
                             toSend.questions = result_qs.map(function(cur){
                                 if (cur.typeInd === 0){
+                                    var rightAnsQ = 0;
+                                    for (var i = 0; i < cur.answers.length; i++){
+                                        if (cur.answers[i].right)
+                                            rightAnsQ++;
+                                    }
                                     return {
                                         text: cur.text,
                                         typeInd: cur.typeInd,
@@ -315,7 +321,8 @@ router.get('/test/page/:testId/stud/:studId', function(req, res) {
                                                 num: cur.answers.indexOf(ans)
                                             };
                                         }),
-                                        id: cur._id
+                                        id: cur._id,
+                                        multipleRight: (rightAnsQ > 1)
                                     };
                                 }
                                 else if (cur.typeInd === 2) {
@@ -449,6 +456,59 @@ router.post('/new/test/add', function (req, res) {
             else {
                 res.send(err);
             }
+        }
+    });
+});
+
+router.post('/test/pass/submit', function(req, res){
+    var questionIds = req.body.questions.map(function(cur){
+        return cur.id;
+    });
+    QuestionModel.find({'_id': { $in: questionIds }}, function(err, result_questions){
+        console.log(result_questions);
+        if (err) {
+            res.send(err);
+        }
+        else {
+            var totalCost = 0;
+            var studCost = 0;
+            for (var i = 0; i < result_questions.length; i++){
+                totalCost += result_questions[i].cost;
+                
+                if (result_questions[i].typeInd === 0) {
+                    var right = true;
+                    for (var j = 0; j < result_questions[i].answers.length; j++){
+                        if (result_questions[i].answers[j].right && req.body.questions[i].answers.indexOf(j) === -1){
+                            right = false;
+                        }
+                        if (!result_questions[i].answers[j].right && req.body.questions[i].answers.indexOf(j) !== -1){
+                            right = false;
+                        }
+                    }
+                    
+                    studCost += (right) ? result_questions[i].cost : 0;
+                }
+                else if (result_questions[i].typeInd === 2) {  
+                    if (req.body.questions[i].answers[0] === result_questions[i].text.substring(result_questions[i].text.indexOf('###') + 3, result_questions[i].text.lastIndexOf('###'))){
+                        studCost += result_questions[i].cost;
+                    }       
+                }
+            }
+            StudentTestModel.findOne({studentId: req.body.studId, testId: req.body.testId}, function(err, result_studTest){
+                if (err){
+                    res.send(err);
+                }    
+                else {
+                    result_studTest.passed = true;
+                    result_studTest.grade = (studCost * 100 / totalCost);
+                    result_studTest.save(function(err){
+                        if (err) {
+                            res.send(err);
+                        }
+                    }); 
+                    res.send({});
+                }
+            });
         }
     });
 });
