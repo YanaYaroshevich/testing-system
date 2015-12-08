@@ -1,12 +1,22 @@
 <div>
     <div class="container-fluid test-container">
         <div class="row">
-            <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10 test-font">
+            <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10">
                 <div ng-repeat="question in questions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-                    <div class="question-text">
-                        <p>{{$index+1}}. {{question.text}}</p>
+                    <div class="question-text test-pass test-font">
+                        <p ng-if="question.typeInd === 0">{{currentPage}}. {{question.text}}</p>
+                        <p ng-if="question.typeInd === 2">{{currentPage}}. Fill the word</p>
                         <hr/>
-                    </div>    
+                    </div>
+                    <div ng-if="question.typeInd === 0 && question.multipleRight" ng-repeat="answer in question.answers" class="answer">
+                        <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-checkbox>
+                         <br/>
+                        
+                    </div>
+                    <div ng-if="question.typeInd === 0 && !question.multipleRight" ng-repeat="answer in question.answers" class="answer">
+                        <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-radio>
+                        <br/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -15,7 +25,7 @@
             <div class="col-sm-2 col-xs-1">
             </div>
             <div class="col-sm-8 col-xs-10">
-                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm my-pagination"></uib-pagination> 
+                <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm my-pagination" rotate="false" num-pages="numPages"></uib-pagination> 
             </div>
         </div>    
         

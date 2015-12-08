@@ -258,7 +258,8 @@ router.get('/test/page/:testId', function(req, res) {
                                                     text: cur.text,
                                                     cost: cur.cost,
                                                     typeInd: cur.typeInd,
-                                                    answers: cur.answers  
+                                                    answers: cur.answers,
+                                                    id: cur._id
                                                 };
                                             });
                                             res.send( { test: toSend } );

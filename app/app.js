@@ -22,7 +22,8 @@ angular.module('myApp', [
     'ui.grid.resizeColumns',
     'ui.router',
     'auth',
-    'matchMedia'
+    'matchMedia',
+    'pretty-checkable'
 ])
 
 .run(['$state', '$rootScope', '$cookies', '$http', 'authService', '$q', function ($state, $rootScope, $cookies, $http, authService, $q) {

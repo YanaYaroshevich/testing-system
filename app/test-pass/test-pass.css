@@ -19,15 +19,8 @@
     border-color: #529085;
 }
 
-.my-pagination {
-    position: fixed;
-    bottom: 120px;
-}
-
 .test-name {
     color:  #529085;
-    position: fixed;
-    bottom: 60px;
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -41,6 +34,21 @@
     padding: 0;
 }
 
-.test-font {
+.test-pass {
     padding: 0;
+}
+
+.answer {
+    color: #529085;
+}
+
+.prettycheckbox>a, 
+.prettyradio>a {
+    float: inherit!important;
+    position: absolute!important;
+}
+
+.prettycheckbox label, 
+.prettyradio label {
+    margin: 6px 30px!important;
 }
