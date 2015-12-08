@@ -94,6 +94,6 @@ angular.module('myApp.testPage')
     
     /*-------------------------------- Start ----------------------------------------------------*/
     $scope.startTest = function(){
-         $state.go('testPass', {testId: testToShow.id});
+         $state.go('testPass', {testId: testToShow.id, studId: $rootScope.id});
     }
 }]);

@@ -9,30 +9,35 @@ angular.module('myApp.testPage')
     
     $scope.questions = test.questions.map(function(cur){
         var rightAnsQ = 0;
-        for (var i = 0; i < cur.answers.length; i++){
-            if (cur.answers[i].right)
-                rightAnsQ++;
+        if (cur.typeInd === 0){
+            for (var i = 0; i < cur.answers.length; i++){
+                if (cur.answers[i].right)
+                    rightAnsQ++;
+            }
         }
         return {
             answers: cur.answers,
-            cost: cur.cost,
             text: cur.text,
             typeInd: cur.typeInd,
             id: cur.id, 
             multipleRight: (rightAnsQ > 1),
-            radioChecked: 0
+            radioChecked: 0,
+            firstPart: cur.firstPart,
+            secondPart: cur.secondPart
         };
     });
     
     for (var i = 0; i < $scope.questions.length; i++){
-        $scope.questions[i].answers = $scope.questions[i].answers.map(function(cur){
-            return {
-                text: cur.text,
-                num: $scope.questions[i].answers.indexOf(cur),
-                right: cur.right,
-                checked: false
-            };
-        });
+        if ($scope.questions[i].typeInd === 0){
+             $scope.questions[i].answers = $scope.questions[i].answers.map(function(cur){
+                return {
+                    text: cur.text,
+                    num: cur.num,
+                    checked: false
+                };
+            });
+        }
+      
     }
     
     console.log($scope.questions);

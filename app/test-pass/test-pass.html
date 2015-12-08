@@ -10,12 +10,15 @@
                     </div>
                     <div ng-if="question.typeInd === 0 && question.multipleRight" ng-repeat="answer in question.answers" class="answer">
                         <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-checkbox>
-                         <br/>
+                        <br/>
                         
                     </div>
                     <div ng-if="question.typeInd === 0 && !question.multipleRight" ng-repeat="answer in question.answers" class="answer">
                         <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-radio>
                         <br/>
+                    </div>
+                    <div ng-if="question.typeInd === 2" class="test-font">
+                        <p>{{question.firstPart}} <input ng-model="question.studAns" type="text" class="form-control fill-in-answer" placeholder="Type here"> {{question.secondPart}}</p>
                     </div>
                 </div>
             </div>

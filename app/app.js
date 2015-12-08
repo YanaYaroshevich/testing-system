@@ -120,12 +120,13 @@ angular.module('myApp', [
             }
         })
         .state('testPass', {
-            url: '/test/pass/:testId',
+            url: '/test/pass/:testId/stud/:studId',
             templateUrl: 'test-pass/test-pass.html',
             controller: 'TestPassPageCtrl',
             resolve: {
                 test: ['$http', '$stateParams', function($http, $stateParams){
-                    return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                    return $http.get('/test/page/' + $stateParams.testId + '/stud/' + $stateParams.studId).then(function(res){
+                        console.log(res);
                         return res.data.test;
                     }, function(err){
                         ngNotify.set(err.data);

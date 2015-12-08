@@ -275,6 +275,70 @@ router.get('/test/page/:testId', function(req, res) {
     });
 });
 
+router.get('/test/page/:testId/stud/:studId', function(req, res) {
+    TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            var toSend = {
+                name: result_test.name,
+                id: req.params.testId,
+                passed: null,
+                assigned: null
+            };
+            StudentTestModel.find({testId: result_test._id}, function (err, result_usersTest) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    for(var i = 0; i < result_usersTest.length; i++){
+                        console.log(result_usersTest[i]);
+                        if(result_usersTest[i].studentId == req.params.studId){
+                            toSend.passed = result_usersTest[i].passed;
+                            toSend.assigned = result_usersTest[i].assigned;
+                        }
+                    }
+                    QuestionModel.find({testId: result_test._id}, function(err, result_qs){
+                        if (err) {
+                            res.send(err);
+                        }
+                        else {
+                            toSend.questions = result_qs.map(function(cur){
+                                if (cur.typeInd === 0){
+                                    return {
+                                        text: cur.text,
+                                        typeInd: cur.typeInd,
+                                        answers: cur.answers.map(function(ans){
+                                            return {
+                                                text: ans.text,
+                                                num: cur.answers.indexOf(ans)
+                                            };
+                                        }),
+                                        id: cur._id
+                                    };
+                                }
+                                else if (cur.typeInd === 2) {
+                                    var firstPart = cur.text.substring(0, cur.text.indexOf('###'));
+                                    var secondPart =  cur.text.substring(cur.text.lastIndexOf('###') + 3, cur.text.length);
+                                    return {
+                                        firstPart: firstPart,
+                                        secondPart: secondPart,
+                                        typeInd: cur.typeInd,
+                                        id: cur._id
+                                    };
+                                }
+                                
+                            });
+                            res.send( { test: toSend } );
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
 var dateCreation = function (date, isStart) {
     var d = new Date(date);
     if (isStart) {
