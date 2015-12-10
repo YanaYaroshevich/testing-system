@@ -14,7 +14,6 @@ angular.module('myApp', [
     'ui.bootstrap',
     'ngAnimate',
     'ngNotify',
-    'ngCookies',
     'ui.grid',
     'ui.grid.edit',
     'ui.grid.selection',
@@ -26,7 +25,7 @@ angular.module('myApp', [
     'pretty-checkable'
 ])
 
-.run(['$state', '$rootScope', '$cookies', '$http', 'authService', '$q', function ($state, $rootScope, $cookies, $http, authService, $q) {
+.run(['$state', '$rootScope', '$http', 'authService', '$q', function ($state, $rootScope, $http, authService, $q) {
     $rootScope.$on("$stateChangeStart", function (e, toState, toParams, fromState, fromParams) {  
         if(typeof(Storage) == "undefined") {
             ngNotify.set('localStorage is not accessible');

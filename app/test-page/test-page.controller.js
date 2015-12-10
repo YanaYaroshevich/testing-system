@@ -5,6 +5,7 @@ angular.module('myApp.testPage')
 .controller('TestPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $state) {
     $rootScope.showLeftMenu = true;
     $scope.pageName = "Test " + testToShow.name;
+    $scope.toShowPassBtn = false;
     
     console.log(testToShow);
     
@@ -27,6 +28,9 @@ angular.module('myApp.testPage')
     };
     
     $scope.gridStudents.data = testToShow.students.map(function(stud){
+        if (stud.id === $rootScope.id && stud.assigned && !stud.passed) {
+            $scope.toShowPassBtn = true;
+        }
         return {
             firstName: stud.firstName,
             lastName: stud.lastName,

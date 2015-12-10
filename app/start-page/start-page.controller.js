@@ -2,7 +2,7 @@
 
 angular.module('myApp.startPage')
 
-.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$state', '$cookies', 'ngNotify', function($scope, $rootScope, $http, $state, $cookies, ngNotify) {
+.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$state', 'ngNotify', function($scope, $rootScope, $http, $state, ngNotify) {
     $rootScope.showLeftMenu = false;
     $scope.rememberMe = false;
     $scope.wrongInput = false;
