@@ -4,7 +4,7 @@ angular.module('myApp.mainPage')
 
 .controller('MainPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', '$state', function($scope, $rootScope, $http, ngNotify, $state) {
     $rootScope.showLeftMenu = true;
-    $scope.pageName = "Main page";
+    $scope.pageName = 'Main page';
     
     ngNotify.config({
         theme: 'pastel',

@@ -42,19 +42,19 @@
         
         <ul class="nav navbar-nav side-nav" id="left-menu">
             <li>
-                <a style="{{getNewTestPageStyle()}}" ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="newTest">
+                <a ng-class="auth.isNewTestPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="newTest">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>New test</span>
                 </a>
             </li>
             <li>
-                <a style="{{getMyTestsPageStyle()}}" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests({userId: auth.getId()})">
+                <a ng-class="auth.isMyTestsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests({userId: auth.getId()})">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>
             </li>
             <li>
-                <a style="{{getStatisticsPageStyle()}}" ng-click="collapse()" ng-if="auth.isTeacher() || auth.isStudent()" ui-sref="statistics">
+                <a ng-class="auth.isStatisticsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isTeacher() || auth.isStudent()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>Statistics</span>
                 </a>

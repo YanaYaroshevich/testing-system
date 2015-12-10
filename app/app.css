@@ -22,10 +22,6 @@ body {
     color: #529085; 
 }
 
-@media (min-height: 502px) {
-   
-}
-
 @media (min-width: 768px) {
     #view-wrapper {
         overflow: hidden;

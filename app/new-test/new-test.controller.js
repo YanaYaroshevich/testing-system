@@ -13,7 +13,7 @@ angular.module('myApp.newTest')
     });
     
     $rootScope.showLeftMenu = true;
-    $scope.pageName = "Test creation";    
+    $scope.pageName = 'Test creation';    
     
     var testToDefault = function(){
         $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];
@@ -209,7 +209,6 @@ angular.module('myApp.newTest')
         if (testFill()){
             $scope.test.teacherId = $rootScope.id;
             $http.post('/new/test/add', $scope.test).then(function (res) {
-                console.log(res);
                 $state.go('test', {testId: res.data.testId});
             }, function (err) {
                 ngNotify.set(err.data);

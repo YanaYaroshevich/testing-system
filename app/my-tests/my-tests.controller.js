@@ -2,8 +2,8 @@
 
 angular.module('myApp.myTestsPage')
 
-.controller('MyTestsPageCtrl', ['$scope', 'myTests', '$http', '$rootScope', 'ngNotify', function($scope, myTests, $http, $rootScope, ngNotify){
-    $scope.pageName = "My tests";
+.controller('MyTestsPageCtrl', ['$scope', 'myTests', '$rootScope', function($scope, myTests, $rootScope){
+    $scope.pageName = 'My tests';
     $rootScope.showLeftMenu = true;
     
     $scope.gridTests = {
@@ -26,6 +26,4 @@ angular.module('myApp.myTestsPage')
         { name: 'testId', visible: false }
        
     ];
-    
-    console.log(myTests);
 }]);

@@ -64,7 +64,6 @@ angular.module('myApp.testPage')
             answersToSend.push(tempObj);
         }
         var toSend = { questions: answersToSend };
-        console.log(toSend);
         toSend.testId = test.id;
         toSend.studId = $rootScope.id;
         $http.post('/test/pass/submit', toSend).then(function(res){

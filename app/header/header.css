@@ -22,7 +22,7 @@
 
 .side-nav li a {
     outline: none;
-    background-color: #7DA7A0 !important;
+    background-color: #7DA7A0;
     border-style: solid;
     border-color: #7DA7A0;
 }
@@ -131,21 +131,21 @@
     #left-menu > li > a:focus {
         color: white;
     }
+    
+    .side-nav li a{
+        background-color: white;
+        border-radius:6px; 
+        border-style: none;
+        -webkit-border-radius:6px; 
+        -moz-border-radius:5px; 
+        -khtml-border-radius:10px;
+    }
 
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
         background-color: #7DA7A0 !important;
         border-style: none;
-    }
-    
-    .side-nav li a{
-        background-color: white !important;
-        border-radius:6px; 
-        border-style: none;
-        -webkit-border-radius:6px; 
-        -moz-border-radius:5px; 
-        -khtml-border-radius:10px;
     }
     
     .top-navig {
@@ -174,4 +174,10 @@
         color: #7DA7A0;
         background-color: white;
     }
+    
+    .selected-link {
+        background-color: #529085 !important; 
+        color: white !important;
+    }   
 }
+

@@ -12,28 +12,10 @@ angular.module('myApp.header')
             $scope.isCollapsed = !$scope.isCollapsed;
         }
     }
-    
-    $scope.getNewTestPageStyle = function () {
-        if (authService.isNewTestPage()){
-            return "background-color: #529085 !important; color: white";            
-        }
-    };
-    
-    $scope.getMyTestsPageStyle = function () {
-        if (authService.isMyTestsPage()){
-            return "background-color: #529085 !important; color: white";            
-        }
-    };
-    
-    $scope.getStatisticsPageStyle = function () {
-        if (authService.isStatisticsPage()){
-            return "background-color: #529085 !important; color: white";            
-        }
-    };
 
     $scope.logout = function(){
         $http.post('/logout', {id: $rootScope.id}).then(function(res){
-            if(typeof(Storage) == "undefined") {
+            if(typeof(Storage) == 'undefined') {
                 ngNotify.set('localStorage is not accessible');
             }
             else {

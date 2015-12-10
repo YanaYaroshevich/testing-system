@@ -2,12 +2,10 @@
 
 angular.module('myApp.testPage')
     
-.controller('TestPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $state) {
+.controller('TestPageCtrl', ['$scope', '$rootScope', 'uiGridConstants', 'testToShow', 'authService', '$state', function($scope, $rootScope, uiGridConstants, testToShow, authService, $state) {
     $rootScope.showLeftMenu = true;
-    $scope.pageName = "Test " + testToShow.name;
+    $scope.pageName = 'Test ' + testToShow.name;
     $scope.toShowPassBtn = false;
-    
-    console.log(testToShow);
     
     $scope.test = testToShow;
     $scope.auth = authService;

@@ -26,7 +26,7 @@ angular.module('myApp.startPage')
                 $rootScope.account = res.data.account;
                 $rootScope.id = res.data.account._id;
                 if ($scope.rememberMe){
-                    if(typeof(Storage) == "undefined") {
+                    if(typeof(Storage) == 'undefined') {
                         ngNotify.set('localStorage is not accessible');
                     }
                     else {
@@ -34,7 +34,7 @@ angular.module('myApp.startPage')
                     }
                 }    
                 else {
-                    if(typeof(Storage) == "undefined") {
+                    if(typeof(Storage) == 'undefined') {
                         ngNotify.set('localStorage is not accessible');
                     }
                     else {

@@ -2,9 +2,7 @@
 
 angular.module('myApp.testEditPage')
     
-.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', 'authService', '$timeout', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, authService, $timeout, $state) {
-    console.log(testToShow);
-    
+.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, $timeout, $state) {
     $scope.pageName = 'Test edit';
     $rootScope.showLeftMenu = true;
     

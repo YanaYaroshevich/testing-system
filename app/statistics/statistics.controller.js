@@ -44,7 +44,7 @@ angular.module('myApp.statistics')
 
         }
         for (var i = 0; i < $scope.testsStatistics.length; i++){
-           $scope.pieChartsData.push([{key: "Passed", y: $scope.testsStatistics[i].passed}, {key: "Not passed", y: $scope.testsStatistics[i].notPassed}]);
+           $scope.pieChartsData.push([{key: 'Passed', y: $scope.testsStatistics[i].passed}, {key: 'Not passed', y: $scope.testsStatistics[i].notPassed}]);
         }
     };
     
@@ -103,7 +103,7 @@ angular.module('myApp.statistics')
             yAxis: {
                 axisLabel: 'Percent',
                 tickFormat: function(d){
-                    return d3.format("%")(d);
+                    return d3.format('%')(d);
                 }
             }
         }

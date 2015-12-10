@@ -36,6 +36,8 @@
     <link href="/main-page/main-page.css" rel="stylesheet" type="text/css"/>
     <link href="/my-tests/my-tests.css" rel="stylesheet" type="text/css"/>
     <link href="/test-pass/test-pass.css" rel="stylesheet" type="text/css"/>
+    <link href="/statistics/statistics.css" rel="stylesheet" type="text/css"/>
+    <link href="/errors/error.css" rel="stylesheet" type="text/css"/>
     
     <!-- Icon -->
     <link href="components/pics/logo.png" rel="shortcut icon" />
@@ -45,9 +47,9 @@
     
     <div ng-include="'header/header.html'"></div>
 
-    <div id="view-wrapper" class="{{getMainStyle()}}">
+    <div id="view-wrapper" ng-class="auth.isStartPage() ? 'background' : ''">
         <div ui-view></div>
-    </div>    
+    </div>
     
     <div ng-include="'footer/footer.html'"></div>
 </body>
@@ -79,6 +81,8 @@
     <!-- My scripts -->
     <!-- App -->
     <script src="/app.js"></script>
+    <script src="/app.config.js"></script>
+    <script src="/app.controller.js"></script>
     <!-- Start-page -->
     <script src="/start-page/start-page.js"></script>
     <script src="/start-page/start-page.controller.js"></script>
