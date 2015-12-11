@@ -2,10 +2,10 @@
 
 angular.module('myApp.startPage')
 
-.controller('StartPageCtrl', ['$scope', '$rootScope', '$http', '$state', 'ngNotify', function($scope, $rootScope, $http, $state, ngNotify) {
+.controller('StartPageCtrl', ['$scope', '$rootScope', 'ngNotify', 'loginService', '$q', function($scope, $rootScope, ngNotify, loginService, $q) {
     $rootScope.showLeftMenu = false;
     $scope.rememberMe = false;
-    $scope.wrongInput = false;
+    var wrongInput = false;
     
     ngNotify.config({
         theme: 'pastel',
@@ -20,35 +20,18 @@ angular.module('myApp.startPage')
         var form = {};
         form.password = $scope.curPassword;
         form.email = $scope.curEmail;
-        $http.post('/login', form).then(function(res){
-            if(res.data.noErrors){
-                $scope.wrongInput = false;
-                $rootScope.account = res.data.account;
-                $rootScope.id = res.data.account._id;
-                if ($scope.rememberMe){
-                    if(typeof(Storage) == 'undefined') {
-                        ngNotify.set('localStorage is not accessible');
-                    }
-                    else {
-                        localStorage.setItem('id', res.data.account._id);
-                    }
-                }    
-                else {
-                    if(typeof(Storage) == 'undefined') {
-                        ngNotify.set('localStorage is not accessible');
-                    }
-                    else {
-                        localStorage.removeItem('id');
-                    }
+        var ans;
+       loginService.login(form, $scope.rememberMe);
+        /*
+                wrongInput = ans.wrongInput;
+                if (ans.errData){
+                    ngNotify.set(ans.errData);
                 }
-                $state.go('main');
-            }
-            else {
-                $scope.wrongInput = true;
-            }
-        }, function(err){
-            $scope.wrongInput = true;
-            ngNotify.set(err.data);
-        });
+            
+        */
+    };
+    
+    $scope.getWrongInput = function(){
+        return wrongInput;
     };
 }]);

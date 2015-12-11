@@ -21,6 +21,7 @@ angular.module('myApp', [
     'ui.grid.resizeColumns',
     'ui.router',
     'auth',
+    'login',
     'pretty-checkable'
 ])
 
