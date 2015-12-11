@@ -2,8 +2,7 @@
 
 angular.module('myApp.error')
 
-.controller('ErrorCtrl', ['$scope', function($scope){
-    $scope.showLeftMenu = false;
+.controller('ErrorCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+    $rootScope.showLeftMenu = false;
     $scope.pageName = '';
-    
 }]);

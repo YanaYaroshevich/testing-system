@@ -7,11 +7,11 @@
 }
 
 .stud-grid, .question-grid, .tests-grid {
-    height: 250px;
+    min-height: 250px;
 }
 
 .ui-grid-row  {
-    height: auto !important;
+    height: auto;
 }
 
 .test-adding {

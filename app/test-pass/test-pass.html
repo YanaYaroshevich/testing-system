@@ -24,21 +24,18 @@
         </div>
         
         <div class="row">
-            <div class="col-sm-2 col-xs-1"></div>
-            <div class="col-sm-6 col-xs-10">
+            <div class="col-sm-offset-2 col-sm-6 col-xs-offset-1 col-xs-10">
                 <uib-pagination total-items="totalItems" ng-model="currentPage" items-per-page="itemsPerPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm my-pagination" rotate="false" num-pages="numPages" boundary-links="true"></uib-pagination>
             </div>
         </div>
         
         <div class="row">
-            <div class="col-sm-2 col-xs-1"></div>
-            <div class="col-xs-10">
+            <div class="col-sm-offset-2 col-xs-offset-1 col-xs-10">
                 <button class="btn btn-primary sub-btn" ng-disabled="" ng-click="submitTest()">Submit</button>
             </div>
         </div>
          <div class="row">
-            <div class="col-sm-3 col-xs-2"></div>
-            <div class="col-sm-6 col-xs-8">
+            <div class="col-sm-offset-3 col-sm-6 col-xs-offset-2 col-xs-8">
                 <div class="test-name">
                     <h2>{{testName}}</h2>
                 </div>

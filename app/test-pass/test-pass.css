@@ -36,8 +36,9 @@
 
 .sub-btn:hover,
 .sub-btn:focus {
-    background-color: #eee;
+    background-color: #529085;
     border-color: #529085;
+    color: white;
 }
 
 .test-name {
@@ -72,11 +73,11 @@
 
 .prettycheckbox>a, 
 .prettyradio>a {
-    float: inherit!important;
-    position: absolute!important;
+    float: inherit;
+    position: absolute;
 }
 
 .prettycheckbox label, 
 .prettyradio label {
-    margin: 6px 30px!important;
+    margin: 6px 30px;
 }

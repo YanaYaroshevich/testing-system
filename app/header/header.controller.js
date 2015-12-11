@@ -2,13 +2,13 @@
 
 angular.module('myApp.header')
 
-.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', 'screenSize', function($scope, $rootScope, ngNotify, $http, $state, authService, screenSize) {
+.controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', function($scope, $rootScope, ngNotify, $http, $state, authService) {
     $scope.isCollapsed = true;
     
     $scope.auth = authService;
     
     $scope.collapse = function() {
-        if (screenSize.is('xs')) {
+        if (window.matchMedia('(max-width: 768px)').matches) {
             $scope.isCollapsed = !$scope.isCollapsed;
         }
     }

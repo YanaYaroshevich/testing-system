@@ -6,6 +6,17 @@
     background-size: cover;
 }
 
+#input-form {
+    border-radius:6px; 
+    -webkit-border-radius:6px; 
+    -moz-border-radius:5px; 
+    -khtml-border-radius:10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    background-color: #7DA7A0;
+    color: white;
+}
+
 .container-main {
 	height: 100%;
 	margin: 0 auto -80px;

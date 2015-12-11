@@ -18,8 +18,27 @@ body {
 	font-size: 15px;
 }
 
-.btn-default {
-    color: #529085; 
+#view-wrapper {
+    height: 100%;
+    overflow: auto;
+    padding-top: 80px;
+    padding-bottom: 60px;
+}
+
+.content-container {
+    height: 100%;
+    margin-top: -80px;
+    padding-top: 60px;
+}
+
+.page-name {
+    color:  #529085;
+    width: 225px;
+}
+
+.test-font {
+    font-size: 20px;
+    color: #529085;
 }
 
 @media (min-width: 768px) {
@@ -37,27 +56,6 @@ body {
     }
 }
 
-#view-wrapper {
-    height: 100%;
-    overflow: auto;
-    padding-top: 80px;
-    padding-bottom: 60px;
-}
-
-.page-name {
-    color:  #529085;
-    width: 225px;
-}
-
-.block-name {
-    color:  #529085;
-}
-
-.content-container {
-    height: 100%;
-    margin-top: -80px;
-    padding-top: 60px;
-}
 
 textarea {
     overflow: auto;
@@ -78,6 +76,10 @@ textarea:focus {
     border-color: #66afe9;
     outline: 0;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+
+.btn-default {
+    color: #529085;
 }
 
 .btn-primary {
@@ -117,9 +119,4 @@ textarea:focus {
     background-color: gray;
     color: white;
     border-color: black; 
-}
-
-.test-font {
-    font-size: 20px;
-    color: #529085;
 }
