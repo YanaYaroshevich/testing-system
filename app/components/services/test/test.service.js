@@ -24,6 +24,17 @@ angular.module('test')
             }, function(err){
                 return err;
             });
+        }, 
+        getStatistics: function(id){
+            return $http.get('/tests/page/' + id).then(function(res){
+                var testRequests = [];
+                for (var i = 0; i < res.data.tests.length; i++){
+                    testRequests.push($http.get('/test/page/' + res.data.tests[i]._id));
+                }
+                return testRequests;
+            }, function(err){
+                return err;
+            });
         }
     };
 }]);

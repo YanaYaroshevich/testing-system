@@ -501,6 +501,7 @@ router.post('/test/pass/submit', function(req, res){
                 else {
                     result_studTest.passed = true;
                     result_studTest.grade = (studCost * 100 / totalCost);
+                    result_studTest.dateOfPass = new Date();
                     result_studTest.save(function(err){
                         if (err) {
                             res.send(err);

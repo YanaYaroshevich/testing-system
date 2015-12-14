@@ -2,30 +2,27 @@
 
 angular.module('myApp.statistics')
 
-.controller('StatisticsPageCtrl', ['$scope', '$rootScope', 'ngNotify', '$http', '$q', function($scope, $rootScope, ngNotify, $http, $q) {
+.controller('StatisticsPageCtrl', ['$scope', '$rootScope', 'ngNotify', '$q', 'testService', function($scope, $rootScope, ngNotify, $q, testService) {
     $scope.pageName = 'Statistics';
     $rootScope.showLeftMenu = true;
     
     /*--------------------------------- Pie charts ------------------------------------------------------*/
     
     $scope.testsStatistics = [];
-    var testRequests = [];
     $scope.pieChartsData = [];
     var studentsPassed = 0;
     var studentsNotPassed = 0;
     
-    $http.get('/tests/page/' + $rootScope.id).then(function(res){
-        for (var i = 0; i < res.data.tests.length; i++){
-            testRequests.push($http.get('/test/page/' + res.data.tests[i]._id));
-        }
+    testService.getStatistics($rootScope.id).then(function(testRequests){
         $q.all(testRequests).then(function (results) {
             getPieChartsData(results);
             getLineChartsData(results);
+            
         }, function (err) {
-            ngNotify.set(err.statusText);
-        });
+            ngNotify.set(err.message);
+        });    
     }, function(err){
-        ngNotify.set(err.data);
+        ngNotify.set(err.message);
     });
     
     var getPieChartsData = function(results) {
@@ -73,6 +70,21 @@ angular.module('myApp.statistics')
     var grade = 0;
     $scope.lineChartsData = [];
     
+    var getLineChartsData = function(results){
+        for (var i = 0; i < results.length; i++) {
+            date = null;
+            grade = 0;
+            $scope.lineChartsData[i] = {key: results[i].data.test.name, values: [] };
+            for (var j = 0; j < results[i].data.test.students.length; j++){
+                if (results[i].data.test.students[j].passed){
+                    date = new Date(results[i].data.test.students[j].dateOfPass).getTime();
+                    grade = results[i].data.test.students[j].grade;
+                    $scope.lineChartsData[i].values.push([date, grade]);
+                }
+            }   
+        }
+    };
+    
     $scope.optionsLine = {
         chart: {
             type: 'lineChart',
@@ -87,41 +99,25 @@ angular.module('myApp.statistics')
             y: function(d){ return d[1] / 100; },
 
             color: d3.scale.category10().range(),
-            duration: 300,
             useInteractiveGuideline: true,
-            clipVoronoi: false,
 
             xAxis: {
+                ticks: 8,
                 axisLabel: 'Date',
                 tickFormat: function(d) {
                     return d3.time.format('%x')(new Date(d))
                 },
                 showMaxMin: false,
-                staggerLabels: true
             },
 
             yAxis: {
+                ticks: 20,
                 axisLabel: 'Percent',
                 tickFormat: function(d){
-                    return d3.format('%')(d);
-                }
+                    return d3.format(',.1%')(d);
+                },
+                axisLabelDistance: 0
             }
-        }
-    };
-
-    
-    var getLineChartsData = function(results){
-        for (var i = 0; i < results.length; i++) {
-            date = null;
-            grade = 0;
-            for (var j = 0; j < results[i].data.test.students.length; j++){
-                if (results[i].data.test.students[j].passed){
-                    $scope.lineChartsData[i] = {key: results[i].data.test.name, values: [] };
-                    date = results[i].data.test.students[j].dateOfPass;
-                    grade = results[i].data.test.students[j].grade;
-                    $scope.lineChartsData[i].values.push([date, grade]);
-                }
-            }   
         }
     };
     
