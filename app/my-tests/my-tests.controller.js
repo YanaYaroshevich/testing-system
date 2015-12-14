@@ -2,7 +2,7 @@
 
 angular.module('myApp.myTestsPage')
 
-.controller('MyTestsPageCtrl', ['$scope', 'myTests', '$rootScope', function($scope, myTests, $rootScope){
+.controller('MyTestsPageCtrl', ['$scope', 'myTests', '$rootScope', 'colService', function($scope, myTests, $rootScope, colService){
     $scope.pageName = 'My tests';
     $rootScope.showLeftMenu = true;
     
@@ -19,11 +19,5 @@ angular.module('myApp.myTestsPage')
         };
     });
     
-    $scope.gridTests.columnDefs = [
-        { name: 'num', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'testName', headerCellClass: 'header-filtered', minWidth: '150', cellTemplate: '<div class="add-cell-test"><a class="ngCellText" ng-class="col.colIndex()" href="/test/{{row.entity.testId}}">{{row.entity.testName}}</a></div>' },
-        { name: 'description', headerCellClass: 'header-filtered', minWidth: '200' },
-        { name: 'testId', visible: false }
-       
-    ];
+    $scope.gridTests.columnDefs = colService.myTests();
 }]);

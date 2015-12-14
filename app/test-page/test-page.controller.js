@@ -2,7 +2,7 @@
 
 angular.module('myApp.testPage')
     
-.controller('TestPageCtrl', ['$scope', '$rootScope', 'uiGridConstants', 'testToShow', 'authService', '$state', function($scope, $rootScope, uiGridConstants, testToShow, authService, $state) {
+.controller('TestPageCtrl', ['$scope', '$rootScope', 'uiGridConstants', 'testToShow', 'authService', '$state', 'colService', function($scope, $rootScope, uiGridConstants, testToShow, authService, $state, colService) {
     $rootScope.showLeftMenu = true;
     $scope.pageName = 'Test ' + testToShow.name;
     $scope.toShowPassBtn = false;
@@ -40,16 +40,7 @@ angular.module('myApp.testPage')
         };
     });
     
-    $scope.gridStudents.columnDefs = [
-        { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '120' },
-        { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'email', headerCellClass: 'header-filtered', minWidth: '150' },
-        { name: 'course', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'group', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'assigned', cellTemplate: '<div class="ngCellText add-cell" ng-class="col.colIndex()" style="color: green;" ng-if="row.entity.assigned"><i class="fa fa-check"></i></div><div class="ngCellText add-cell" style="color: red;" ng-if="!row.entity.assigned"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false },
-        { name: 'passed', cellTemplate: '<div class="ngCellText add-cell" ng-class="col.colIndex()" style="color: green;" ng-if="row.entity.passed"><i class="fa fa-check"></i></div><div class="ngCellText add-cell" style="color: red;" ng-if="!row.entity.passed"><i class="fa fa-times"></i></div>', minWidth: '100', maxWidth: '100', enableFiltering: false }
-    ];
-    
+    $scope.gridStudents.columnDefs = colService.testStudents();
     
     /*------------------------------ Questions table -------------------------*/
     
@@ -80,12 +71,7 @@ angular.module('myApp.testPage')
         return toReturn;
     });
     
-    $scope.gridQuestions.columnDefs = [
-        { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
-        { name: 'cost', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-        { name: 'type', headerCellClass: 'header-filtered', minWidth: '200' },
-        { name: 'rightAnswers', enableFiltering: false,  minWidth: '150' }
-    ];
+    $scope.gridQuestions.columnDefs = colService.testQuestions();
     
     
     /*------------------------------- Edit ------------------------------------------------------*/

@@ -2,7 +2,7 @@
 
 angular.module('myApp.testEditPage')
     
-.controller('TestEditPageCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, testToShow, $timeout, $state) {
+.controller('TestEditPageCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', 'colService', 'testService', function($scope, $rootScope, ngNotify, uiGridConstants, testToShow, $timeout, colService, testService) {
     $scope.pageName = 'Test edit';
     $rootScope.showLeftMenu = true;
     
@@ -74,12 +74,7 @@ angular.module('myApp.testEditPage')
     
     $scope.gridQuestions = {
             enableFiltering: true,
-            columnDefs : [
-                    { name: 'num', headerCellClass: 'header-filtered', enableCellEdit: false, minWidth: '80' },
-                    { name: 'type', headerCellClass: 'header-filtered', enableCellEdit: false, minWidth: '200'  },
-                    { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
-                    { name: 'cost', headerCellClass: 'header-filtered', minWidth: '90' }
-            ],
+            columnDefs : colService.newTestQuestions(),
             data: $scope.test.questions
     };
     
@@ -170,13 +165,7 @@ angular.module('myApp.testEditPage')
                 }
             }
         });
-        $scope.gridStudents.columnDefs = [
-            { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
-            { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-            { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
-            { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
-            { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
-        ];
+        $scope.gridStudents.columnDefs = colService.newTestStudents();
     };
     
     getStudents();
@@ -206,10 +195,10 @@ angular.module('myApp.testEditPage')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.id;
-            $http.put('/test/edit/complete/' + testToShow.id, $scope.test).then(function (res) {
-                $state.go('test', {testId: testToShow.id});
-            }, function (err) {
-                ngNotify.set(err.data);
+            testService.editTest(testToShow.id, $scope.test).then(function(err){
+                if (err) {
+                    ngNotify.set(err.message);
+                }
             });
         }
     };    

@@ -20,6 +20,9 @@ angular.module('login')
                         }
                     }
                     $state.go('main');
+                    return {
+                        wrongInput: false
+                    }
                 }
                 else {
                     return  {

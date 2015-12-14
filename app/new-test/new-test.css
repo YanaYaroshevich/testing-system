@@ -7,7 +7,7 @@
 }
 
 .stud-grid, .question-grid, .tests-grid {
-    min-height: 250px;
+    min-height: 300px;
 }
 
 .ui-grid-row  {

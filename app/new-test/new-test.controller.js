@@ -2,7 +2,7 @@
 
 angular.module('myApp.newTest')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', 'studService', 'testService', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state, studService, testService) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'studService', 'testService', 'colService', function($scope, $rootScope, ngNotify, uiGridConstants, studService, testService, colService) {
     ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -72,12 +72,7 @@ angular.module('myApp.newTest')
     
     $scope.gridQuestions = {
             enableFiltering: true,
-            columnDefs : [
-                    { name: 'num', headerCellClass: 'header-filtered', enableCellEdit: false, minWidth: '80' },
-                    { name: 'type', headerCellClass: 'header-filtered', enableCellEdit: false, minWidth: '200'  },
-                    { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
-                    { name: 'cost', headerCellClass: 'header-filtered', minWidth: '90' }
-            ]
+            columnDefs : colService.newTestQuestions()
     };
     
     var questionFill = function(){
@@ -161,13 +156,7 @@ angular.module('myApp.newTest')
             ngNotify.set(err.message);
         });
             
-        $scope.gridStudents.columnDefs = [
-            { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
-            { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-            { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
-            { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
-            { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
-        ];
+        $scope.gridStudents.columnDefs = colService.newTestStudents();
     }
     
     getStudents();

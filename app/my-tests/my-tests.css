@@ -1,3 +1,7 @@
+.grid1450076171124 .ui-grid-render-container-body .ui-grid-viewport {
+    min-height: 300px;
+}
+
 .add-cell-test {
     padding: 5px;
 }

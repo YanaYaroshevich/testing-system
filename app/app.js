@@ -24,6 +24,7 @@ angular.module('myApp', [
     'login',
     'students',
     'test',
+    'columns',
     'pretty-checkable'
 ])
 

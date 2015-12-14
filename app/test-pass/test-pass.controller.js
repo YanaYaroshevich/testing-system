@@ -2,7 +2,7 @@
 
 angular.module('myApp.testPage')
 
-.controller('TestPassPageCtrl', ['$scope', '$rootScope', 'test', '$state', '$http', 'ngNotify', function($scope, $rootScope, test, $state, $http, ngNotify){
+.controller('TestPassPageCtrl', ['$scope', '$rootScope', 'test', 'ngNotify', 'testService', function($scope, $rootScope, test, ngNotify, testService){
     $rootScope.showLeftMenu = false;
     $scope.testName = test.name;
     
@@ -46,30 +46,32 @@ angular.module('myApp.testPage')
         for (var i = 0; i < $scope.questions.length; i++) {
             tempObj = {answers: []}; 
             tempObj.id = $scope.questions[i].id;
-            if ($scope.questions[i].typeInd === 0){
-                if (!$scope.questions[i].multipleRight) {
-                    tempObj.answers.push($scope.questions[i].radioChecked);
-                }
-                else {
-                    for (var j = 0; j < $scope.questions[i].answers.length; j++) {
-                        if ($scope.questions[i].answers[j].checked){
-                            tempObj.answers.push($scope.questions[i].answers[j].num);
+            switch($scope.questions[i].typeInd){
+                case 0:     
+                    if (!$scope.questions[i].multipleRight) {
+                        tempObj.answers.push($scope.questions[i].radioChecked);
+                    }
+                    else {
+                        for (var j = 0; j < $scope.questions[i].answers.length; j++) {
+                            if ($scope.questions[i].answers[j].checked){
+                                tempObj.answers.push($scope.questions[i].answers[j].num);
+                            }
                         }
                     }
-                }
-            }
-            else if ($scope.questions[i].typeInd === 2) {
-                tempObj.answers.push($scope.questions[i].studAns);
-            }
+                    break;
+                case 2:
+                    tempObj.answers.push($scope.questions[i].studAns);
+                    break;
+            };
             answersToSend.push(tempObj);
         }
         var toSend = { questions: answersToSend };
         toSend.testId = test.id;
         toSend.studId = $rootScope.id;
-        $http.post('/test/pass/submit', toSend).then(function(res){
-            $state.go($state.current, {testId: test.id}, {reload: true});
-        }, function(err){
-            ngNotify.set(err.data);
+        testService.passTest(toSend, test.id).then(function(err){
+            if (err){
+                ngNotify.set(err.message);
+            }
         });
     };
 }]);
