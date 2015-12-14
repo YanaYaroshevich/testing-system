@@ -41,10 +41,7 @@
                                     {{toShowTypes[question.typeInd]}} <span class="caret"></span>
                                 </button>
                                 <ul class="uib-dropdown-menu fill-dropdown-list" role="menu">
-                                    <li><a href="#" ng-click="chooseType(0)">{{toShowTypes[0]}}</a></li>
-                                    <li><a href="#" ng-click="chooseType(1)">{{toShowTypes[1]}}</a></li>
-                                    <li><a href="#" ng-click="chooseType(2)">{{toShowTypes[2]}}</a></li>
-                                    <li><a href="#" ng-click="chooseType(3)">{{toShowTypes[3]}}</a></li>
+                                    <li ng-repeat="type in toShowTypes"><a href="#" ng-click="chooseType($index)">{{type}}</a></li>
                                 </ul>
                             </div>
                         </div>

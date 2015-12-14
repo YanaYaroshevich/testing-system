@@ -22,6 +22,7 @@ angular.module('myApp', [
     'ui.router',
     'auth',
     'login',
+    'students',
     'pretty-checkable'
 ])
 

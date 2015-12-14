@@ -2,7 +2,7 @@
 
 angular.module('myApp.newTest')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', 'studService', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state, studService) {
     ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -153,32 +153,19 @@ angular.module('myApp.newTest')
     };
     
     var getStudents = function(){
-        $http.get('/new/test/students/' + $rootScope.id).then(function (res) {
-            if (res.data){
-                var students = res.data.map(function(stud){
-                    return {
-                        firstName: stud.firstName,
-                        lastName: stud.lastName,
-                        email: stud.email,
-                        course: stud.course,
-                        group: stud.group,
-                        studId: stud._id
-                    };
-                });
-                
+        studService.getStuds().then(function(students){
+            if (students) {
                 $scope.gridStudents.data = students;
             }
+        });
             
-            $scope.gridStudents.columnDefs = [
-                { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
-                { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
-                { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
-                { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
-                { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
-            ];
-        }, function (err) {   
-            ngNotify.set(err.data);
-        }); 
+        $scope.gridStudents.columnDefs = [
+            { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },
+            { name: 'lastName', headerCellClass: 'header-filtered', minWidth: '150' },
+            { name: 'email', headerCellClass: 'header-filtered', minWidth: '200' },
+            { name: 'course', headerCellClass: 'header-filtered', minWidth: '80' },
+            { name: 'group', headerCellClass: 'header-filtered', minWidth: '90' }
+        ];
     }
     
     getStudents();

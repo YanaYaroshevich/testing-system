@@ -2,7 +2,7 @@
 
 angular.module('login')
 
-.service('loginService', ['$http', '$state', '$rootScope', '$q', function($http, $state, $rootScope, $q){
+.service('loginService', ['$http', '$state', '$rootScope', function($http, $state, $rootScope){
     return {
         login: function(form, rememberMe){
             return $http.post('/login', form).then(function(res){
