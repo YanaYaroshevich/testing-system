@@ -2,7 +2,7 @@
 
 angular.module('students')
 
-.service('studService', ['$http', 'ngNotify', '$rootScope', function($http, ngNotify, $rootScope){
+.service('studService', ['$http', '$rootScope', function($http, $rootScope){
     return { 
         getStuds: function(){
             return $http.get('/new/test/students/' + $rootScope.id).then(function (res) {
@@ -19,10 +19,9 @@ angular.module('students')
                     });
                 }
                 else {
-                    return {};
+                    return new Error("No students to show");
                 }
             }, function (err) {   
-                ngNotify.set(err.data);
                 return err;
             })
         }

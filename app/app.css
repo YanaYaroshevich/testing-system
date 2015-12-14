@@ -43,13 +43,13 @@ body {
 
 @media (min-width: 768px) {
     #view-wrapper {
-        overflow: hidden;
+        overflow: auto;
     }
     .content-container {
         padding-top: 70px;
     }
     #view-wrapper > .ng-scope {
-        margin-top: 80px;
+        padding-top: 80px;
     }
     .page-name {
         position: fixed;

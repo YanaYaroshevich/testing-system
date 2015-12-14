@@ -23,6 +23,7 @@ angular.module('myApp', [
     'auth',
     'login',
     'students',
+    'test',
     'pretty-checkable'
 ])
 

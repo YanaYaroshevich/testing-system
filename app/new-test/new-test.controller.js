@@ -2,7 +2,7 @@
 
 angular.module('myApp.newTest')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', 'studService', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state, studService) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', '$http', 'ngNotify', 'uiGridConstants', '$state', 'studService', 'testService', function($scope, $rootScope, $http, ngNotify, uiGridConstants, $state, studService, testService) {
     ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -157,6 +157,8 @@ angular.module('myApp.newTest')
             if (students) {
                 $scope.gridStudents.data = students;
             }
+        }, function(err){
+            ngNotify.set(err.message);
         });
             
         $scope.gridStudents.columnDefs = [
@@ -195,10 +197,10 @@ angular.module('myApp.newTest')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.id;
-            $http.post('/new/test/add', $scope.test).then(function (res) {
-                $state.go('test', {testId: res.data.testId});
-            }, function (err) {
-                ngNotify.set(err.data);
+            testService.createTest($scope.test).then(function(err){
+                if (err) {
+                    ngNotify.set(err.message);
+                }                                         
             });
         }
     }
