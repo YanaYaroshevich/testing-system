@@ -5,7 +5,7 @@ angular.module('login')
 .service('loginService', ['$http', '$state', '$rootScope', '$q', function($http, $state, $rootScope, $q){
     return {
         login: function(form, rememberMe){
-            $http.post('/login', form).then(function(res){
+            return $http.post('/login', form).then(function(res){
                 if(res.data.noErrors){
                     $rootScope.account = res.data.account;
                     $rootScope.id = res.data.account._id;
@@ -22,7 +22,7 @@ angular.module('login')
                     $state.go('main');
                 }
                 else {
-                    return {
+                    return  {
                         wrongInput: true,
                         errData: ''
                     };

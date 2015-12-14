@@ -20,15 +20,12 @@ angular.module('myApp.startPage')
         var form = {};
         form.password = $scope.curPassword;
         form.email = $scope.curEmail;
-        var ans;
-       loginService.login(form, $scope.rememberMe);
-        /*
-                wrongInput = ans.wrongInput;
-                if (ans.errData){
-                    ngNotify.set(ans.errData);
-                }
-            
-        */
+        loginService.login(form, $scope.rememberMe).then(function(ans) {
+            wrongInput = ans.wrongInput;
+            if (ans.errData){
+                ngNotify.set(ans.errData);
+            }
+        });
     };
     
     $scope.getWrongInput = function(){
