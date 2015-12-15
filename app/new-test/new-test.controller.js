@@ -12,7 +12,6 @@ angular.module('myApp.newTest')
 		html: false
     });
     
-    $rootScope.showLeftMenu = true;
     $scope.pageName = 'Test creation';    
     
     var testToDefault = function(){

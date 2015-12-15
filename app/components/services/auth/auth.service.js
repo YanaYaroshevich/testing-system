@@ -53,6 +53,9 @@ angular.module('auth')
         isNewTestPage: function(){
             return ($state.is('newTest'));
         },
+        isTestEditPage: function(){
+            return ($state.is('testEdit'));    
+        },
         isErrorPage: function(){
             return ($state.is('error'));    
         },
@@ -61,6 +64,12 @@ angular.module('auth')
         },
         isStatisticsPage: function(){
             return ($state.is('statistics'));    
+        },
+        isTestPage: function(){
+            return ($state.is('test'));
+        },
+        isTestPassPage: function(){
+            return ($state.is('testPass'));    
         },
         getUserName: function(){
             return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';

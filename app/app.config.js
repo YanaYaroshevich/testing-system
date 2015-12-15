@@ -97,8 +97,9 @@ angular.module('myApp')
     $urlRouterProvider.when('/test/:testId/', '/test/:testId');
     $urlRouterProvider.when('/test/edit/:testId/', '/test/edit/:testId');
     $urlRouterProvider.when('/tests/:userId/', '/tests/:userId');
-    
+    $urlRouterProvider.when('/test/pass/:testId/stud/:studId/', '/test/pass/:testId/stud/:studId');
     $urlRouterProvider.when('/', '/start');
+    
     $urlRouterProvider.otherwise('/error');
     $locationProvider.html5Mode(true);
 }]);

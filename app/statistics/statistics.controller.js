@@ -4,7 +4,6 @@ angular.module('myApp.statistics')
 
 .controller('StatisticsPageCtrl', ['$scope', '$rootScope', 'ngNotify', '$q', 'testService', function($scope, $rootScope, ngNotify, $q, testService) {
     $scope.pageName = 'Statistics';
-    $rootScope.showLeftMenu = true;
     
     /*--------------------------------- Pie charts ------------------------------------------------------*/
     
@@ -102,12 +101,11 @@ angular.module('myApp.statistics')
             useInteractiveGuideline: true,
 
             xAxis: {
-                ticks: 8,
+                ticks: 4,
                 axisLabel: 'Date',
                 tickFormat: function(d) {
-                    return d3.time.format('%x')(new Date(d))
-                },
-                showMaxMin: false,
+                    return d3.time.format('%c')(new Date(d))
+                }
             },
 
             yAxis: {

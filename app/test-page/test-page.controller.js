@@ -3,7 +3,6 @@
 angular.module('myApp.testPage')
     
 .controller('TestPageCtrl', ['$scope', '$rootScope', 'uiGridConstants', 'testToShow', 'authService', '$state', 'colService', function($scope, $rootScope, uiGridConstants, testToShow, authService, $state, colService) {
-    $rootScope.showLeftMenu = true;
     $scope.pageName = 'Test ' + testToShow.name;
     $scope.toShowPassBtn = false;
     

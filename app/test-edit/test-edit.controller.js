@@ -4,7 +4,6 @@ angular.module('myApp.testEditPage')
     
 .controller('TestEditPageCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', 'colService', 'testService', function($scope, $rootScope, ngNotify, uiGridConstants, testToShow, $timeout, colService, testService) {
     $scope.pageName = 'Test edit';
-    $rootScope.showLeftMenu = true;
     
     var testToDefault = function(){
         $scope.toShowTypes = ['Text question and text answers', 'Text question and picture answers', 'Fill-the-word question', 'Text question with picture and text answers'];

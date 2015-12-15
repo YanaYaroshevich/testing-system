@@ -3,7 +3,6 @@
 angular.module('myApp.testPage')
 
 .controller('TestPassPageCtrl', ['$scope', '$rootScope', 'test', 'ngNotify', 'testService', function($scope, $rootScope, test, ngNotify, testService){
-    $rootScope.showLeftMenu = false;
     $scope.testName = test.name;
     
     $scope.passed = test.passed;
