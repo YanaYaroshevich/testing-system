@@ -22,7 +22,7 @@ angular.module('myApp.testPage')
     });
     
     for (var i = 0; i < $scope.questions.length; i++){
-        if ($scope.questions[i].typeInd === 0){
+        if ($scope.questions[i].typeInd === 0 ||  $scope.questions[i].typeInd === 3){
             $scope.questions[i].answers = $scope.questions[i].answers.map(function(cur){
                 return {
                     text: cur.text,
@@ -46,7 +46,8 @@ angular.module('myApp.testPage')
             tempObj = {answers: []}; 
             tempObj.id = $scope.questions[i].id;
             switch($scope.questions[i].typeInd){
-                case 0:     
+                case 0: 
+                case 3:
                     if (!$scope.questions[i].multipleRight) {
                         tempObj.answers.push($scope.questions[i].radioChecked);
                     }

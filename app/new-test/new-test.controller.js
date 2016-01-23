@@ -54,7 +54,7 @@ angular.module('myApp.newTest')
     $scope.chooseType = function(ind){
         $scope.question.typeInd = ind;
         $scope.question.type = $scope.toShowTypes[$scope.question.typeInd];
-        if (ind === 0){
+        if (ind === 0 || ind === 3){
             $scope.question.answers = [{text: '', right: true}, {text: '', right: false}];
         }
     };

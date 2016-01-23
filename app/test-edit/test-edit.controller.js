@@ -194,7 +194,7 @@ angular.module('myApp.testEditPage')
     $scope.addTest = function(){
         if (testFill()){
             $scope.test.teacherId = $rootScope.id;
-            testService.editTest(testToShow.id, $scope.test).then(function(err){
+            testService.editTest($scope.test, testToShow.id).then(function(err){
                 if (err) {
                     ngNotify.set(err.message);
                 }

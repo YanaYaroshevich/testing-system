@@ -81,3 +81,9 @@
 .prettyradio label {
     margin: 6px 30px;
 }
+
+@media(max-width: 768px) {
+    .test-container{
+        padding-top: 60px;
+    }
+}

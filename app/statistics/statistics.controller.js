@@ -94,8 +94,8 @@ angular.module('myApp.statistics')
                 bottom: 50,
                 left: 65
             },
-            x: function(d){ return d[0]; },
-            y: function(d){ return d[1] / 100; },
+            x: function(d){ return d[0] || 0; },
+            y: function(d){ return d[1] / 100 || 0; },
 
             color: d3.scale.category10().range(),
             useInteractiveGuideline: true,

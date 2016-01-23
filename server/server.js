@@ -306,7 +306,7 @@ router.get('/test/page/:testId/stud/:studId', function(req, res) {
                         }
                         else {
                             toSend.questions = result_qs.map(function(cur){
-                                if (cur.typeInd === 0){
+                                if (cur.typeInd === 0 || cur.typeInd === 3){
                                     var rightAnsQ = 0;
                                     for (var i = 0; i < cur.answers.length; i++){
                                         if (cur.answers[i].right)
@@ -373,7 +373,7 @@ var questionsAdding = function(req, testId, res){
         question.typeInd = req.body.questions[i].typeInd;
         if (req.body.questions[i].typeInd === 3)
             question.additionalPicture = req.body.questions[i].additionalPicture;
-        if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 1){
+        if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 3){
             question.answers = req.body.questions[i].answers.map( function(ans) {
                 return {
                     text: ans.text,
@@ -475,7 +475,7 @@ router.post('/test/pass/submit', function(req, res){
             for (var i = 0; i < result_questions.length; i++){
                 totalCost += result_questions[i].cost;
                 
-                if (result_questions[i].typeInd === 0) {
+                if (result_questions[i].typeInd === 0 || result_questions[i].typeInd === 3) {
                     var right = true;
                     for (var j = 0; j < result_questions[i].answers.length; j++){
                         if (result_questions[i].answers[j].right && req.body.questions[i].answers.indexOf(j) === -1){

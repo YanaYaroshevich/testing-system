@@ -52,7 +52,7 @@ angular.module('myApp.testPage')
     $scope.gridQuestions.data = testToShow.questions.map(function(quest){
         var toReturn = {};
         toReturn.rightAnswers = '';
-        if (quest.typeInd === 0) {
+        if (quest.typeInd === 0 || quest.typeInd === 3) {
             for (var i = 0; i < quest.answers.length; i++) {
                 if (quest.answers[i].right){
                     toReturn.rightAnswers += quest.answers[i].text + '; ';
