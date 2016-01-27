@@ -5,7 +5,7 @@ angular.module('students')
 .service('studService', ['$http', '$rootScope', function($http, $rootScope){
     return { 
         getStuds: function(){
-            return $http.get('/new/test/students/' + $rootScope.id).then(function (res) {
+            return $http.get('/rest/test/new/students/' + $rootScope.id).then(function (res) {
                 if (res.data){
                    return res.data.map(function(stud){
                         return {

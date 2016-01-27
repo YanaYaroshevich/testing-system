@@ -109,7 +109,7 @@ var addStudent = function(teacher_email, stud_email) {
     });
 };
 
-router.post('/login', function (req, res) {
+router.post('/rest/login', function (req, res) {
     appStormpath.authenticateAccount({
       username: req.body.email,
       password: req.body.password
@@ -132,7 +132,7 @@ router.post('/login', function (req, res) {
     });
 });
 
-router.post('/logout', function (req, res) {
+router.post('/rest/logout', function (req, res) {
     UserModel.findOne({_id: req.body.id}, function(err, result_acc){
         if(err) {
             res.send(err);
@@ -146,7 +146,7 @@ router.post('/logout', function (req, res) {
     
 });
 
-router.get('/user/:userId', function(req, res) {
+router.get('/rest/user/:userId', function(req, res) {
     UserModel.findOne({_id: req.params.userId}, function(err, result_user) {
         if (err) {
             res.send(err);
@@ -157,7 +157,7 @@ router.get('/user/:userId', function(req, res) {
     });
 });
 
-router.get('/main/:userId/news', function (req, res) {
+router.get('/rest/main/:userId/news', function (req, res) {
     NewsModel.find({userId: req.params.userId}, function (err, result_news) {
         if (err) {
             res.send(err);
@@ -168,7 +168,7 @@ router.get('/main/:userId/news', function (req, res) {
     });
 });
 
-router.delete('/main/:userId/news/:newsId', function (req, res) {
+router.delete('/rest/main/:userId/news/:newsId', function (req, res) {
     NewsModel.findOne({_id: req.params.newsId}, function (err, news) {
         if (err) {
             res.send(err); 
@@ -186,7 +186,7 @@ router.delete('/main/:userId/news/:newsId', function (req, res) {
     });
 });
 
-router.get('/test/page/:testId', function(req, res) {
+router.get('/rest/test/:testId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
             res.send(err);
@@ -275,7 +275,7 @@ router.get('/test/page/:testId', function(req, res) {
     });
 });
 
-router.get('/test/page/:testId/stud/:studId', function(req, res) {
+router.get('/rest/test/:testId/stud/:studId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
             res.send(err);
@@ -420,7 +420,7 @@ var newsAdding = function(studId, text, linkText, testId, res) {
     });
 };
 
-router.post('/new/test/add', function (req, res) {
+router.post('/rest/test/new', function (req, res) {
     UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
         if (err) {
             res.send(err);
@@ -460,7 +460,7 @@ router.post('/new/test/add', function (req, res) {
     });
 });
 
-router.post('/test/pass/submit', function(req, res){
+router.post('/rest/test/pass', function(req, res){
     var questionIds = req.body.questions.map(function(cur){
         return cur.id;
     });
@@ -514,7 +514,7 @@ router.post('/test/pass/submit', function(req, res){
     });
 });
 
-router.put('/test/edit/complete/:testId', function(req, res) {
+router.put('/rest/test/:testId/edit', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function(err, result_test){
         if (err){
             res.send(err);
@@ -573,7 +573,7 @@ router.put('/test/edit/complete/:testId', function(req, res) {
     
 });
 
-router.get('/new/test/students/:teacherId', function (req, res) {
+router.get('/rest/test/new/students/:teacherId', function (req, res) {
     UserModel.findOne({_id: req.params.teacherId}, function(err, result_user){
         if (err) {
             res.send(err);
@@ -596,7 +596,7 @@ router.get('/new/test/students/:teacherId', function (req, res) {
     });
 });
 
-router.get('/tests/page/:userId', function(req, res) {
+router.get('/rest/tests/:userId', function(req, res) {
     UserModel.findOne({_id: req.params.userId}, function(err, result_user) {
         if (err){
             res.send(err);

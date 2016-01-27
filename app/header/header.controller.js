@@ -17,7 +17,7 @@ angular.module('myApp.header')
     };
 
     $scope.logout = function(){
-        $http.post('/logout', {id: $rootScope.id}).then(function(res){
+        $http.post('/rest/logout', {id: $rootScope.id}).then(function(res){
             if(typeof(Storage) == 'undefined') {
                 ngNotify.set('localStorage is not accessible');
             }

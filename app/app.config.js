@@ -15,7 +15,7 @@ angular.module('myApp')
         controller: 'MainPageCtrl'
     })
     .state('newTest', {
-        url: '/new/test',
+        url: '/test/new',
         templateUrl: 'new-test/new-test.html',
         controller: 'NewTestCtrl'
     })
@@ -30,7 +30,7 @@ angular.module('myApp')
         controller: 'TestPageCtrl',
         resolve : {
             testToShow: ['$http', '$stateParams', function($http, $stateParams){
-                return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                return $http.get('/rest/test/' + $stateParams.testId).then(function(res){
                     return res.data.test;
                 }, function(err){
                     ngNotify.set(err.data);
@@ -40,12 +40,12 @@ angular.module('myApp')
         }
     })
     .state('testEdit', {
-        url: '/test/edit/:testId',
+        url: '/test/:testId/edit',
         templateUrl: 'new-test/new-test.html',
         controller: 'TestEditPageCtrl',
         resolve : {
             testToShow: ['$http', '$stateParams', function($http, $stateParams){
-                return $http.get('/test/page/' + $stateParams.testId).then(function(res){
+                return $http.get('/rest/test/' + $stateParams.testId).then(function(res){
                     return res.data.test;
                 }, function(err){
                     ngNotify.set(err.data);
@@ -55,12 +55,12 @@ angular.module('myApp')
         }
     })
     .state('myTests', {
-        url: '/tests/:userId',
+        url: '/tests',
         templateUrl: 'my-tests/my-tests.html',
         controller: 'MyTestsPageCtrl',
         resolve: {
-            myTests: ['$http', '$stateParams', function($http, $stateParams) {
-                return $http.get('/tests/page/' + $stateParams.userId).then(function(res){
+            myTests: ['$http', '$stateParams', 'authService', function($http, $stateParams, authService) {
+                return $http.get('/rest/tests/' + authService.getId()).then(function(res){
                     return res.data.tests;
                 }, function(err) {
                     ngNotify.set(err.data);
@@ -70,12 +70,12 @@ angular.module('myApp')
         }
     })
     .state('testPass', {
-        url: '/test/pass/:testId/stud/:studId',
+        url: '/test/:testId/pass',
         templateUrl: 'test-pass/test-pass.html',
         controller: 'TestPassPageCtrl',
         resolve: {
-            test: ['$http', '$stateParams', function($http, $stateParams){
-                return $http.get('/test/page/' + $stateParams.testId + '/stud/' + $stateParams.studId).then(function(res){
+            test: ['$http', '$stateParams', 'authService', function($http, $stateParams, authService){
+                return $http.get('/rest/test/' + $stateParams.testId + '/stud/' + authService.getId()).then(function(res){
                     return res.data.test;
                 }, function(err){
                     ngNotify.set(err.data);
@@ -92,7 +92,7 @@ angular.module('myApp')
 
     $urlRouterProvider.when('/start/', '/start');
     $urlRouterProvider.when('/main/', '/main');
-    $urlRouterProvider.when('/new/test/', '/new/test');
+    $urlRouterProvider.when('/test/new/', '/test/new');
     $urlRouterProvider.when('/statistics/', '/statistics');
     $urlRouterProvider.when('/test/:testId/', '/test/:testId');
     $urlRouterProvider.when('/test/edit/:testId/', '/test/edit/:testId');

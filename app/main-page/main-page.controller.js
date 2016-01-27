@@ -15,7 +15,7 @@ angular.module('myApp.mainPage')
     });
     
     var updatePage = function(){
-        $http.get('/user/' + $rootScope.id).then(
+        $http.get('/rest/user/' + $rootScope.id).then(
             function(res) {
                 $rootScope.account = res.data.account;
                 getNews();
@@ -28,7 +28,7 @@ angular.module('myApp.mainPage')
     };
     
     var getNews = function() {
-        $http.get('/main/' + $rootScope.account._id + '/news').then(function (res) {
+        $http.get('/rest/main/' + $rootScope.account._id + '/news').then(function (res) {
             $scope.news = res.data.news.map(function(elem){
                 elem.onClose = (function(newsId){
                     return function() { onClose(newsId); };
@@ -42,7 +42,7 @@ angular.module('myApp.mainPage')
     };
 
     var onClose = function(newsId){
-        $http.delete('/main/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
+        $http.delete('/rest/main/' + $rootScope.account._id + '/news/' + newsId).then(function(res){
             getNews();
         }, function (err) {
             ngNotify.set(err.data);

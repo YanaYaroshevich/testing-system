@@ -8,7 +8,7 @@ angular.module('auth')
     return {
         setAccount: function(id){
             if (id){
-                return $http.get('/user/' + id).then(function(res){
+                return $http.get('/rest/user/' + id).then(function(res){
                     account = res.data.account;
                 }, function(err) {
                     console.log(err.data);
