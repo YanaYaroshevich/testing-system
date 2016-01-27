@@ -115,17 +115,22 @@ router.post('/rest/login', function (req, res) {
       password: req.body.password
     }, function (err, result) {
         if (err) {
-            res.send({noErrors: false});
+            res.send(new Error("Bad authentification"));
+            return;
         }
         else {
             UserModel.findOne({email: result.account.email}, function (err, result_acc) {
                 if(err) {
-                    res.send({noErrors: false});
+                    res.send(new Error("Bad authentification"));
+                    return;
                 }
                 else {
                     result_acc.online = true;
-                    result_acc.save(function(err){console.log(err)});
-                    res.send({account: result_acc, noErrors: true});
+                    result_acc.save(function(err){
+                        res.send(new Error("Bad authentification"));
+                        return;
+                    });
+                    res.send({account: result_acc});
                 }
             });
         }
@@ -135,11 +140,15 @@ router.post('/rest/login', function (req, res) {
 router.post('/rest/logout', function (req, res) {
     UserModel.findOne({_id: req.body.id}, function(err, result_acc){
         if(err) {
-            res.send(err);
+            res.send(new Error("Bad logout"));
+            return;
         }
         else {
             result_acc.online = false;
-            result_acc.save(function(err){console.log(err)});
+            result_acc.save(function(err){
+                res.send(new Error("Bad logout"));
+                return;
+            });
             res.send({account: result_acc});
         }
     });

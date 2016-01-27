@@ -6,7 +6,7 @@ angular.module('login')
     return {
         login: function(form, rememberMe){
             return $http.post('/rest/login', form).then(function(res){
-                if(res.data.noErrors){
+                try{
                     $rootScope.account = res.data.account;
                     $rootScope.id = res.data.account._id;
                     if (rememberMe){
@@ -24,7 +24,7 @@ angular.module('login')
                         wrongInput: false
                     }
                 }
-                else {
+                catch(e) {
                     return  {
                         wrongInput: true,
                         errData: ''
