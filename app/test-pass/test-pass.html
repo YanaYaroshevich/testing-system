@@ -2,7 +2,7 @@
     <div ng-if="!passed" class="container-fluid test-container">
         <div class="row">
             <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10">
-                <div ng-repeat="question in ::questions.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+                <div ng-repeat="question in questions.slice(((currentPage-1)*itemsPerPage), ((currentPage) * itemsPerPage))">
                     <div class="question-text test-pass test-font">
                         <p ng-if="question.typeInd === 0 || question.typeInd === 3">{{currentPage}}. {{question.text}}</p>
                         <p ng-if="question.typeInd === 2">{{currentPage}}. Fill the word</p>

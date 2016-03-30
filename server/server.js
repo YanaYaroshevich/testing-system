@@ -40,12 +40,12 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         if (error) { throw error; }
         appStormpath = application;
         app.listen(port);
-        //addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
-        //addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
-        //addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
-        //addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);
-        //addStudent('b@b.bbb', 'c@c.ccc');
-        //addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');
+        /*addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
+        addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
+        addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
+        addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);
+        addStudent('b@b.bbb', 'c@c.ccc');
+        addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');*/
     });
 });
 

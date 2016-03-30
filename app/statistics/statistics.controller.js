@@ -104,7 +104,7 @@ angular.module('myApp.statistics')
                 ticks: 4,
                 axisLabel: 'Date',
                 tickFormat: function(d) {
-                    return d3.time.format('%c')(new Date(d))
+                    return d3.time.format('%d.%m.%y')(new Date(d))
                 }
             },
 
