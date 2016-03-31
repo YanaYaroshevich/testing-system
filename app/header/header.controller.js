@@ -13,7 +13,7 @@ angular.module('myApp.header')
     };
     
     $scope.showLeftMenu = function(){
-        return !(authService.isStartPage() || authService.isTestPassPage());
+        return !(authService.isStartPage() || authService.isTestPassPage() || authService.isErrorPage());
     };
 
     $scope.logout = function(){

@@ -616,7 +616,13 @@ router.get('/rest/tests/:userId', function(req, res) {
                                 res.send(err);
                             }    
                             else {
-                                res.send({tests: result_tests});
+                                var testsToSend = [];
+                                for (var i = 0; i < result_tests.length; i++) {
+                                    if (new Date(result_tests[i].start) <= new Date() && new Date(result_tests[i].finish) >= new Date()) {
+                                        testsToSend.push(result_tests[i]);
+                                    }
+                                }
+                                res.send({tests: testsToSend});
                             }
                         });
                     }
