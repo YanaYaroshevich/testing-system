@@ -9,9 +9,16 @@ angular.module('myApp.myTestsPage')
         enableFiltering: true,
     };
     
-    $scope.gridTests.data = myTests.map(function(test){
+    var testsToShow = [];
+    for (var i = 0; i < myTests.length; i++) {
+        if (new Date(myTests[i].start) <= new Date() && new Date(myTests[i].finish) >= new Date()) {
+            testsToShow.push(myTests[i]);
+        }
+    }
+    
+    $scope.gridTests.data = testsToShow.map(function(test){
         return {
-            num: myTests.indexOf(test) + 1,
+            num: testsToShow.indexOf(test) + 1,
             testName: test.name,
             description: test.description,
             testId: test._id
