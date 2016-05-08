@@ -90,7 +90,7 @@
 @media (min-width: 768px) {
 	.navbar-inverse .navbar-nav {
 		position: fixed;
-		top: 150px;
+		top: 182px;
 		left: 225px;
 		width: 225px;
 		margin-left: -225px;

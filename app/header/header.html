@@ -31,7 +31,7 @@
             </li>
 
             <li>
-                <a ng-click="collapse()" href="">
+                <a href="" ng-click="showUser()">
                     <i class="fa fa-fw fa-user"></i>
                     <span>{{auth.getUserName()}}</span>
                 </a>
@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a ng-class="auth.isMyTestsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests({userId: auth.getId()})">
+                <a ng-class="auth.isMyTestsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>My tests</span>
                 </a>

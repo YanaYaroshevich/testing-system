@@ -84,7 +84,7 @@ var addUser = function(role, email, fn, ln, group, course){
     };
         
     var aaa = new UserModel(user);
-    aaa.save(function(err){if(err) console.log(err)}); 
+    aaa.save(function(err){if(err) {console.log(err)}}); 
 };
 
 var addStudent = function(teacher_email, stud_email) {
@@ -100,8 +100,9 @@ var addStudent = function(teacher_email, stud_email) {
                 else {
                     result_teacher.students.push(result_student._id);
                     result_teacher.save(function (err) {
-                        if (err) 
+                        if (err) {
                            console.log(err);
+                        }
                     });
                 }
             });  
@@ -124,7 +125,7 @@ router.post('/rest/login', function (req, res) {
                 }
                 else {
                     result_acc.online = true;
-                    result_acc.save(function(err){console.log(err)});
+                    result_acc.save(function(err){if(err) {console.log(err); }});
                     res.send({account: result_acc, noErrors: true});
                 }
             });
@@ -139,7 +140,7 @@ router.post('/rest/logout', function (req, res) {
         }
         else {
             result_acc.online = false;
-            result_acc.save(function(err){console.log(err)});
+            result_acc.save(function(err){ if(err){console.log(err)}});
             res.send({account: result_acc});
         }
     });
@@ -186,7 +187,7 @@ router.delete('/rest/main/:userId/news/:newsId', function (req, res) {
     });
 });
 
-router.get('/rest/test/:testId', function(req, res) {
+router.get('/rest/test/:testId/user/:userId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
             res.send(err);
@@ -218,7 +219,10 @@ router.get('/rest/test/:testId', function(req, res) {
                             res.send(err);
                         }
                         else {
-                            toSend.teacher = result_teacher;
+                            toSend.teacher = {
+                                firstName: result_teacher.firstName,
+                                lastName: result_teacher.lastName
+                            };
                             UserModel.find({role: 1, '_id': { $in: result_teacher.students}}, function(err, all_students){
                                 if (err) {
                                     res.send(err);
@@ -248,20 +252,32 @@ router.get('/rest/test/:testId', function(req, res) {
                                         }
                                         return toReturn;
                                     });
-                                    QuestionModel.find({testId: result_test._id}, function(err, result_qs){
+                                    
+                                    UserModel.findOne({_id: req.params.userId}, function(err, res_user){
                                         if (err) {
                                             res.send(err);
                                         }
+                                        else if (res_user.role === 2){
+                                            QuestionModel.find({testId: result_test._id}, function(err, result_qs){
+                                                if (err) {
+                                                    res.send(err);
+                                                }
+                                                else {
+                                                    toSend.questions = result_qs.map(function(cur){  
+                                                        return {
+                                                            text: cur.text,
+                                                            cost: cur.cost,
+                                                            typeInd: cur.typeInd,
+                                                            answers: cur.answers,
+                                                            id: cur._id
+                                                        };
+                                                    });
+                                                    res.send( { test: toSend } );
+                                                }
+                                            });    
+                                        }
+
                                         else {
-                                            toSend.questions = result_qs.map(function(cur){
-                                                return {
-                                                    text: cur.text,
-                                                    cost: cur.cost,
-                                                    typeInd: cur.typeInd,
-                                                    answers: cur.answers,
-                                                    id: cur._id
-                                                };
-                                            });
                                             res.send( { test: toSend } );
                                         }
                                     });
@@ -465,7 +481,6 @@ router.post('/rest/test/pass', function(req, res){
         return cur.id;
     });
     QuestionModel.find({'_id': { $in: questionIds }}, function(err, result_questions){
-        console.log(result_questions);
         if (err) {
             res.send(err);
         }
@@ -616,7 +631,20 @@ router.get('/rest/tests/:userId', function(req, res) {
                                 res.send(err);
                             }    
                             else {
-                                res.send({tests: result_tests});
+                                var testsToSend = result_tests.map(function(cur){
+                                    return {
+                                        active: cur.active,
+                                        description: cur.description,
+                                        start: cur.start,
+                                        finish: cur.finish,
+                                        name: cur.name,
+                                        _id: cur._id
+                                    };
+                                });
+                                for (var j = 0; j < result_tests.length; j++){
+                                    testsToSend[j].gradeInfo = result_studentTests[j];
+                                }
+                                res.send({tests: testsToSend});
                             }
                         });
                     }
@@ -628,7 +656,7 @@ router.get('/rest/tests/:userId', function(req, res) {
                         res.send(err);
                     }
                     else {
-                       res.send({tests: result_tests});
+                        res.send({tests: result_tests});
                     }
                 });
                 

@@ -2,7 +2,7 @@
 
 angular.module('test')
 
-.service('testService', ['$http', '$state', function($http, $state){
+.service('testService', ['$http', '$state', '$rootScope', function($http, $state, $rootScope){
     return {
         createTest: function(test){
             return $http.post('/rest/test/new', test).then(function(res) {
@@ -29,7 +29,7 @@ angular.module('test')
             return $http.get('/rest/tests/' + id).then(function(res){
                 var testRequests = [];
                 for (var i = 0; i < res.data.tests.length; i++){
-                    testRequests.push($http.get('/rest/test/' + res.data.tests[i]._id));
+                    testRequests.push($http.get('/rest/test/' + res.data.tests[i]._id + '/user/' + $rootScope.id));
                 }
                 return testRequests;
             }, function(err){

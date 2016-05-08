@@ -3,6 +3,7 @@
 angular.module('myApp.header')
 
 .controller('HeaderCtrl', ['$scope', '$rootScope','ngNotify', '$http', '$state', 'authService', function($scope, $rootScope, ngNotify, $http, $state, authService) {
+    
     $scope.isCollapsed = true;
     $scope.auth = authService;
     
@@ -16,6 +17,10 @@ angular.module('myApp.header')
         return !(authService.isStartPage() || authService.isTestPassPage() || authService.isErrorPage());
     };
 
+    $scope.showUser = function(){
+        $state.go('userPage', {userId: authService.getId()})    
+    };
+    
     $scope.logout = function(){
         $http.post('/rest/logout', {id: $rootScope.id}).then(function(res){
             if(typeof(Storage) == 'undefined') {

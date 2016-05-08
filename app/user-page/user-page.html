@@ -1,0 +1,57 @@
+<div>
+    <div class="page-name">
+        <h2>{{pageName}}</h2>
+        <hr/>
+    </div>
+    
+    <div class="content-container container-fluid">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Role</p>
+                    <div class="text-in">
+                        <p>
+                            <i class="fa fa-star"></i>
+                            {{role}}
+                        </p>
+                    </div>
+                </div>
+            </div>   
+            
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Email</p>
+                    <div class="text-in">
+                        <p>
+                            <i class="fa fa-envelope"></i>
+                            {{email}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-4" ng-if="userIsStudent">
+                <div class="test-font">
+                    <p>Course &#38; group</p>
+                    <div class="text-in">
+                        <p>
+                            <i class="fa  fa-graduation-cap"></i>
+                            {{courseAndGroup}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <hr/>
+            
+            <div class="col-xs-12">
+                <div class="test-font">
+                    <p>List of tests</p>
+                    <div class="text-in">
+                        <div ui-grid="gridTests" ui-grid-resize-columns class="stud-grid"></div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

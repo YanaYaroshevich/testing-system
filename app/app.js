@@ -10,6 +10,7 @@ angular.module('myApp', [
     'myApp.myTestsPage',
     'myApp.statistics',
     'myApp.testPassPage',
+    'myApp.userPage',
     'myApp.error',
     'ui.bootstrap',
     'ngAnimate',

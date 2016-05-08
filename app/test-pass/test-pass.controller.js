@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.testPage')
+angular.module('myApp.testPassPage')
 
 .controller('TestPassPageCtrl', ['$scope', '$rootScope', 'test', 'ngNotify', 'testService', function($scope, $rootScope, test, ngNotify, testService){
     $scope.testName = test.name;

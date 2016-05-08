@@ -4,16 +4,17 @@
             <div class="col-sm-offset-2 col-sm-8 col-xs-offset-1 col-xs-10">
                 <div ng-repeat="question in questions.slice(((currentPage-1)*itemsPerPage), ((currentPage) * itemsPerPage))">
                     <div class="question-text test-pass test-font">
-                        <p ng-if="question.typeInd === 0 || question.typeInd === 3">{{currentPage}}. {{question.text}}</p>
-                        <p ng-if="question.typeInd === 2">{{currentPage}}. Fill the word</p>
+                        <p ng-if="question.typeInd === 0 || question.typeInd === 3">Question #{{currentPage}}</p>
+                        <pre ng-if="question.typeInd === 0 || question.typeInd === 3">{{question.text}}</pre>
+                        <p ng-if="question.typeInd === 2">{{currentPage}} Fill the word</p>
                         <hr/>
                     </div>
                     <div ng-if="(question.typeInd === 0 || question.typeInd === 3) && question.multipleRight" ng-repeat="answer in ::question.answers" class="answer">
-                        <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-checkbox>
+                        <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="false"><label>Answer #{{answer.num + 1}}<pre>{{answer.text}}</pre></label></pretty-checkbox>
                         <br/>
                     </div>
                     <div ng-if="(question.typeInd === 0 || question.typeInd === 3) && !question.multipleRight" ng-repeat="answer in ::question.answers" class="answer">
-                        <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="(answer.num + 1) + '.' + ' ' + answer.text"></pretty-radio>
+                        <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="false"><label style="width: 90%">Answer #{{answer.num + 1}}<pre>{{answer.text}}</pre></label></pretty-radio>
                         <br/>
                     </div>
                     <div ng-if="question.typeInd === 2" class="test-font">
@@ -46,8 +47,11 @@
     
     <div ng-if="passed" class="container-fluid test-container">
         <div class="row">
-            <div class="col-xs-12">
-                <pre>{{grade}}</pre>
+            <div class="col-sm-offset-2 col-sm-6 col-xs-offset-1 col-xs-8">
+                <div class="question-text test-pass test-font">
+                    <p>The test is passed.</p>
+                    <pre>Your result is: {{grade}}%</pre>
+                </div>    
             </div>
         </div>
     </div>
