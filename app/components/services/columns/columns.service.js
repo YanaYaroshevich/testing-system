@@ -44,7 +44,8 @@ angular.module('columns')
             return [
                 { name: 'text', headerCellClass: 'header-filtered', minWidth: '200' },
                 { name: 'cost', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
-                { name: 'type', headerCellClass: 'header-filtered', minWidth: '200' }
+                { name: 'type', headerCellClass: 'header-filtered', minWidth: '200' },
+                { name: 'rightAnswers', enableFiltering: false,  minWidth: '150' }
             ];
         },
         

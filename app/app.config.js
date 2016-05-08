@@ -29,9 +29,9 @@ angular.module('myApp')
         templateUrl: 'test-page/test-page.html',
         controller: 'TestPageCtrl',
         resolve : {
-            testToShow: ['$http', '$stateParams', '$rootScope', function($http, $stateParams, $rootScope){
+            testToShow: ['$http', '$stateParams', '$rootScope', 'authService', function($http, $stateParams, $rootScope, authService){
                 return $http.get('/rest/test/' + $stateParams.testId + '/user/' + $rootScope.id).then(function(res){
-                    if (res && new Date(res.data.test.start) <= new Date() && new Date(res.data.test.finish) >= new Date()) {
+                    if (res && (new Date(res.data.test.start) <= new Date() && new Date(res.data.test.finish) >= new Date() || authService.isTeacher())) {
                         return res.data.test; 
                     }
                     else 
@@ -53,7 +53,12 @@ angular.module('myApp')
             userToShow: ['$http', '$stateParams', function($http, $stateParams){
                 return $http.get('/rest/user/' + $stateParams.userId).then(
                     function(res){
-                        return res.data.account;
+                        if (res) {
+                            return res.data.account;    
+                        }
+                        else {
+                            return false;
+                        }
                     },
                     function(err){
                         ngNotify.set(err.data);
@@ -63,7 +68,12 @@ angular.module('myApp')
             }],
             testsToShow: ['$http', '$stateParams', function($http, $stateParams) {
                 return $http.get('/rest/tests/' + $stateParams.userId).then(function(res){
-                    return res.data.tests;
+                    if (res) {
+                        return res.data.tests;    
+                    }
+                    else {
+                        return false;
+                    }
                 }, function(err) {
                     ngNotify.set(err.data);
                     return '';
@@ -108,7 +118,12 @@ angular.module('myApp')
         resolve: {
             test: ['$http', '$stateParams', '$rootScope', function($http, $stateParams, $rootScope){
                 return $http.get('/rest/test/' + $stateParams.testId + '/stud/' + $rootScope.id).then(function(res){
-                    return res.data.test;
+                    if (res && new Date(res.data.test.start) <= new Date() && new Date(res.data.test.finish) >= new Date()) {
+                        return res.data.test;    
+                    }
+                    else {
+                        return false;
+                    }
                 }, function(err){
                     ngNotify.set(err.data);
                     return '';
