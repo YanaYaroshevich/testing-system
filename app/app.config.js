@@ -86,8 +86,8 @@ angular.module('myApp')
         templateUrl: 'new-test/new-test.html',
         controller: 'TestEditPageCtrl',
         resolve : {
-            testToShow: ['$http', '$stateParams', function($http, $stateParams){
-                return $http.get('/rest/test/' + $stateParams.testId).then(function(res){
+            testToShow: ['$http', '$stateParams', '$rootScope', function($http, $stateParams, $rootScope){
+                return $http.get('/rest/test/' + $stateParams.testId + '/user/' + $rootScope.id).then(function(res){
                     return res.data.test;
                 }, function(err){
                     ngNotify.set(err.data);

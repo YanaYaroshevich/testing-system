@@ -2,7 +2,7 @@
 
 angular.module('myApp.newTest')
     
-.controller('NewTestCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'studService', 'testService', 'colService', function($scope, $rootScope, ngNotify, uiGridConstants, studService, testService, colService) {
+.controller('NewTestCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'studService', 'testService', 'colService', 'FileUploader', '$http', function($scope, $rootScope, ngNotify, uiGridConstants, studService, testService, colService, FileUploader, $http) {
     ngNotify.config({
         theme: 'pastel',
 		position: 'bottom',
@@ -11,6 +11,46 @@ angular.module('myApp.newTest')
 		sticky: true,
 		html: false
     });
+    
+    $scope.uploader = new FileUploader({url: '/test/new/mainpicture/upload'});
+    
+    $scope.uploader.filters.push({
+            name: 'imageFilter',
+            fn: function(item /*{File|FileLikeObject}*/, options) {
+                var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+            }
+        });
+    
+    // CALLBACKS
+
+    $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        ngNotify.set('An error occured while file uploading');
+        console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    
+    $scope.uploader.onAfterAddingFile = function(fileItem) {
+        $scope.question.mainPicture = fileItem.file;
+        console.info('onAfterAddingFile', fileItem);
+    };
+    
+    $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+        $scope.question.mainPicture = response.fileName;
+        $scope.question.num = $scope.test.questions.length + 1;
+        $scope.test.questions.push(angular.copy($scope.question));
+        $scope.gridQuestions.data = $scope.test.questions;
+        questionToDefault();
+    };
+    
+    $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+        ngNotify.set('An error occured while file uploading');
+        console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    
+    $scope.removeMainPicture = function() {
+        delete $scope.question.mainPicture;   
+    };
     
     $scope.pageName = 'Test creation';    
     
@@ -70,8 +110,8 @@ angular.module('myApp.newTest')
     /* --------------------- Questions table ---------------------------- */
     
     $scope.gridQuestions = {
-            enableFiltering: true,
-            columnDefs : colService.newTestQuestions()
+        enableFiltering: true,
+        columnDefs : colService.newTestQuestions()
     };
     
     var questionFill = function(){
@@ -95,6 +135,12 @@ angular.module('myApp.newTest')
                 return false;
             }
         }
+        
+        if ($scope.question.typeInd === 3) {
+            if (!$scope.question.mainPicture){
+                return false;
+            }
+        }
         return true;
     };
         
@@ -102,10 +148,16 @@ angular.module('myApp.newTest')
         if (!questionFill()){
             return false;
         }
+        if ($scope.question.typeInd === 3) {
+            $scope.uploader.uploadAll();
+            return true;
+        }
+        
         $scope.question.num = $scope.test.questions.length + 1;
         $scope.test.questions.push(angular.copy($scope.question));
         $scope.gridQuestions.data = $scope.test.questions;
         questionToDefault();
+        
         return true;
     };
     
@@ -117,7 +169,10 @@ angular.module('myApp.newTest')
         }
         else{
             if($scope.gridQuestions.data.length > 0){
-                $scope.gridQuestions.data.splice($scope.questionToRemove - 1, 1);
+                if ($scope.gridQuestions.data[$scope.questionToRemove.num - 1].typeInd === 3) {
+                    $http.delete('/picture/' + $scope.gridQuestions.data[$scope.questionToRemove.num - 1].mainPicture).then(function(res){}, function(err){ngNotify.set(err.data);});    
+                }
+                $scope.gridQuestions.data.splice($scope.questionToRemove.num - 1, 1);
                 for (var i = 0; i < $scope.gridQuestions.data.length; i++){
                     $scope.gridQuestions.data[i].num = i + 1;
                 }

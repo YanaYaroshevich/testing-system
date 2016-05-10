@@ -56,7 +56,20 @@
                             <div class="col-xs-10">
                                 <textarea class="test-description" rows="5" placeholder="Type here" cols="50" ng-model="question.text"></textarea>
                             </div>
-                        </div>   
+                        </div> 
+                        
+                        
+                        <div class="row" nv-file-drop="" uploader="uploader">
+                            <div class="col-xs-10" ng-if="question.typeInd === 3">
+                                <br/>
+                                <div ng-show="!question.mainPicture" class="well my-drop-zone" nv-file-over="" uploader="uploader">
+                                    Choose a picture for the question
+                                </div>
+                                <div ng-show="question.mainPicture">
+                                    <label>{{question.mainPicture.name}} <a href="" ng-click="removeMainPicture()"><i class="fa fa-times" aria-hidden="true"></i></a></label>
+                                </div>
+                            </div>
+                        </div>    
                         
                         <br/>
                         
@@ -69,7 +82,7 @@
                             </div>
                         </div>   
             
-                        <div ng-if="question.typeInd === 0 || question.typeInd === 4">
+                        <div ng-if="question.typeInd === 0 || question.typeInd === 3">
                             <div ng-repeat="answer in question.answers track by $index">
                                  <div class="test-font">
                                     <br/> 

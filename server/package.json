@@ -13,6 +13,7 @@
     "express": "^4.13.3",
     "mongodb": "^2.0.48",
     "mongoose": "^4.2.5",
-    "stormpath": "^0.14.0"
+    "stormpath": "^0.14.0",
+    "multer": ">=1.1.0"
   }
 }

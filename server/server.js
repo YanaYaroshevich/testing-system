@@ -5,6 +5,8 @@ var stormpath = require('stormpath');
 var mongoose = require('mongoose');
 var cloudinary = require('cloudinary');
 var bodyParser = require('body-parser');
+var multer  = require('multer');
+var fs = require('fs');
 
 var db = require('./db');
 var security = require('./storm');
@@ -379,7 +381,7 @@ var dateCreation = function (date, isStart) {
     return d;
 };
 
-var questionsAdding = function(req, testId, res){
+var questionsAdding = function(req, testId, res, testName){
     var questions = [];
     var question = {};
                 
@@ -387,8 +389,10 @@ var questionsAdding = function(req, testId, res){
         question.text = req.body.questions[i].text;
         question.cost = req.body.questions[i].cost;
         question.typeInd = req.body.questions[i].typeInd;
-        if (req.body.questions[i].typeInd === 3)
-            question.additionalPicture = req.body.questions[i].additionalPicture;
+        if (req.body.questions[i].typeInd === 3) {
+            question.additionPicture = req.body.questions[i].mainPicture;
+
+        }
         if (req.body.questions[i].typeInd === 0 || req.body.questions[i].typeInd === 1 || req.body.questions[i].typeInd === 3){
             question.answers = req.body.questions[i].answers.map( function(ans) {
                 return {
@@ -436,6 +440,36 @@ var newsAdding = function(studId, text, linkText, testId, res) {
     });
 };
 
+router.post('/test/new/mainpicture/upload', function(req, res) {
+    var tmp;
+    
+    var storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, 'my-uploads/');
+      },
+      filename: function (req, file, cb) {
+        tmp = Date.now() + file.originalname;
+        cb(null, tmp);
+      }
+    });
+    
+    var upload = multer({ storage: storage }).single('file');
+
+    upload(req, res, function (err) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        else {
+            res.send({fileName: tmp});
+        }
+    });
+});
+
+router.delete('/picture/:pictureName', function(req, res){
+    fs.unlinkSync('my-uploads/' + req.params.pictureName);
+});
+
 router.post('/rest/test/new', function (req, res) {
     UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
         if (err) {
@@ -459,7 +493,7 @@ router.post('/rest/test/new', function (req, res) {
                     }
                     else {
                         testId = curTest._id;
-                        questionsAdding(req, testId, res);
+                        questionsAdding(req, testId, res, test.name);
                         for (var i = 0; i < req.body.students.length; i++) {
                             studentTestAdding(testId, req.body.students[i], res);
                             newsAdding(req.body.students[i], 'New test was created', 'Click here to open', testId, res);

@@ -13,6 +13,7 @@
     "angular-ui-grid": ">=3.0.7",
     "angular-nvd3": "~1.0.5",
     "angular-animate": ">=1.4.8",
-    "angular-pretty-checkable": ">=0.1.7"
+    "angular-pretty-checkable": ">=0.1.7",
+    "angular-file-upload": ">=2.2.0"   
   }
 }

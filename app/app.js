@@ -26,7 +26,8 @@ angular.module('myApp', [
     'students',
     'test',
     'columns',
-    'pretty-checkable'
+    'pretty-checkable',
+    'angularFileUpload'
 ])
 
 .run(['$state', '$rootScope', '$http', 'authService', '$q', function ($state, $rootScope, $http, authService, $q) {
