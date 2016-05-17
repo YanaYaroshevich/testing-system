@@ -9,7 +9,7 @@ angular.module('myApp.testPassPage')
     
     else {
         $scope.testName = test.name;
-    
+        
         $scope.passed = test.passed;
         $scope.grade = test.grade;
 
@@ -20,6 +20,7 @@ angular.module('myApp.testPassPage')
                 typeInd: cur.typeInd,
                 id: cur.id, 
                 multipleRight: cur.multipleRight,
+                mainPicture: cur.mainPicture,
                 radioChecked: 0,
                 firstPart: cur.firstPart,
                 secondPart: cur.secondPart

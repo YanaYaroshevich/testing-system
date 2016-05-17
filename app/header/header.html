@@ -47,6 +47,14 @@
                     <span>New test</span>
                 </a>
             </li>
+            
+            <li>
+                <a ng-class="auth.isNewProblemPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isTeacher()" ui-sref="newProblem">
+                    <i class="fa fa-fw fa-circle-o"></i>
+                    <span>New problem</span>
+                </a>
+            </li>
+            
             <li>
                 <a ng-class="auth.isMyTestsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myTests">
                     <i class="fa fa-fw fa-circle-o"></i>
@@ -72,7 +80,7 @@
                 </a>
             </li>
              <li>
-                <a ng-click="collapse()" ng-if="auth.isAdmin()" href="">
+                <a ng-class="auth.isNewUserPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isAdmin()" ui-sref="newUser">
                     <i class="fa fa-fw fa-circle-o"></i>
                     <span>User creation</span>
                 </a>

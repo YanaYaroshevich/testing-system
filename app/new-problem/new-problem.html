@@ -1,0 +1,161 @@
+<div>
+    <div class="page-name">
+        <h2>{{pageName}}</h2>
+        <hr/>
+    </div>
+
+    <div class="content-container container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="test-font">
+                    <p>Name</p>
+                </div>
+                <input type="text" class="form-control" placeholder="Type here" ng-model="problem.name"/>
+
+                <br/>
+
+                <div class="test-font">
+                    <p>Description</p>
+                </div>
+                <textarea class="test-description" rows="5" placeholder="Type here" cols="50" ng-model="problem.description"></textarea>
+
+                <br/>
+
+            </div>
+
+            <div class="col-sm-8">
+
+                <label class="test-font">Input files</label>
+
+                <div ng-repeat="inputFile in filesPair.inputFilesNames track by $index">
+                    <div class="test-font">
+                        <p>Input file name #{{$index + 1}}</p>
+                    </div>
+
+
+                    <ng-form name="inputForm">
+                        <input type="text" ng-disabled="status.open" name="inputFileName" class="form-control" placeholder="Type here" ng-model="inputFile.nameForTest" ng-pattern="/^[\w,\s-]+\.[A-Za-z0-9]+$/"/>
+                        <span ng-show="inputForm.inputFileName.$error.pattern" style="color:red">File name is not valid.</span>
+                    </ng-form>
+                    <br/>
+
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" ng-disabled="filesPair.inputFilesNames.length >= 6 || filesPair.inputFilesNames[filesPair.inputFilesNames.length - 1].nameForTest.length === 0 || status.open" ng-click="addInputFile()">Add input file</button>
+                    <button class="btn btn-primary" ng-disabled="filesPair.inputFilesNames.length <= 1 || status.open" ng-click="removeInputFile()">Remove input file</button>
+                </div>
+
+                <br/>
+
+                <label class="test-font">Output files</label>
+
+                <div ng-repeat="outputFile in filesPair.outputFilesNames track by $index">
+                    <div class="test-font">
+                        <p>Output file name #{{$index + 1}}</p>
+                    </div>
+
+                    <ng-form name="outputForm">
+                        <input type="text" ng-disabled="status.open" name="outputFileName" class="form-control" placeholder="Type here" ng-model="outputFile.nameForTest" ng-pattern="/^[\w,\s-]+\.[A-Za-z0-9]+$/"/>
+                        <span ng-show="outputForm.outputFileName.$error.pattern" style="color:red">File name is not valid.</span>
+                    </ng-form>
+                    <br/>
+
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" ng-disabled="filesPair.outputFilesNames.length >= 6 || filesPair.outputFilesNames[filesPair.outputFilesNames.length - 1].nameForTest.length === 0 || status.open" ng-click="addOutputFile()">Add output file</button>
+                    <button class="btn btn-primary" ng-disabled="filesPair.outputFilesNames.length <= 1 || status.open" ng-click="removeOutputFile()">Remove output file</button>
+                </div>
+
+                <br/>
+
+                <div class="test-font" ng-show="showAccord()">
+                    <p>Tests adding</p>
+                </div>
+
+
+                <uib-accordion ng-show="showAccord()">
+                    <uib-accordion-group is-open="status.open">
+                        <uib-accordion-heading>
+                            Click here <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        </uib-accordion-heading>
+
+                        <label ng-show="filesPair.inputFilesNames.length > 0 && filesPair.inputFilesNames[0].nameForTest.length > 0" class="test-font">Input files</label>
+
+                        <div ng-repeat="inputFile in filesPair.inputFilesNames track by $index">
+                            <div class="test-font" ng-show="inputFile.nameForTest.length > 0">
+                                <p>Input file {{inputFile.nameForTest}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <div ng-show="inputFile.nameForTest.length > 0">
+                                        <input type="file" name="inputFile" nv-file-select="" uploader="ioUploader" options="{ nameForTest: inputFile.nameForTest, isInput: true }"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <label ng-show="filesPair.outputFilesNames.length > 0 && filesPair.outputFilesNames[0].nameForTest.length > 0" class="test-font">Output files</label>
+
+                        <div ng-repeat="outputFile in filesPair.outputFilesNames track by $index">
+                            <div class="test-font" ng-show="outputFile.nameForTest.length > 0">
+                                <p>Output file {{outputFile.nameForTest}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <div ng-show="outputFile.nameForTest.length > 0">
+                                        <input type="file" name="outputFile" nv-file-select="" uploader="ioUploader" options="{nameForTest: outputFile.nameForTest, isInput: false }"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-success add-question" ng-click="addFilesPair() && (status.open = !status.open)">Add test</button>
+
+                    </uib-accordion-group>
+                </uib-accordion>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 test-font">
+                <p>Choose dates of start and finish</p>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <p class="input-group">
+                    <uib-datepicker ng-model="problem.from" min-date="minDate" show-weeks="true" class="well well-sm"></uib-datepicker>
+                </p>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <p class="input-group datepicker-to">
+                    <uib-datepicker ng-model="problem.to" min-date="test.from" show-weeks="true" class="well well-sm"></uib-datepicker>
+                </p>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="test-font">
+            <p>Assign students</p>
+
+            <div class="row">
+                <div class="col-xs-12 text-in">
+                    <div ui-grid="gridStudents" ui-grid-selection ui-grid-resize-columns class="stud-grid"></div>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+            <button class="btn btn-primary test-adding" ng-disabled="" ng-click="addProblem()">Complete </button>
+
+    </div>
+</div>

@@ -19,6 +19,16 @@ angular.module('myApp')
         templateUrl: 'new-test/new-test.html',
         controller: 'NewTestCtrl'
     })
+    .state('newUser', {
+        url: '/user/new',
+        templateUrl: 'new-user/new-user.html',
+        controller: 'NewUserCtrl'
+    })
+    .state('newProblem', {
+        url: '/problem/new',
+        templateUrl: 'new-problem/new-problem.html',
+        controller: 'NewProblemCtrl'
+    })
     .state('statistics', {
         url: '/statistics',
         templateUrl: 'statistics/statistics.html',

@@ -61,6 +61,17 @@ module.exports = function (mongoose) {
             linkText: { type: String } //+
         }, {
             collection: 'news'
+        }),
+
+        problemSchema: new mongoose.Schema({
+            teacherId: mongoose.Schema.Types.ObjectId,
+            name: String,
+            description: String,
+            filesDefinition: String,
+            start: { type: Date, default: new Date() },
+            finish: { type: Date, default: new Date() }
+        }, {
+            collection: 'problems'
         })
     };
 };

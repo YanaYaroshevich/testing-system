@@ -74,6 +74,12 @@ angular.module('auth')
         isUserPage: function(){
             return ($state.is('user'));    
         },
+        isNewUserPage: function() {
+            return ($state.is('newUser'));
+        },
+        isNewProblemPage: function() {
+            return ($state.is('newProblem'));
+        },
         getUserName: function(){
             return account && !this.isStartPage() ? account.firstName + ' ' + account.lastName : '';
         },

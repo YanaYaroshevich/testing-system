@@ -67,6 +67,7 @@ var router = express.Router();
 var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
 
 app.use(express.static(rootDir + '\\app'));
+app.use(express.static(__dirname + '\\my-uploads'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
@@ -302,6 +303,8 @@ router.get('/rest/test/:testId/stud/:studId', function(req, res) {
             var toSend = {
                 name: result_test.name,
                 id: req.params.testId,
+                start: result_test.start,
+                finish: result_test.finish,
                 passed: null,
                 assigned: null,
                 grade: 0
@@ -330,7 +333,8 @@ router.get('/rest/test/:testId/stud/:studId', function(req, res) {
                                         if (cur.answers[i].right)
                                             rightAnsQ++;
                                     }
-                                    return {
+                                    
+                                    var obj = {
                                         text: cur.text,
                                         typeInd: cur.typeInd,
                                         answers: cur.answers.map(function(ans){
@@ -342,6 +346,14 @@ router.get('/rest/test/:testId/stud/:studId', function(req, res) {
                                         id: cur._id,
                                         multipleRight: (rightAnsQ > 1)
                                     };
+                                    
+                                    if(cur.typeInd === 3) {
+                                        console.log('my-uploads/' + cur.additionPicture);
+                                        obj.mainPicture = cur.additionPicture;
+                                    }
+                                    
+                                    return obj;
+                                    
                                 }
                                 else if (cur.typeInd === 2) {
                                     var firstPart = cur.text.substring(0, cur.text.indexOf('###'));
@@ -353,8 +365,10 @@ router.get('/rest/test/:testId/stud/:studId', function(req, res) {
                                         id: cur._id
                                     };
                                 }
-                                
                             });
+                            
+                    
+                            
                             res.send( { test: toSend } );
                         }
                     });
@@ -462,6 +476,40 @@ router.post('/test/new/mainpicture/upload', function(req, res) {
         }
         else {
             res.send({fileName: tmp});
+        }
+    });
+});
+
+router.post('/problem/new/io', function(req, res) {
+    var tmp;
+    var origName;
+
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            if (req.body.isInput) {
+                cb(null, 'my-inputs/');
+            }
+            else {
+                cb(null, 'my-outputs/');
+;            }
+
+        },
+        filename: function (req, file, cb) {
+            tmp = Date.now() + file.originalname;
+            origName = file.originalname;
+            cb(null, tmp);
+        }
+    });
+
+    var upload = multer({ storage: storage }).single('file');
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        else {
+            res.send({origFileName: origName, isInput: req.body.isInput, nameForTest: req.body.nameForTest});
         }
     });
 });

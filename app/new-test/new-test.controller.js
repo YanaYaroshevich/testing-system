@@ -85,7 +85,7 @@ angular.module('myApp.newTest')
 
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
-    }
+    };
     
     datesToDefault();
 
@@ -211,7 +211,7 @@ angular.module('myApp.newTest')
         });
             
         $scope.gridStudents.columnDefs = colService.newTestStudents();
-    }
+    };
     
     getStudents();
     
@@ -246,5 +246,5 @@ angular.module('myApp.newTest')
                 }                                         
             });
         }
-    }
+    };
 }]);

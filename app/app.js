@@ -12,6 +12,8 @@ angular.module('myApp', [
     'myApp.testPassPage',
     'myApp.userPage',
     'myApp.error',
+    'myApp.newUser',
+    'myApp.newProblem',
     'ui.bootstrap',
     'ngAnimate',
     'ngNotify',
@@ -27,7 +29,8 @@ angular.module('myApp', [
     'test',
     'columns',
     'pretty-checkable',
-    'angularFileUpload'
+    'angularFileUpload',
+    'ezplus'
 ])
 
 .run(['$state', '$rootScope', '$http', 'authService', '$q', function ($state, $rootScope, $http, authService, $q) {

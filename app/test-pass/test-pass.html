@@ -7,13 +7,17 @@
                         <p ng-if="question.typeInd === 0 || question.typeInd === 3">Question #{{currentPage}}</p>
                         <pre ng-if="question.typeInd === 0 || question.typeInd === 3">{{question.text}}</pre>
                         <p ng-if="question.typeInd === 2">{{currentPage}} Fill the word</p>
+                        
+                        <img style="max-width: 400px; width: 100%;" ez-plus ezp-model="{thumb: question.mainPicture, small: question.mainPicture, large: question.mainPicture}" ezp-options="{scrollZoom: true, easing: true}" ng-if="question.typeInd === 3" src="{{::question.mainPicture}}"/>
                         <hr/>
                     </div>
+                    
+                    
                     <div ng-if="(question.typeInd === 0 || question.typeInd === 3) && question.multipleRight" ng-repeat="answer in ::question.answers" class="answer">
                         <pretty-checkbox class="clearfix" multiple ng-model="answer.checked" label="false"><label>Answer #{{answer.num + 1}}<pre>{{answer.text}}</pre></label></pretty-checkbox>
                         <br/>
                     </div>
-                    <div ng-if="(question.typeInd === 0 || question.typeInd === 3) && !question.multipleRight" ng-repeat="answer in ::question.answers" class="answer">
+                    <div ng-if="(question.typeInd === 0 || question.typeInd === 3) && !question.multipleRight" ng-repeat="answer in ::question.answers" class="answer">    
                         <pretty-radio value="{{$index}}" class="clearfix" ng-model="question.radioChecked" label="false"><label style="width: 90%">Answer #{{answer.num + 1}}<pre>{{answer.text}}</pre></label></pretty-radio>
                         <br/>
                     </div>
