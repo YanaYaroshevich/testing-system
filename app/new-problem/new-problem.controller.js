@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp.newUser')
+angular.module('myApp.newProblem')
 
-    .controller('NewProblemCtrl', ['$scope', '$rootScope', 'ngNotify', 'studService', 'colService', 'FileUploader', function($scope, $rootScope, ngNotify, studService, colService, FileUploader) {
+    .controller('NewProblemCtrl', ['$scope', '$rootScope', 'ngNotify', '$uibModal', 'studService', 'colService', 'FileUploader', 'problemService',  function($scope, $rootScope, ngNotify, $uibModal, studService, colService, FileUploader, problemService) {
         ngNotify.config({
             theme: 'pastel',
             position: 'bottom',
@@ -23,34 +23,55 @@ angular.module('myApp.newUser')
 
         $scope.ioUploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
             ngNotify.set('An error occured while file uploading');
-            console.info('onWhenAddingFileFailed', item, filter, options);
         };
 
         $scope.ioUploader.onAfterAddingFile = function(fileItem) {
+            $scope.filesPair.qAdded++;
+            if (fileItem.isInput) {
+                for (var i = 0; i <  $scope.filesPair.inputFilesNames.length; i++) {
+                    if (fileItem.nameForTest === $scope.filesPair.inputFilesNames[i].nameForTest) {
+                        $scope.filesPair.inputFilesNames[i].isAdded = true;
+                    }
+                }
+            }
+            else {
+                for (var j = 0; j <  $scope.filesPair.outputFilesNames.length; j++) {
+                    if (fileItem.nameForTest === $scope.filesPair.outputFilesNames[j].nameForTest) {
+                        $scope.filesPair.outputFilesNames[j].isAdded = true;
+                    }
+                }
+            }
             fileItem.formData.push({nameForTest: fileItem.nameForTest});
             fileItem.formData.push({isInput: fileItem.isInput});
-            console.info('onAfterAddingFile', fileItem);
         };
 
         $scope.ioUploader.onSuccessItem = function(fileItem, response, status, headers) {
-            console.info('onSuccessItem', fileItem, response, status, headers);
-            if (response.isInput) {
-                $scope.filesPair.inputFiles.push(response.origFileName);
+            if (response.isInput === 'true') {
+                $scope.filesPair.inputFiles.push({originalName: response.origFileName, nameForTest: response.nameForTest});
             }
             else {
-                $scope.filesPair.outputFiles.push(response.origFileName);
+                $scope.filesPair.outputFiles.push({originalName: response.origFileName, nameForTest: response.nameForTest});
             }
             $scope.filesPair.num = $scope.problem.filePairs.length + 1;
 
             if ($scope.filesPair.inputFiles.length + $scope.filesPair.outputFiles.length === $scope.filesPair.inputFilesNames.length + $scope.filesPair.outputFilesNames.length) {
-                $scope.problem.filePairs.push($scope.filesPair);
-                filesToDefault();
+                $scope.problem.filePairs.push(angular.copy($scope.filesPair));
+                $scope.filesPair.qAdded = 0;
+                $scope.filesPair.inputFiles = [];
+                $scope.filesPair.outputFiles = [];
+                $scope.status.open = false;
+                for (var i = 0; i < $scope.filesPair.inputFilesNames.length; i++) {
+                    $scope.filesPair.inputFilesNames[i].isAdded = false;
+                }
+
+                for (var j = 0; j < $scope.filesPair.outputFilesNames.length; j++) {
+                    $scope.filesPair.outputFilesNames[j].isAdded = false;
+                }
             }
         };
 
         $scope.ioUploader.onErrorItem = function(fileItem, response, status, headers) {
             ngNotify.set('An error occured while file uploading');
-            console.info('onErrorItem', fileItem, response, status, headers);
         };
 
         $scope.pageName = 'Problem creation';
@@ -59,6 +80,7 @@ angular.module('myApp.newUser')
             $scope.problem = {};
             $scope.problem.name = '';
             $scope.problem.description = '';
+            $scope.problem.definition = '';
             $scope.problem.students = [];
             $scope.problem.filePairs = [];
         };
@@ -67,8 +89,9 @@ angular.module('myApp.newUser')
 
         var filesToDefault = function(){
             $scope.filesPair = {};
-            $scope.filesPair.inputFilesNames = [ { nameForTest: '' } ];
-            $scope.filesPair.outputFilesNames = [ { nameForTest: '' } ];
+            $scope.filesPair.qAdded = 0;
+            $scope.filesPair.inputFilesNames = [ { nameForTest: '', isAdded: false } ];
+            $scope.filesPair.outputFilesNames = [ { nameForTest: '', isAdded: false } ];
 
             $scope.filesPair.inputFiles = [];
             $scope.filesPair.outputFiles = [];
@@ -104,6 +127,26 @@ angular.module('myApp.newUser')
             }
 
             return true;
+        };
+
+        $scope.openFileTest = function(fileTestInd) {
+            var fileTest = $scope.problem.filePairs[fileTestInd];
+            var modalInstance = $uibModal.open({
+                templateUrl: '/new-problem/fileTestModal.html',
+                controller: 'fileTestModalCtrl',
+                size: 'lg',
+                resolve: {
+                    fileTest: function () {
+                        return fileTest;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (res) {
+
+            }, function () {
+
+            });
         };
 
         var datesToDefault = function(){
@@ -167,14 +210,14 @@ angular.module('myApp.newUser')
             return true;
         };
 
-        $scope.addTest = function(){
+        $scope.addProblem = function(){
             if (problemFill()){
                 $scope.problem.teacherId = $rootScope.id;
-                /*testService.createTest($scope.test).then(function(err){
+                problemService.createProblem($scope.problem).then(function(err){
                     if (err) {
                         ngNotify.set(err.message);
                     }
-                });*/
+                });
             }
         };
 

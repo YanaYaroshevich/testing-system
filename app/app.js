@@ -27,6 +27,7 @@ angular.module('myApp', [
     'login',
     'students',
     'test',
+    'problem',
     'columns',
     'pretty-checkable',
     'angularFileUpload',

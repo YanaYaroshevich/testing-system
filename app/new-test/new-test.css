@@ -10,12 +10,29 @@
     min-height: 300px;
 }
 
+.fileTest-grid {
+    min-height: 100px;
+}
+
 .ui-grid-row  {
     height: auto;
 }
 
+ table.t01 th, table.t01 td {
+     border: 1px solid black;
+     border-collapse: collapse;
+ }
+table.t01 th, table.t01 td {
+    padding: 5px;
+    text-align: left;
+}
+
 .test-adding {
     margin-bottom: 70px;
+}
+
+input[type='file'] {
+    color: transparent;
 }
 
 .my-drop-zone { border: dotted 3px lightgray; }

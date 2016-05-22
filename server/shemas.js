@@ -72,6 +72,25 @@ module.exports = function (mongoose) {
             finish: { type: Date, default: new Date() }
         }, {
             collection: 'problems'
+        }),
+
+        fileTestSchema: new mongoose.Schema({
+            inputFiles: [ { originalName: String, nameForTest: String } ],
+            outputFiles: [ { originalName: String, nameForTest: String } ],
+            problemId: mongoose.Schema.Types.ObjectId,
+            num: Number
+        }, {
+            collection: 'fileTests'
+        }),
+
+        studentProblemSchema: new mongoose.Schema({
+            studentId: mongoose.Schema.Types.ObjectId, //+
+            problemId: mongoose.Schema.Types.ObjectId,
+            passed: { type: Boolean, default: false },
+            assigned: { type: Boolean, default: false },
+            solutions: [ { qOfPassedTests: Number, dateOfPass: Date, programText: String, errorsToShow: [ { errorText: String, errorType: String } ] }  ]
+        },{
+            collection: 'studentProblems'
         })
     };
 };

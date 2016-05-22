@@ -31,6 +31,9 @@ var QuestionModel = mongoose.model('Question', schemas.questionSchema);
 var TestModel = mongoose.model('Test', schemas.testSchema);
 var StudentTestModel = mongoose.model('StudentTest', schemas.studentTestSchema);
 var NewsModel = mongoose.model('NewsModel', schemas.newsSchema);
+var ProblemModel = mongoose.model('Problem', schemas.problemSchema);
+var FileTestModel = mongoose.model('FileTest', schemas.fileTestSchema);
+var StudentProblemModel = mongoose.model('StudentProblem', schemas.studentProblemSchema);
 
 var ObjectID = require('mongodb').ObjectID;
 
@@ -68,6 +71,8 @@ var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
 
 app.use(express.static(rootDir + '\\app'));
 app.use(express.static(__dirname + '\\my-uploads'));
+app.use(express.static(__dirname + '\\my-inputs'));
+app.use(express.static(__dirname + '\\my-outputs'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
@@ -439,6 +444,21 @@ var studentTestAdding = function(testId, studId, res) {
     });
 };
 
+var studentProblemAdding = function(problemId, studId, res) {
+    var studentProblem = {};
+    studentProblem.problemId = problemId;
+    studentProblem.studentId = studId;
+    studentProblem.passed = false;
+    studentProblem.assigned = true;
+    
+    var studentProblemDB = new StudentProblemModel(studentProblem);
+    studentProblemDB.save(function(err){
+        if(err) {
+            res.send(err);
+        }
+    });
+};
+
 var newsAdding = function(studId, text, linkText, testId, res) {
     var news = {};
     news.userId = studId;
@@ -491,8 +511,7 @@ router.post('/problem/new/io', function(req, res) {
             }
             else {
                 cb(null, 'my-outputs/');
-;            }
-
+            }
         },
         filename: function (req, file, cb) {
             tmp = Date.now() + file.originalname;
@@ -509,6 +528,7 @@ router.post('/problem/new/io', function(req, res) {
             return;
         }
         else {
+            console.log(req.body);
             res.send({origFileName: origName, isInput: req.body.isInput, nameForTest: req.body.nameForTest});
         }
     });
@@ -516,6 +536,54 @@ router.post('/problem/new/io', function(req, res) {
 
 router.delete('/picture/:pictureName', function(req, res){
     fs.unlinkSync('my-uploads/' + req.params.pictureName);
+});
+
+router.post('/rest/problem/new', function(req, res){
+    UserModel.findOne({_id: req.body.teacherId}, function(err, result_teacher){
+        if (err) {
+            res.send(err);
+        }
+        else {
+            if(result_teacher.role === 2) {
+                var problem = {};
+                problem.name = req.body.name;
+                problem.description = req.body.description;
+                problem.filesDefinition = req.body.definition;
+                problem.start = req.body.start;
+                problem.finish = req.body.finish;
+                problem.teacherId = req.body.teacherId;
+                var problemId;
+
+                var problemDB = new ProblemModel(problem);
+                problemDB.save(function(err, currProb){
+                    if(err) {
+                        res.send(err);
+                    }
+                    else {
+                        problemId = currProb._id;
+                        var fileTest = {};
+                        for (var i = 0; i < req.body.filePairs.length; i++) {
+                            fileTest.inputFiles = req.body.filePairs[i].inputFiles;
+                            fileTest.outputFiles = req.body.filePairs[i].outputFiles;
+                            fileTest.problemId = problemId;
+                            fileTest.num = i + 1;
+                            var fileTestDB = FileTestModel(fileTest);
+                            fileTestDB.save(function(err){
+                                if (err) {
+                                    res.send(err);
+                                }
+                            });
+                        }
+
+                        for (var j = 0; j < req.body.students.length; j++) {
+                            studentProblemAdding(problemId, req.body.students[j], res);
+                        }
+                        res.send({problemId: problemId});
+                    }
+                });
+            }
+        }
+    });
 });
 
 router.post('/rest/test/new', function (req, res) {

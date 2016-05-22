@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{header}}</h3>
+</div>
+<div class="modal-body">
+
+
+    <div class="test-font">
+        <label>Files:</label>
+
+        <table class="t01">
+            <tr>
+                <th ng-repeat="file in fileTest.inputFiles.concat(fileTest.outputFiles)">
+                    {{file.nameForTest}}
+                </th>
+            </tr>
+
+            <tr>
+                <td ng-repeat="file in fileTest.inputFiles.concat(fileTest.outputFiles)">
+                    {{file.originalName}}
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
