@@ -196,11 +196,19 @@ angular.module('myApp.newProblem')
 
         var problemFill = function(){
             if (!$scope.problem.name) {
-                ngNotify.set('Fill the test name, please');
+                ngNotify.set('Fill the name, please');
                 return false;
             }
             if (!$scope.problem.description) {
-                ngNotify.set('Fill the test description, please');
+                ngNotify.set('Fill the description, please');
+                return false;
+            }
+            if (!$scope.problem.definition) {
+                ngNotify.set('Fill the definition, please');
+                return false;
+            }
+            if ($scope.problem.filePairs.length === 0) {
+                ngNotify.set('You should add at least one test');
                 return false;
             }
             if ($scope.problem.students.length === 0) {

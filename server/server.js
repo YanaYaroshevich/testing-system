@@ -299,6 +299,98 @@ router.get('/rest/test/:testId/user/:userId', function(req, res) {
     });
 });
 
+router.get('/rest/problem/:problemId/user/:userId', function(req, res) {
+    ProblemModel.findOne({_id: req.params.problemId}, function (err, result_problem) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            var toSend = {
+                name: result_problem.name,
+                description: result_problem.description,
+                definition: result_problem.filesDefinition,
+                finish: result_problem.finish,
+                start: result_problem.start,
+                id: req.params.problemId
+            };
+            StudentProblemModel.find({problemId: result_problem._id}, function (err, result_usersProblem) {
+                if (err) {
+                    res.send(err);
+                }
+                else {
+                    var usersProblem = result_usersProblem.map(function(cur){
+                        return {
+                            passed: cur.passed,
+                            assigned: cur.assigned,
+                            id: cur.studentId,
+                            solutions: cur.solutions
+                        };
+                    });
+
+                    UserModel.findOne({_id: result_problem.teacherId}, function(err, result_teacher){
+                        if (err) {
+                            res.send(err);
+                        }
+                        else {
+                            toSend.teacher = {
+                                firstName: result_teacher.firstName,
+                                lastName: result_teacher.lastName
+                            };
+                            UserModel.find({role: 1, '_id': { $in: result_teacher.students}}, function(err, all_students){
+                                if (err) {
+                                    res.send(err);
+                                }
+                                else {
+                                    toSend.students = all_students.map(function(cur){
+                                        var toReturn = {
+                                            firstName: cur.firstName,
+                                            lastName: cur.lastName,
+                                            email: cur.email,
+                                            course: cur.course,
+                                            group: cur.group,
+                                            passed: false,
+                                            assigned: false,
+                                            solutions: [],
+                                            id: cur._id
+                                        };
+                                        for (var i = 0; i < usersProblem.length; i++){
+                                            if (cur._id.toString() === usersProblem[i].id.toString()){
+                                                toReturn.passed = usersProblem[i].passed;
+                                                toReturn.assigned = usersProblem[i].assigned;
+                                                toReturn.solutions = usersProblem[i].solutions;
+                                                break;
+                                            }
+                                        }
+                                        return toReturn;
+                                    });
+
+                                    FileTestModel.find({problemId: result_problem._id}, function(err, result_tests){
+                                        if (err) {
+                                            res.send(err);
+                                        }
+                                        else {
+                                            toSend.tests = result_tests.map(function(cur){
+                                                return {
+                                                    inputFiles: cur.inputFiles,
+                                                    outputFiles: cur.outputFiles,
+                                                    num: cur.num
+
+                                                };
+                                            });
+                                            res.send({problem: toSend});
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                    });
+
+                }
+            });
+        }
+    });
+});
+
 router.get('/rest/test/:testId/stud/:studId', function(req, res) {
     TestModel.findOne({_id: req.params.testId}, function (err, result_test) {
         if (err) {
@@ -353,7 +445,6 @@ router.get('/rest/test/:testId/stud/:studId', function(req, res) {
                                     };
                                     
                                     if(cur.typeInd === 3) {
-                                        console.log('my-uploads/' + cur.additionPicture);
                                         obj.mainPicture = cur.additionPicture;
                                     }
                                     
@@ -492,10 +583,77 @@ router.post('/test/new/mainpicture/upload', function(req, res) {
     upload(req, res, function (err) {
         if (err) {
           console.log(err);
-          return;
+          res.send(err);
         }
         else {
             res.send({fileName: tmp});
+        }
+    });
+});
+
+router.post('/rest/problem/:problemId/solution/:studId', function(req, res) {
+    StudentProblemModel.findOne({studentId: req.params.studId, problemId: req.params.problemId}, function(err, result){
+        if (err) {
+            res.send(err);
+        }
+        else {
+            var tmp;
+
+            var storage = multer.diskStorage({
+                destination: function (req, file, cb) {
+                    cb(null, 'my-programs/');
+                },
+                filename: function (req, file, cb) {
+                    tmp = Date.now() + file.originalname;
+                    cb(null, tmp);
+                }
+            });
+
+            var upload = multer({ storage: storage }).single('file');
+
+            upload(req, res, function (err) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                else {
+                    result.solutions.push({ qOfPassedTests: 0, dateOfPass: new Date(), errorsToShow: [] });
+                    FileTestModel.find({problemId: req.params.problemId}, function(err, tests) {
+                        for (var i = 0; i < tests.length; i++) {
+                            for (var j = 0; j < tests[i].outputFiles.length; j++) {
+                                if (req.body.index === 0 || req.body.index === '0') {
+                                    result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Compilation error' });
+                                }
+                                if (req.body.index === 1 || req.body.index === '1') {
+                                    if (j === 1) {
+                                        result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Mismatch in row 1' });
+                                    }
+                                    else {
+                                        result.solutions[result.solutions.length - 1].qOfPassedTests++;
+                                        result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Success' });
+                                    }
+                                }
+                                if (req.body.index === 2 || req.body.index === '2') {
+                                    result.solutions[result.solutions.length - 1].qOfPassedTests++;
+                                    result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Success' });
+                                }
+                                else {
+                                    result.solutions[result.solutions.length - 1].qOfPassedTests++;
+                                    result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Success' })
+                                }
+                            }
+                        }
+                        result.save(function(err){
+                            if (err) {
+                                res.send(err);
+                            }
+                            else {
+                                res.send ({solution: result.solutions[result.solutions.length - 1]});                            }
+                        });
+
+                    });
+                }
+            });
         }
     });
 });
@@ -506,7 +664,8 @@ router.post('/problem/new/io', function(req, res) {
 
     var storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            if (req.body.isInput) {
+            console.log(req.body);
+            if (req.body.isInput === 'true') {
                 cb(null, 'my-inputs/');
             }
             else {
@@ -525,10 +684,9 @@ router.post('/problem/new/io', function(req, res) {
     upload(req, res, function (err) {
         if (err) {
             console.log(err);
-            return;
+            res.send(err);
         }
         else {
-            console.log(req.body);
             res.send({origFileName: origName, isInput: req.body.isInput, nameForTest: req.body.nameForTest});
         }
     });
@@ -549,8 +707,8 @@ router.post('/rest/problem/new', function(req, res){
                 problem.name = req.body.name;
                 problem.description = req.body.description;
                 problem.filesDefinition = req.body.definition;
-                problem.start = req.body.start;
-                problem.finish = req.body.finish;
+                problem.start = dateCreation(req.body.from, true);
+                problem.finish = dateCreation(req.body.to, false);
                 problem.teacherId = req.body.teacherId;
                 var problemId;
 
@@ -724,9 +882,9 @@ router.put('/rest/test/:testId/edit', function(req, res) {
                         });
                     }   
 
-                    for (var i = 0; i < req.body.students.length; i++) {
-                        studentTestAdding(req.params.testId, req.body.students[i], res);
-                        newsAdding(req.body.students[i], 'The test was edited', 'Click here to open', result_test._id, res);
+                    for (var j = 0; j < req.body.students.length; j++) {
+                        studentTestAdding(req.params.testId, req.body.students[j], res);
+                        newsAdding(req.body.students[j], 'The test was edited', 'Click here to open', result_test._id, res);
                     }
                     newsAdding(req.body.teacherId, 'Your test was successfully edited', 'Click here to open', result_test._id, res);
                     res.send({});

@@ -1,0 +1,116 @@
+<div>
+    <div class="page-name">
+        <h2>{{pageName}}
+            <a class="edit-link" ng-click="" ng-if="auth.isTeacher() || auth.isAdmin()" href=""><i class="fa fa-pencil"></i></a>
+        </h2>
+        <hr/>
+    </div>
+
+    <span us-spinner spinner-key="spinner-1"></span>
+
+    <div class="content-container container-fluid">
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Description</p>
+                    <div class="text-in">
+                        <pre style="white-space:pre-wrap; overflow-x: hidden;">{{problem.description}}</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Dates</p>
+                    <div class="text-in">
+                        <p>
+                            <i class="fa fa-calendar-check-o"></i>
+                            from: {{problem.from}}
+                        </p>
+                        <p>
+                            <i class="fa fa-calendar-times-o"></i>
+                            to: {{problem.to}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Teacher</p>
+                    <div class="text-in">
+                        <p>
+                            <i class="fa fa-child"></i>
+                            {{problem.teacher.firstName + ' ' + problem.teacher.lastName}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="test-font">
+                    <p>Files' definitions</p>
+                    <div class="text-in">
+                        <pre style="white-space:pre-wrap; overflow-x: hidden;">{{problem.definition}}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="auth.isStudent()">
+            <br/>
+            <div class="col-xs-12">
+                <div class="test-font">
+                    <p>Add your file</p>
+                </div>
+                <input type="file" nv-file-select="" uploader="uploader" multiple/>
+
+            </div>
+        </div>
+
+        <div class="row" ng-show="auth.isStudent()">
+            <br/>
+            <div class="col-xs-12">
+                <div class="test-font">
+                    <p>
+                        <i class="fa fa-users"></i>
+                        Solutions
+                    </p>
+                    <div class="text-in">
+                        <div ui-grid="gridSolutions" ui-grid-resize-columns class="stud-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="auth.isTeacher()">
+            <br/>
+            <div class="col-xs-12">
+                <div class="test-font">
+                    <p>
+                        <i class="fa fa-users"></i>
+                        Students
+                    </p>
+                    <div class="text-in">
+                        <div ui-grid="gridStudents" ui-grid-resize-columns class="stud-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-show="auth.isTeacher()">
+            <br/>
+            <div class="col-xs-12">
+                <div class="test-font">
+                    <p>
+                        <i class="fa fa-users"></i>
+                        Tests
+                    </p>
+                    <div class="text-in">
+                        <div ui-grid="gridTests" ui-grid-resize-columns class="stud-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

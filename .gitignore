@@ -5,6 +5,7 @@ bower_components/
 server/my-uploads
 server/my-inputs
 server/my-outputs
+server/my-programs
 tmp
 .DS_Store
 .idea

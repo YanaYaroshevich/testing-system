@@ -88,7 +88,7 @@ module.exports = function (mongoose) {
             problemId: mongoose.Schema.Types.ObjectId,
             passed: { type: Boolean, default: false },
             assigned: { type: Boolean, default: false },
-            solutions: [ { qOfPassedTests: Number, dateOfPass: Date, programText: String, errorsToShow: [ { errorText: String, errorType: String } ] }  ]
+            solutions: [ { qOfPassedTests: Number, dateOfPass: Date, errorsToShow: [ { testNum: Number, outputFileName: String, errorText: String } ] }  ]
         },{
             collection: 'studentProblems'
         })

@@ -55,6 +55,27 @@ angular.module('myApp')
             }]
         }
     })
+    .state('problem', {
+        url: '/problem/:problemId',
+        templateUrl: 'problem-page/problem-page.html',
+        controller: 'ProblemPageCtrl',
+        resolve: {
+            problemToShow: ['$http', '$stateParams', '$rootScope', 'authService', function($http, $stateParams, $rootScope, authService){
+                return $http.get('/rest/problem/' + $stateParams.problemId + '/user/' + $rootScope.id).then(function(res){
+                    if (res && (new Date(res.data.problem.start) <= new Date() && new Date(res.data.problem.finish) >= new Date() || authService.isTeacher())) {
+                        return res.data.problem;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }, function(err){
+                    ngNotify.set(err.data);
+                    return '';
+                });
+            }]
+        }
+    })
     .state('userPage', {
         url: '/user/:userId',
         templateUrl: 'user-page/user-page.html',

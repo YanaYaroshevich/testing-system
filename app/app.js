@@ -14,6 +14,7 @@ angular.module('myApp', [
     'myApp.error',
     'myApp.newUser',
     'myApp.newProblem',
+    'myApp.problemPage',
     'ui.bootstrap',
     'ngAnimate',
     'ngNotify',
@@ -31,7 +32,8 @@ angular.module('myApp', [
     'columns',
     'pretty-checkable',
     'angularFileUpload',
-    'ezplus'
+    'ezplus',
+    'angularSpinner'
 ])
 
 .run(['$state', '$rootScope', '$http', 'authService', '$q', function ($state, $rootScope, $http, authService, $q) {

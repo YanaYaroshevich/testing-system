@@ -40,7 +40,6 @@
                         <p>Input file name #{{$index + 1}}</p>
                     </div>
 
-
                     <ng-form name="inputForm">
                         <input type="text" ng-disabled="status.open || problem.filePairs.length > 0" name="inputFileName" class="form-control" placeholder="Type here" ng-model="inputFile.nameForTest" ng-pattern="/^[\w,\s-]+\.[A-Za-z0-9]+$/"/>
                         <span ng-show="inputForm.inputFileName.$error.pattern" style="color:red">File name is not valid.</span>
@@ -152,7 +151,7 @@
 
             <div class="col-lg-4 col-md-6">
                 <p class="input-group datepicker-to">
-                    <uib-datepicker ng-model="problem.to" min-date="test.from" show-weeks="true" class="well well-sm"></uib-datepicker>
+                    <uib-datepicker ng-model="problem.to" min-date="problem.from" show-weeks="true" class="well well-sm"></uib-datepicker>
                 </p>
             </div>
         </div>

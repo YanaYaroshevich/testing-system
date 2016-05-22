@@ -5,7 +5,7 @@ angular.module('myApp.testPage')
 .controller('TestPageCtrl', ['$scope', '$rootScope', 'uiGridConstants', 'testToShow', 'authService', '$state', 'colService', function($scope, $rootScope, uiGridConstants, testToShow, authService, $state, colService) {
     
     $scope.gridStudents = {
-        enableFiltering: true,
+        enableFiltering: true
     };
     
     $scope.gridQuestions = {
@@ -27,9 +27,9 @@ angular.module('myApp.testPage')
 
         /*------------------------- Dates --------------------------------------*/
 
-        function getPrettyDate(date) {
+        var getPrettyDate = function(date) {
             return  (new Date(date)).toLocaleTimeString() + ' ' + (new Date(date)).toLocaleDateString();
-        }
+        };
 
         $scope.test.from = getPrettyDate($scope.test.start);
         $scope.test.to = getPrettyDate($scope.test.finish);
