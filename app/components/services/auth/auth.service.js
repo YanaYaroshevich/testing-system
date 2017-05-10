@@ -62,6 +62,9 @@ angular.module('auth')
         isMyTestsPage: function(){
             return ($state.is('myTests'));
         },
+        isMyProblemsPage: function(){
+            return ($state.is('myProblems'));
+        },
         isStatisticsPage: function(){
             return ($state.is('statistics'));    
         },

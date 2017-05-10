@@ -13,17 +13,28 @@ var security = require('./storm');
 var cloudConfig = require('./cloud');
 var schemas = require('./shemas')(mongoose);
 
+var port = 8080;
+var app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.all('*', function (req, res, next) {
+    res.set({
+        'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS"
+    });
+    next();
+});
+
 var client = null;
 var appStormpath = null;
 var keyfile = security.apiKeyFile;
 
-var port = 8080;
-var app = express();
-
 mongoose.connect(db.url);
+
 var connection = mongoose.connection;
 cloudinary.config(cloudConfig);
-
 var account = {};
 
 var UserModel = mongoose.model('User', schemas.userSchema);
@@ -37,34 +48,6 @@ var StudentProblemModel = mongoose.model('StudentProblem', schemas.studentProble
 
 var ObjectID = require('mongodb').ObjectID;
 
-stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
-    if (err) { throw err; }
-    client = new stormpath.Client({apiKey: apiKey});
-    
-    client.getApplication(security.application, function (error, application) {
-        if (error) { throw error; }
-        appStormpath = application;
-        app.listen(port);
-        /*addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
-        addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
-        addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
-        addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);
-        addStudent('b@b.bbb', 'c@c.ccc');
-        addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');*/
-    });
-});
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.all('*', function (req, res, next) {
-    res.set({
-        'Access-Control-Allow-Origin': '*',
-        "Access-Control-Allow-Methods": "PUT, DELETE, POST, GET, OPTIONS"
-    });
-    next();
-});
-
 var router = express.Router();
 
 var rootDir = __dirname.substring(0, __dirname.lastIndexOf('\\'));
@@ -77,6 +60,23 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 app.use(router);
+
+stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
+    if (err) { throw err; }
+    client = new stormpath.Client({apiKey: apiKey});
+    
+    client.getApplication(security.application, function (error, application) {
+        if (error) { throw error; }
+        appStormpath = application;
+        app.listen(port);
+        /*addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
+        addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
+        addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
+        addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);*/
+        /*addStudent('b@b.bbb', 'c@c.ccc');
+        addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');*/
+    });
+});
 
 var addUser = function(role, email, fn, ln, group, course){
     var user = {
@@ -277,6 +277,7 @@ router.get('/rest/test/:testId/user/:userId', function(req, res) {
                                                             cost: cur.cost,
                                                             typeInd: cur.typeInd,
                                                             answers: cur.answers,
+                                                            additionPicture: cur.additionPicture,
                                                             id: cur._id
                                                         };
                                                     });
@@ -616,15 +617,15 @@ router.post('/rest/problem/:problemId/solution/:studId', function(req, res) {
                     console.log(err);
                     res.send(err);
                 }
-                else {
-                    result.solutions.push({ qOfPassedTests: 0, dateOfPass: new Date(), errorsToShow: [] });
+                else if (result) {
+                    result.solutions.push({ qOfPassedTests: 0, dateOfPass: new Date(), errorsToShow: [], solutionName: tmp });
                     FileTestModel.find({problemId: req.params.problemId}, function(err, tests) {
                         for (var i = 0; i < tests.length; i++) {
                             for (var j = 0; j < tests[i].outputFiles.length; j++) {
                                 if (req.body.index === 0 || req.body.index === '0') {
                                     result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Compilation error' });
                                 }
-                                if (req.body.index === 1 || req.body.index === '1') {
+                                else if (req.body.index === 1 || req.body.index === '1') {
                                     if (j === 1) {
                                         result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Mismatch in row 1' });
                                     }
@@ -633,7 +634,7 @@ router.post('/rest/problem/:problemId/solution/:studId', function(req, res) {
                                         result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Success' });
                                     }
                                 }
-                                if (req.body.index === 2 || req.body.index === '2') {
+                                else if (req.body.index === 2 || req.body.index === '2') {
                                     result.solutions[result.solutions.length - 1].qOfPassedTests++;
                                     result.solutions[result.solutions.length - 1].errorsToShow.push({ testNum: i, outputFileName: tests[i].outputFiles[j].nameForTest, errorText: 'Success' });
                                 }
@@ -916,6 +917,62 @@ router.get('/rest/test/new/students/:teacherId', function (req, res) {
                 res.send(err);
             }
         } 
+    });
+});
+
+router.get('/rest/problems/:userId', function(req, res) {
+    UserModel.findOne({_id: req.params.userId}, function(err, result_user) {
+        if (err){
+            res.send(err);
+        }
+        else {
+            if (result_user.role === 1) {
+                StudentProblemModel.find({studentId: result_user._id}, function(err, result_studentProblems) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        var problemsIds = result_studentProblems.map(function(cur){
+                            return cur.problemId;
+                        });
+                        ProblemModel.find({'_id': { $in: problemsIds }}, function(err, result_problems) {
+                            if (err) {
+                                res.send(err);
+                            }
+                            else {
+                                var problemsToSend = result_problems.map(function(cur){
+                                    return {
+                                        description: cur.description,
+                                        start: cur.start,
+                                        finish: cur.finish,
+                                        name: cur.name,
+                                        _id: cur._id
+                                    };
+                                });
+                                for (var j = 0; j < result_problems.length; j++){
+                                    problemsToSend[j].gradeInfo = result_studentProblems[j];
+                                }
+                                res.send({problems: problemsToSend});
+                            }
+                        });
+                    }
+                });
+            }
+            else if (result_user.role === 2) {
+                ProblemModel.find({teacherId: result_user._id}, function(err, result_problems){
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        res.send({problems: result_problems});
+                    }
+                });
+
+            }
+            else {
+                res.send({problems: ''});
+            }
+        }
     });
 });
 

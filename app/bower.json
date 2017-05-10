@@ -15,6 +15,7 @@
     "angular-animate": ">=1.4.8",
     "angular-pretty-checkable": ">=0.1.7",
     "angular-file-upload": ">=2.2.0",
-    "angular-ez-plus": "^1.1.18"
+    "angular-ez-plus": "^1.1.18",
+    "angular-spinner": "^1.0.1"
   }
 }

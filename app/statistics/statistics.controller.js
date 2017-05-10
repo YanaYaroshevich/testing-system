@@ -79,7 +79,7 @@ angular.module('myApp.statistics')
             for (var j = 0; j < results[i].data.test.students.length; j++){
                 if (results[i].data.test.students[j].passed){
                     date = new Date(results[i].data.test.students[j].dateOfPass).getTime();
-                    grade = results[i].data.test.students[j].grade;
+                    grade = results[i].data.test.students[j].grade * 100000;
                     $scope.histBars[i][0].values.push([date, grade]);
                 }
             } 

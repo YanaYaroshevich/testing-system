@@ -88,9 +88,27 @@ module.exports = function (mongoose) {
             problemId: mongoose.Schema.Types.ObjectId,
             passed: { type: Boolean, default: false },
             assigned: { type: Boolean, default: false },
-            solutions: [ { qOfPassedTests: Number, dateOfPass: Date, errorsToShow: [ { testNum: Number, outputFileName: String, errorText: String } ] }  ]
+            solutions: [ { qOfPassedTests: Number, dateOfPass: Date, solutionName: String, errorsToShow: [ { testNum: Number, outputFileName: String, errorText: String } ] }  ]
         },{
             collection: 'studentProblems'
+        }),
+        
+        studentProblemTrySchema: new mongoose.Schema({
+            problemId: mongoose.Schema.Types.ObjectId,
+            studentId: mongoose.Schema.Types.ObjectId,
+            dateOfPass: Date,
+            fileName: String //TODO: metrics
+        }, {
+            collection: 'studentProblemTries'
+        }),
+        
+        plagiatSchema: new mongoose.Schema({
+            tryId1: mongoose.Schema.Types.ObjectId,
+            tryId2: mongoose.Schema.Types.ObjectId,
+            jakkarKoef: Number,
+            tokenizationType: Number
+        }, {
+            collection: 'plagiat'
         })
     };
 };

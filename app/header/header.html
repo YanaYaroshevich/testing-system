@@ -61,6 +61,13 @@
                     <span>My tests</span>
                 </a>
             </li>
+
+            <li>
+                <a ng-class="auth.isMyProblemsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isStudent() || auth.isTeacher()" ui-sref="myProblems">
+                    <i class="fa fa-fw fa-circle-o"></i>
+                    <span>My problems</span>
+                </a>
+            </li>
             <li>
                 <a ng-class="auth.isStatisticsPage() ? 'selected-link' : ''" ng-click="collapse()" ng-if="auth.isTeacher() || auth.isStudent()" ui-sref="statistics">
                     <i class="fa fa-fw fa-circle-o"></i>

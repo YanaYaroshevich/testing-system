@@ -12,6 +12,14 @@ angular.module('columns')
                 { name: 'testId', visible: false }
             ];
         },
+        myProblems : function() {
+            return [
+                { name: 'num', headerCellClass: 'header-filtered', minWidth: '80', maxWidth: '80' },
+                { name: 'problemName', headerCellClass: 'header-filtered', minWidth: '150', cellTemplate: '<div class="add-cell-test"><a class="ngCellText" ng-class="col.colIndex()" href="/problem/{{row.entity.problemId}}">{{row.entity.problemName}}</a></div>' },
+                { name: 'description', headerCellClass: 'header-filtered', minWidth: '200' },
+                { name: 'problemId', visible: false }
+            ];
+        },
         newTestStudents : function() {
             return [
                 { name: 'firstName', headerCellClass: 'header-filtered', minWidth: '150' },

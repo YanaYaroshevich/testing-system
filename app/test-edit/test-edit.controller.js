@@ -2,7 +2,7 @@
 
 angular.module('myApp.testEditPage')
     
-.controller('TestEditPageCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', 'colService', 'testService', function($scope, $rootScope, ngNotify, uiGridConstants, testToShow, $timeout, colService, testService) {
+.controller('TestEditPageCtrl', ['$scope', '$rootScope', 'ngNotify', 'uiGridConstants', 'testToShow', '$timeout', 'colService', 'testService', 'FileUploader', function($scope, $rootScope, ngNotify, uiGridConstants, testToShow, $timeout, colService, testService, FileUploader) {
     $scope.pageName = 'Test edit';
     
     var testToDefault = function(){
@@ -25,6 +25,42 @@ angular.module('myApp.testEditPage')
     };
 
     questionToDefault();
+
+    $scope.uploader = new FileUploader({url: '/test/new/mainpicture/upload'});
+
+    $scope.uploader.filters.push({
+        name: 'imageFilter',
+        fn: function(item /*{File|FileLikeObject}*/, options) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+        }
+    });
+
+    // CALLBACKS
+
+    $scope.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        ngNotify.set('An error occured while file uploading');
+        console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+
+    $scope.uploader.onAfterAddingFile = function(fileItem) {
+        $scope.question.mainPicture = fileItem.file;
+        console.info('onAfterAddingFile', fileItem);
+    };
+
+    $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+        $scope.question.mainPicture = response.fileName;
+        $scope.question.num = $scope.test.questions.length + 1;
+        $scope.test.questions.push(angular.copy($scope.question));
+        $scope.gridQuestions.data = $scope.test.questions;
+        questionToDefault();
+    };
+
+    $scope.uploader.onErrorItem = function(fileItem, response, status, headers) {
+        ngNotify.set('An error occured while file uploading');
+        console.info('onErrorItem', fileItem, response, status, headers);
+    };
     
     /* ---------------------------- Dates ----------------------------------- */
     
@@ -35,7 +71,7 @@ angular.module('myApp.testEditPage')
 
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
-    }
+    };
     
     datesToDefault();
 
@@ -68,6 +104,7 @@ angular.module('myApp.testEditPage')
                 toReturn.type = $scope.toShowTypes[quest.typeInd];
                 toReturn.typeInd = quest.typeInd;
                 toReturn.answers = quest.answers;
+                toReturn.mainPicture = quest.additionPicture;
                 return toReturn;
             });
     

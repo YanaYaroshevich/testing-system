@@ -70,27 +70,29 @@ angular.module('myApp.problemPage')
                 $scope.gridTests.columnDefs.push({ displayName: problemToShow.tests[0].outputFiles[l].nameForTest, field: problemToShow.tests[0].outputFiles[l].nameForTest.replace('.', ''), headerCellClass: 'header-filtered', minWidth: '120'});
             }
 
-            $scope.myRecord = {};
-            for (var s = 0; s < problemToShow.students.length; s++) {
-                if ($rootScope.id === problemToShow.students[s].id) {
-                    $scope.myRecord = problemToShow.students[s];
+            if (authService.isStudent()) {
+                $scope.myRecord = {};
+                for (var s = 0; s < problemToShow.students.length; s++) {
+                    if ($rootScope.id === problemToShow.students[s].id) {
+                        $scope.myRecord = problemToShow.students[s];
+                    }
                 }
+
+                $scope.gridSolutions.data = $scope.myRecord.solutions.map(function(cur){
+                    return {
+                        dateOfPass: cur.dateOfPass,
+                        errorsToShow: cur.errorsToShow,
+                        qOfPassedTests: cur.qOfPassedTests,
+                        solutionName: 'Solution #' + ($scope.myRecord.solutions.indexOf(cur) + 1)
+                    };
+                });
+
+                $scope.gridSolutions.columnDefs = [
+                    { displayName: 'Solution name', field: 'solutionName', headerCellClass: 'header-filtered', minWidth: '120', cellTemplate: '<div class="add-cell-test"><a href="" ng-click="grid.appScope.showSolution(row.entity)" class="ngCellText">{{row.entity.solutionName}}</a></div>' },
+                    { displayName: 'Quantity of files without errors', field: 'qOfPassedTests',  headerCellClass: 'header-filtered', minWidth: '150' },
+                    { displayName: 'Date of pass', field: 'dateOfPass', type: 'date', cellFilter: 'date:\'dd/MM/yyyy\'', enableFiltering: false, minWidth: '150' }
+                ];
             }
-
-            $scope.gridSolutions.data = $scope.myRecord.solutions.map(function(cur){
-                return {
-                    dateOfPass: cur.dateOfPass,
-                    errorsToShow: cur.errorsToShow,
-                    qOfPassedTests: cur.qOfPassedTests,
-                    solutionName: 'Solution #' + ($scope.myRecord.solutions.indexOf(cur) + 1)
-                };
-            });
-
-            $scope.gridSolutions.columnDefs = [
-                { displayName: 'Solution name', field: 'solutionName', headerCellClass: 'header-filtered', minWidth: '120', cellTemplate: '<div class="add-cell-test"><a href="" ng-click="grid.appScope.showSolution(row.entity)" class="ngCellText">{{row.entity.solutionName}}</a></div>' },
-                { displayName: 'Quantity of files without errors', field: 'qOfPassedTests',  headerCellClass: 'header-filtered', minWidth: '150' },
-                { displayName: 'Date of pass', field: 'dateOfPass', type: 'date', cellFilter: 'date:\'dd/MM/yyyy\'', enableFiltering: false, minWidth: '150' }
-            ];
 
             $scope.uploader = new FileUploader(
                 {

@@ -8,6 +8,7 @@ angular.module('myApp', [
     'myApp.testPage',
     'myApp.testEditPage',
     'myApp.myTestsPage',
+    'myApp.myProblemsPage',
     'myApp.statistics',
     'myApp.testPassPage',
     'myApp.userPage',
@@ -24,6 +25,7 @@ angular.module('myApp', [
     'ui.grid.autoResize',
     'ui.grid.resizeColumns',
     'ui.router',
+    'ui.router.state.events',
     'auth',
     'login',
     'students',
@@ -33,7 +35,7 @@ angular.module('myApp', [
     'pretty-checkable',
     'angularFileUpload',
     'ezplus',
-    'angularSpinner'
+    'angularSpinner',
 ])
 
 .run(['$state', '$rootScope', '$http', 'authService', '$q', function ($state, $rootScope, $http, authService, $q) {

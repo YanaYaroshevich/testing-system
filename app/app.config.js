@@ -142,6 +142,21 @@ angular.module('myApp')
             }]    
         }
     })
+    .state('myProblems', {
+        url: '/problems',
+        templateUrl: 'my-problems/my-problems.html',
+        controller: 'MyProblemsPageCtrl',
+        resolve: {
+            myProblems: ['$http', '$rootScope', function($http, $rootScope) {
+                return $http.get('/rest/problems/' + $rootScope.id).then(function(res){
+                    return res.data.problems;
+                }, function(err) {
+                    ngNotify.set(err.data);
+                    return '';
+                });
+            }]
+        }
+    })
     .state('testPass', {
         url: '/test/:testId/pass',
         templateUrl: 'test-pass/test-pass.html',
