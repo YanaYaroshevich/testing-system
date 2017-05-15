@@ -97,7 +97,10 @@ module.exports = function (mongoose) {
             problemId: mongoose.Schema.Types.ObjectId,
             studentId: mongoose.Schema.Types.ObjectId,
             dateOfPass: Date,
-            fileName: String //TODO: metrics
+	        fingerPrints1: [ {type: Number} ],
+	        fingerPrints2: [ {type: Number} ],
+	        fingerPrints3: [ {type: Number} ],
+	        fileName: String //TODO: metrics
         }, {
             collection: 'studentProblemTries'
         }),
@@ -105,8 +108,12 @@ module.exports = function (mongoose) {
         plagiatSchema: new mongoose.Schema({
             tryId1: mongoose.Schema.Types.ObjectId,
             tryId2: mongoose.Schema.Types.ObjectId,
-            jakkarKoef: Number,
-            tokenizationType: Number
+            jakkarCoef3: Number,
+            jakkarCoef4: Number,
+            tokenizationType: Number,
+            intersectionArray: [ { pos1: Number, pos2: Number, intersec: String} ],
+	        NOPLength: Number,
+	        fingerPrintsCoef: Number
         }, {
             collection: 'plagiat'
         })

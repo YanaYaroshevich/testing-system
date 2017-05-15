@@ -69,10 +69,21 @@ stormpath.loadApiKey(keyfile, function apiKeyFileLoaded(err, apiKey) {
         if (error) { throw error; }
         appStormpath = application;
         app.listen(port);
-        /*addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
-        addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
-        addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
-        addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);*/
+	    /*addUser(1, 'd@d.ddd', 'Ddd', 'Ddd', '5', 3);
+	    addUser(1, 'e@e.eee', 'Eee', 'Eee', '5', 1);
+	    addUser(1, 'f@f.fff', 'Fff', 'Fff', '4', 2);
+	    addUser(1, 'g@g.ggg', 'Ggg', 'Ggg', '3', 3);
+	    addUser(1, 'h@h.hhh', 'Hhh', 'Hhh', '6', 4);
+	    addUser(1, 'i@i.iii', 'Iii', 'Iii', '8', 3);
+	    addUser(1, 'j@j.jjj', 'Jjj', 'Jjj', '3', 3);
+	    addUser(1, 'k@k.kkk', 'Kkk', 'Kkk', '3', 3);
+	    addUser(1, 'l@l.lll', 'Lll', 'Lll', '3', 3);
+	    addUser(1, 'm@m.mmm', 'Mmm', 'Mmm', '2', 2);
+	    addUser(1, 'n@n.nnn', 'Nnn', 'Nnn', '3', 4);*/
+	    /*addUser(0, 'a@a.aaa', 'Aaa', 'Aaa', '-1', -1);
+		addUser(2, 'b@b.bbb', 'Bbb', 'Bbb', '-1', -1);
+		addUser(1, 'yaroshevich.yana@gmail.com', 'Yana', 'Yaroshevich', '8', 3);
+		addUser(1, 'c@c.ccc', 'Ccc', 'Ccc', '2', 1);*/
         /*addStudent('b@b.bbb', 'c@c.ccc');
         addStudent('b@b.bbb', 'yaroshevich.yana@gmail.com');*/
     });
